@@ -111,8 +111,8 @@ class LocalApi extends CI_Controller
                 JSON_UNESCAPED_UNICODE
             );
             die();
-            // pull is done by check updating work not /updating/
-        } else if (strpos($output, 'Updating') !== false && strpos($output, 'fatal') == false) {
+            // pull is done by check updating work not /updating/ or changed files
+        } else if ((strpos($output, 'Updating') !== false || (strpos($output, 'changed') !== false)) && strpos($output, 'fatal') == false) {
             echo json_encode(
                 array(
                     'status' => 200,
