@@ -4,7 +4,7 @@ $local_host = "localhost";
 $local_username = "redha";
 $local_password = "redhaRedha@1redha";
 $local_dbname = "unimedica_db";
-$port = "3307";
+$port = "3306";
 
 // Remote database credentials
 $remote_host = "account.native-code-iq.com";
