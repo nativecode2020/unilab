@@ -1,122 +1,94 @@
-<?php
-//defined('BASEPATH') OR exit('No direct script access allowed');
+<?php //00591
+// IONCUBE ENCODER 11.0 EVALUATION
+// THIS LICENSE MESSAGE IS ONLY ADDED BY THE EVALUATION ENCODER AND
+// IS NOT PRESENT IN PRODUCTION ENCODED FILES
 
-/*
-| -------------------------------------------------------------------
-| DATABASE CONNECTIVITY SETTINGS
-| -------------------------------------------------------------------
-| This file will contain the settings needed to access your database.
-|
-| For complete instructions please consult the 'Database Connection'
-| page of the User Guide.
-|
-| -------------------------------------------------------------------
-| EXPLANATION OF VARIABLES
-| -------------------------------------------------------------------
-|
-|	['dsn']      The full DSN string describe a connection to the database.
-|	['hostname'] The hostname of your database server.
-|	['username'] The username used to connect to the database
-|	['password'] The password used to connect to the database
-|	['database'] The name of the database you want to connect to
-|	['dbdriver'] The database driver. e.g.: mysqli.
-|			Currently supported:
-|				 cubrid, ibase, mssql, mysql, mysqli, oci8,
-|				 odbc, pdo, postgre, sqlite, sqlite3, sqlsrv
-|	['dbprefix'] You can add an optional prefix, which will be added
-|				 to the table name when using the  Query Builder class
-|	['pconnect'] TRUE/FALSE - Whether to use a persistent connection
-|	['db_debug'] TRUE/FALSE - Whether database errors should be displayed.
-|	['cache_on'] TRUE/FALSE - Enables/disables query caching
-|	['cachedir'] The path to the folder where cache files should be stored
-|	['char_set'] The character set used in communicating with the database
-|	['dbcollat'] The character collation used in communicating with the database
-|				 NOTE: For MySQL and MySQLi databases, this setting is only used
-| 				 as a backup if your server is running PHP < 5.2.3 or MySQL < 5.0.7
-|				 (and in table creation queries made with DB Forge).
-| 				 There is an incompatibility in PHP with mysql_real_escape_string() which
-| 				 can make your site vulnerable to SQL injection if you are using a
-| 				 multi-byte character set and are running versions lower than these.
-| 				 Sites using Latin-1 or UTF-8 database character set and collation are unaffected.
-|	['swap_pre'] A default table prefix that should be swapped with the dbprefix
-|	['encrypt']  Whether or not to use an encrypted connection.
-|
-|			'mysql' (deprecated), 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE
-|			'mysqli' and 'pdo/mysql' drivers accept an array with the following options:
-|
-|				'ssl_key'    - Path to the private key file
-|				'ssl_cert'   - Path to the public key certificate file
-|				'ssl_ca'     - Path to the certificate authority file
-|				'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
-|				'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
-|				'ssl_verify' - TRUE/FALSE; Whether verify the server certificate or not ('mysqli' only)
-|
-|	['compress'] Whether or not to use client compression (MySQL only)
-|	['stricton'] TRUE/FALSE - forces 'Strict Mode' connections
-|							- good for ensuring strict SQL while developing
-|	['ssl_options']	Used to set various SSL options that can be used when making SSL connections.
-|	['failover'] array - A array with 0 or more data for connections if the main should fail.
-|	['save_queries'] TRUE/FALSE - Whether to "save" all executed queries.
-| 				NOTE: Disabling this will also effectively disable both
-| 				$this->db->last_query() and profiling of DB queries.
-| 				When you run a query, with this setting set to TRUE (default),
-| 				CodeIgniter will store the SQL statement for debugging purposes.
-| 				However, this may cause high memory usage, especially if you run
-| 				a lot of SQL queries ... disable this to avoid that problem.
-|
-| The $active_group variable lets you choose which connection group to
-| make active.  By default there is only one group (the 'default' group).
-|
-| The $query_builder variables lets you determine whether or not to load
-| the query builder class.
-*/
-$active_group = 'default';
-$query_builder = TRUE;
-
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'port'     => '3306',
-	'username' => 'redha',
-	'password' => 'redhaRedha@1redha',
-	'database' => 'unimedica_db',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	//'db_debug' => FALSE,
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
-
-$db['unimedica'] = array(
-	'dsn'      => '',
-	'hostname' => 'localhost',
-	'port'     => '3306',
-	'username' => 'redha',
-	'password' => 'redhaRedha@1redha',
-	'database' => 'unimedica_db',
-
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt'  => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+if(!extension_loaded('ionCube Loader')){$__oc=strtolower(substr(php_uname(),0,3));$__ln='ioncube_loader_'.$__oc.'_'.substr(phpversion(),0,3).(($__oc=='win')?'.dll':'.so');if(function_exists('dl')){@dl($__ln);}if(function_exists('_il_exec')){return _il_exec();}$__ln='/ioncube/'.$__ln;$__oid=$__id=realpath(ini_get('extension_dir'));$__here=dirname(__FILE__);if(strlen($__id)>1&&$__id[1]==':'){$__id=str_replace('\\','/',substr($__id,2));$__here=str_replace('\\','/',substr($__here,2));}$__rd=str_repeat('/..',substr_count($__id,'/')).$__here.'/';$__i=strlen($__rd);while($__i--){if($__rd[$__i]=='/'){$__lp=substr($__rd,0,$__i).$__ln;if(file_exists($__oid.$__lp)){$__ln=$__lp;break;}}}if(function_exists('dl')){@dl($__ln);}}else{die('The file '.__FILE__." is corrupted.\n");}if(function_exists('_il_exec')){return _il_exec();}echo("Site error: the ".(php_sapi_name()=='cli'?'ionCube':'<a href="http://www.ioncube.com">ionCube</a>')." PHP Loader needs to be installed. This is a widely used PHP extension for running ionCube protected PHP code, website security and malware blocking.\n\nPlease visit ".(php_sapi_name()=='cli'?'get-loader.ioncube.com':'<a href="http://get-loader.ioncube.com">get-loader.ioncube.com</a>')." for install assistance.\n\n");exit(199);
+?>
+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
+SjmJ4B/fCIDpY1RvL8VxbP/OLoQgTaYE7m==
