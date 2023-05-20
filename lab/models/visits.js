@@ -5,8 +5,7 @@ let getData = run(`SELECT name,birth,hash FROM lab_patient WHERE lab_id='${local
                    SELECT name,price,note,catigory_id as type, 
                           (select DISTINCT name from devices where id=lab_pakage_tests.lab_device_id) as device_name,
                           (select DISTINCT name from kits where id=lab_pakage_tests.kit_id) as kit_name,
-                          lab_package.hash as hash,
-                          (select group_concat((select test_name from lab_test where hash=tests_id)) from lab_visits_tests where package_id=lab_package.hash) as tests
+                          lab_package.hash as hash
                    FROM lab_package 
                    inner join lab_pakage_tests on lab_package.hash=lab_pakage_tests.package_id 
                    inner join lab_test on lab_pakage_tests.test_id=lab_test.hash
