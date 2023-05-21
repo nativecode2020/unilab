@@ -15,14 +15,6 @@ class Reports extends CI_Controller
         $this->load->library('session');
         $this->load->model('Menu_db');
         $this->load->library('pagination');
-
-
-        // $this->name = $this->session->userdata('name');
-        // $this->id = $this->session->userdata('id');
-        // $this->idhash = $this->session->userdata('idhash');
-        // if ($this->name == "") {
-        //     redirect('Login/logout');
-        // }
         header('Content-Type: application/json; charset=utf-8');
         $token = $this->input->get_request_header('Authorization', TRUE);
         $token = explode(" ", $token)[1];

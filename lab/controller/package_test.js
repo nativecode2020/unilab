@@ -312,7 +312,7 @@ function saveNewTest() {
 function deleteTest(hash) {
     const count = run_both(`select Count(*) as count from lab_visits_package where package_id='${hash}';`).result[0].query0[0].count
     if (count != 0) {
-        niceSwal('error', 'top-end', 'لا يمكن حذف هذا الاختبار لانه مرتبط ببعض الفواتير');
+        niceSwal('error', 'top-end', `لا يمكن حذف هذا الاختبار لانه مرتبط ببعض الفواتير ${count}`);
         return false;
     }
     // delete lab_package and lab_pakage_tests
