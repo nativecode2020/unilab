@@ -323,7 +323,7 @@ function deleteTest(hash) {
 
     if (result.length != 0) {
         niceSwal('error', 'top-end', `لا يمكن حذف هذا الاختبار لانه مرتبط بعدد ${result.length} زيارة هما {${result.map((item, index) => {
-            return `${index + 1} - ${item.name} بتاريخ ${item.visit_date} \n`
+            return item.name;
         }).join(' و ')}}`);
         return false;
     }
