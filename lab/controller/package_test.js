@@ -319,7 +319,7 @@ function deleteTest(hash) {
         WHERE
             package_id = '${hash}' and
             lab_visits.isdeleted = 0
-    ;`).result.query;
+    ;`).result[0].query0;
 
     if (result.length != 0) {
         niceSwal('error', 'top-end', `لا يمكن حذف هذا الاختبار لانه مرتبط بعدد ${result.length} زيارة هما ${result.map((item, index) => {
