@@ -310,9 +310,21 @@ function saveNewTest() {
 }
 
 function deleteTest(hash) {
-    const count = run_both(`select Count(*) as count from lab_visits_package where package_id='${hash}';`).result[0].query0[0].count
-    if (count != 0) {
-        niceSwal('error', 'top-end', `لا يمكن حذف هذا الاختبار لانه مرتبط ببعض الفواتير ${count}`);
+    const result = run_both(`
+            SELECT 
+        name, visit_date
+        FROM
+            lab_visits_package
+        left join lab_visits on lab_visits.hash = lab_visits_package.visit_id
+        WHERE
+            package_id = '${hash}' and
+            lab_visits.isdeleted = 0
+    ;`).result.query;
+
+    if (result.length != 0) {
+        niceSwal('error', 'top-end', `لا يمكن حذف هذا الاختبار لانه مرتبط بعدد ${result.length} زيارة هما ${result.map((item, index) => {
+            return `${index + 1} - ${item.name} بتاريخ ${item.visit_date}`
+        }).join(' و ')}}`);
         return false;
     }
     // delete lab_package and lab_pakage_tests
