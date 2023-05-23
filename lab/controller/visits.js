@@ -577,7 +577,7 @@ function generateFieldForTest(test, resultList, reference, testType) {
                         ${reference?.[0]?.result?.trim() == 'result' ?
             `<select class="form-control result" id="result_${test.hash}" name="${test.name}">
                 ${reference?.[0]?.options.map(option => {
-                return `<option value="${option}" ${resultList?.[test.name] ?? (reference?.[0]?.right_options[0]) == option ? 'selected' : ''}>${option}</option>`
+                return `<option value="${option}" ${resultList?.[test.name] ? ((reference?.[0]?.right_options[0]) == option ? 'selected' : '') : ''}>${option}</option>`
             }).join('')}
             </select>`
             :
