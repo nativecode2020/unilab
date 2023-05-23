@@ -1916,7 +1916,7 @@ function manageTestType(type, test = {}) {
                     <p class="${color} w-75 text-center">${result ?? ''}</p>
                 </div>
                 <div class="testresult col-2">
-                    <p class="${color} w-75 text-center">${flag}</p>
+                    ${name == 'Blood Group (ABO)' ? "" : `<p class="${color} w-75 text-center">${flag}</p>`}
                 </div>
                 <div class="testresult col-2">
                     <p> ${unit}</p>
