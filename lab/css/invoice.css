@@ -7,8 +7,8 @@
     /* init font */
     --font_size: 18px;
     --invoice-color: #000;
-    --typeTest-font:24px;
-    --logo-height:175px;
+    --typeTest-font: 24px;
+    --logo-height: 175px;
 }
 
 .mytest {
@@ -106,8 +106,7 @@
 .header.money,
 .header.money .logo,
 .header.money .left,
-.header.money .right
-{
+.header.money .right {
     height: 175px;
 }
 
@@ -133,7 +132,7 @@
     margin-block-end: 0px;
     margin-inline-start: 3px;
     margin-inline-end: 3px;
-    color:#000;
+    color: #000;
     font-weight: bolder;
 }
 
@@ -193,7 +192,12 @@
     height: 42px;
 }
 
-.namett,.agesext,.paidt,.vidt,.prdt,.refbyt {
+.namett,
+.agesext,
+.paidt,
+.vidt,
+.prdt,
+.refbyt {
     margin: 2px;
     padding: 2px;
     border: 1px solid #ccc;
@@ -201,9 +205,16 @@
     background-color: var(--color-orange);
 
 }
-.namett p,.agesext p,.paidt p,.vidt p,.prdt p,.refbyt p {
+
+.namett p,
+.agesext p,
+.paidt p,
+.vidt p,
+.prdt p,
+.refbyt p {
     color: #fff !important;
 }
+
 .namegot,
 .agesexgot,
 .paidgot,
@@ -219,7 +230,7 @@
 }
 
 .paidgot,
-.vidgot{
+.vidgot {
     width: 23.5%
 }
 
@@ -266,7 +277,7 @@
     color: #000000;
 }
 
-.typetest.sp p{
+.typetest.sp p {
     font-size: 20px;
     font-weight: bold;
     text-align: start;
@@ -307,14 +318,18 @@
     font-size: 16px;
 }
 
-#invoice-GeneralUrineExaminationGUE .page .testname  p,
-#invoice-GeneralUrineExaminationGUE .page .testresult  p,
-#invoice-GeneralUrineExaminationGUE .page .testnormal  p,
-#invoice-GeneralStoolExaminationGSE .page .testname  p,
-#invoice-GeneralStoolExaminationGSE .page .testresult  p,
-#invoice-GeneralStoolExaminationGSE .page .testnormal  p
-{
+#invoice-GeneralUrineExaminationGUE .page .testname p,
+#invoice-GeneralUrineExaminationGUE .page .testresult p,
+#invoice-GeneralUrineExaminationGUE .page .testnormal p,
+#invoice-GeneralStoolExaminationGSE .page .testname p,
+#invoice-GeneralStoolExaminationGSE .page .testresult p,
+#invoice-GeneralStoolExaminationGSE .page .testnormal p {
     font-size: 14px;
+}
+
+.page .typetest:has(~ .strc-test)>p,
+.page .sections:has(~ .strc-test) p {
+    font-size: 22px !important;
 }
 
 .sections p {
@@ -488,13 +503,14 @@
     margin-inline-end: 0px;
 
 }
+
 /* 
     any .strc-test child or grandchild element with class .testname, .testresult, .testnormal
 */
 .strc-test .testname p,
 .strc-test .testresult p,
-.strc-test .testnormal  p,
-.strc-test .sections  p{
+.strc-test .testnormal p,
+.strc-test .sections p {
     font-size: var(--font_size);
 }
 
@@ -544,26 +560,30 @@
 
 @media print {
 
-    html, body .page{
-      height:100vh; 
-      margin: 0 !important; 
-      padding: 0 !important;
-      overflow: hidden;
+    html,
+    body .page {
+        height: 100vh;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
     }
 
     * {
-        -webkit-print-color-adjust: exact !important; /*Chrome, Safari */
-        color-adjust: exact !important;  /*Firefox*/
+        -webkit-print-color-adjust: exact !important;
+        /*Chrome, Safari */
+        color-adjust: exact !important;
+        /*Firefox*/
     }
 }
+
 .testresult .text-info,
-.testresult .text-danger
-{
-    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.75);
--webkit-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.75);
--moz-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.75);
+.testresult .text-danger {
+    box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
 }
 
-.vidt,.paidt{
+.vidt,
+.paidt {
     width: 25%;
 }

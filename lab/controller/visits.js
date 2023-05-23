@@ -1400,7 +1400,11 @@ function showResult(visit, visitTests) {
         });
         if (options.type == 'type') {
             let font = options?.font ?? invoices?.font ?? '14px';
-            let typeHistory = history.find(item => item.name == test.name)?.result ?? '{}';
+            let typeHistory = history.find(item => item.name == test.name)?.result;
+            // check if typeHistory is nulled
+            if (!typeHistory) {
+                typeHistory = '{}';
+            }
             typeHistory = JSON.parse(typeHistory);
             buttons[test.name.replace(/\s/g, '').replace(/[^a-zA-Z0-9]/g, '')] =
                 `<div class="col-auto">
