@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>التقارير المالية</title>
+    <title> التقارير المالية</title>
     <link rel="icon" type="image/x-icon" href="assets/image/logo2.ico" />
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/loader.js"></script>
@@ -32,11 +32,18 @@
     <link href="assets/css/components/custom-modal.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/new_style.css">
+    <style>
+        input{
+            min-height: 47.99px;
+            border-color: #aaa;
+        }
+    </style>
+
     <!--  END CUSTOM STYLE FILE  -->
 
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -67,23 +74,70 @@
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container" id="container">
 
-        <div class="overlay"></div> 
+        <div class="overlay"></div>
         <div class="search-overlay"></div>
 
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
                 <div class="page-header">
-                    <h3 class="page-title">ايرادات اليوم</h3>
                 </div>
 
                 <div class="row layout-spacing">
                     <div class="col-lg-12">
                         <div class="statbox widget box box-shadow bg-white">
                             <div class="widget-content widget-content-area m-auto" style="width: 95%;">
-                                <div class="row justify-content-center align-items-center" id="root">
-
+                                <!-- header -->
+                                <h3 class="text-center mt-4">التقارير المالية</h3>
+                                <div class="table-form row justify-content-center">
+                                    <div class="form-group col-3">
+                                        <label for="startDate" class="">من تاريخ</label>
+                                        <div class="col-sm-12">
+                                            <input type="date" class="form-control form-control-sm" name="startDate" id="startDate" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="endDate" class="">الي تاريخ</label>
+                                        <div class="col-sm-12">
+                                            <input type="date" class="form-control form-control-sm" name="endDate" id="endDate" placeholder="">
+                                        </div>
+                                    </div>
+                                    <!-- doctor -->
+                                    <div class="form-group col-3">
+                                        <label for="doctor" class="">الدكتور</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-sm" name="doctor" id="doctor">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- user -->
+                                    <div class="form-group col-3">
+                                        <label for="user" class="">المستخدم</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-sm" name="user" id="user">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="form-group col-3">
+                                        <input class="btn btn-primary h-50 mt-3 col-11" onclick="search()" type="submit" id="searchQ" value="ابحث">
+                                    </div>
                                 </div>
+                                <table id="incomes-table" class="style1">
+                                    <thead>
+                                        <tr>
+                                            <th>اسم المريض</th>
+                                            <th>الدكتور</th>
+                                            <th>تاريخ الزيارة</th>
+                                            <th>السعر</th>
+                                            <th>التخفيض</th>
+                                            <th>السعر النهائي</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -95,7 +149,6 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="bootstrap/js/popper.min.js"></script>
@@ -106,19 +159,21 @@
     <script src="plugins/table/datatable/datatables.js"></script>
     <script src="plugins/table/datatable/respon.js"></script>
     <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
     <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
     <script src="plugins/select2/select2.min.js"></script>
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             App.init();
         });
     </script>
     <script src="js/const.js"></script>
+    <script src="js/login.js"></script>
     <script src="js/exe.js"></script>
     <script src="js/factory3.js"></script>
     <script src="views/today_incomes.js"></script>
