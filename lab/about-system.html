@@ -76,9 +76,66 @@
             <div class="layout-px-spacing">
                 <div class="page-header">
                 </div>
-
                 <div class="row layout-spacing page-body">
-                    
+                </div>
+                <div class="row layout-spacing">
+                    <div class="col-sm-12 col-md-8 col-lg-6 mx-auto modal-body page" id="active">
+                        <h2 class="text-center mb-4">تفعيل الكارت</h2>
+                        <h4 class="text-center mb-4">
+                            الرجاء ادخال رقم الكارت  لتفعيل لتفعيل النظام او لتمديد الاشتراك
+                        </h4>
+                        <div class="container mt-5">
+                            <div class="row justify-content-center">
+                              <div class="col-md-6">
+                                <div class="card card-custom">
+                                  <div class="card-body">
+                                    <div class="form-row">
+                                      <div class="col-md-12 mb-4 text-center">
+                                        <h4 class="card-type">ادخال رقم الكارت</h4>
+                                      </div>
+                                    </div>
+                                    <div class="form-row">
+                                      <div class="col-md-12 mb-4">
+                                        <div class="input-group mb-4">
+                                          <input type="number" class="form-control" name="code" id="code" placeholder="رقم الكارت">
+                                          <div class="input-group-append">
+                                            <button class="btn btn-primary btn-block" type="button" onclick="activeCart();">
+                                                <i class="fas fa-plus-circle mr-2"></i>
+                                                تفعيل
+                                              </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12 mb-4">
+                                            تاريخ النفاذ
+                                          <i class="far fa-calendar-alt mr-2"></i>
+                                          <span class="badge badge-secondary card-expiry">2024-05-07</span>
+                                        </div>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <h4 class="text-center mt-5">
+                            لمعرفة التفاصيل اكثر يرجى  يرجى التواصل مع الدعم الفني
+                        </h4>
+                    </div>
+                    <div class="col-sm-12 col-md-8 col-lg-6 mx-auto modal-body page" id="contact">
+                        <h2 class="text-center mb-4">الدعم الفني</h2>
+                        <h4 class="text-center mb-4">
+                            الدعم الفني يستقبل  الطلبات  لاتترد بارسال الرسائل  المتعلقة حول النظام
+
+                        </h4>
+                        <div class="row mt-4 justify-content-center">
+                            <div class="col-auto">
+                                <h4 class="text-center"> ارسل رسالة عبر الواتساب</h4>
+                                <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -117,10 +174,10 @@
     <script>
         $('.page-body').html(`
             <div class="row justify-content-center buttons m-auto">
-                <a href="${front_url}active.html" class="btn btn-action w-230 col-auto mr-30 mb-30 active" data-id="allPackage">
+                <a href="#" class="btn btn-action w-230 col-auto mr-30 mb-30 active" data-id="allPackage">
                     <i class="fas fa-folder"></i>  تفعيل النظام 
                 </a>
-                <a href="${front_url}contact-us.html" class="btn btn-action w-230 col-auto mr-30 mb-30" data-id="addPackage">
+                <a href="#" class="btn btn-action w-230 col-auto mr-30 mb-30" data-id="addPackage">
                     <i class="fas fa-folder-plus"></i> الدعم الفني  
                 </a>
                 <a onclick="getAsyncData()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="allTests">
@@ -131,6 +188,154 @@
                 </a>
             </div>
         `);
+        $(".action").click(function() {
+            $(".action").removeClass("active");
+            $(this).addClass("active");
+            var id = $(this).attr("data-id");
+            $(".page").hide();
+            $("#" + id).show();
+        });
+    </script>
+    <script>
+        updateExpireDate();
+        let formDate = new FormData();
+        formDate.append('lab', localStorage.getItem('lab_hash'));
+        fetch(`${base_url}LastDate/get`,{
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: formDate
+        }).then(res => res.json()).then(res => {
+            if(res.status == 200){
+                $('.card-expiry').html(res.data);
+            }else{
+                $('.card-expiry').html('لا يوجد اشتراك');
+            }
+        });
+        function activeCart(){
+            // check internet connection
+            if(!navigator.onLine){
+                swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    icon: "error",
+                    title: "لا يوجد اتصال بالانترنت",
+                });
+                return;
+            }
+            let code = $('#code').val();
+            if(code == ''){
+                swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    icon: "error",
+                    title: "الرجاء ادخال رقم الكارت",
+                });
+            }else{
+                let formData = new FormData();
+                formData.append('code', code);
+                let lab = localStorage.getItem('lab_hash');
+                let hash = localStorage.getItem('hash');
+                if(!lab || !hash){
+                    location.href = front_url + "login/login.html";
+                    return;
+                }
+                formData.append('lab',lab);
+                formData.append('hash',hash);
+                fetch(`http://umc.native-code-iq.com/app/index.php/ActivateLab/active`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    }
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    if(res.status==200){
+                        updateExpireDate();
+                        $('#code').val('');
+                        $('.card-expiry').html(res.data);
+                    }
+                    Swal.fire({
+                        title: res.message,
+                        icon: res.status == 200?'success':'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'موافق',
+                    })
+                })
+                .catch(err=>{
+                    swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 5000,
+                        icon: "error",
+                        title:err,
+                    })
+                })
+            }
+        }
+    </script>
+    <script>
+        function sendMessage(){
+            // check internet connection
+            if(!navigator.onLine){
+                swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    icon: "error",
+                    title: "لا يوجد اتصال بالانترنت",
+                });
+                return;
+            }
+            
+            let message = $('#message').val();
+            if(message == ''){
+                swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    icon: "error",
+                    title: "ادخل محتوي المشكلة",
+                });
+            }else{
+                let formData = new FormData();
+                formData.append('dec', message);
+                formData.append('name',localStorage.getItem('lab_name'));
+                formData.append('lab_id',localStorage.getItem('lab_hash'));
+                formData.append('user_name',localStorage.getItem('hash'));
+                fetch(`https://nativecodeiq.com/site/mail/index.php/Mob/opinion`, {
+                    method: 'POST',
+                    body: formData
+                }).then(res=>{
+                    swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    icon: "success",
+                    title: "تم ارسال المشكلة بنجاح",
+                })
+            }).catch(err=>{
+                    swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    icon: "error",
+                    title: "حدث خطأ ما",
+                })
+                })
+            }
+        }
     </script>
 </body>
 
