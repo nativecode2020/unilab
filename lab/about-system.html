@@ -77,6 +77,20 @@
                 <div class="page-header">
                 </div>
                 <div class="row layout-spacing page-body">
+                    <div class="row justify-content-center buttons m-auto">
+                        <a href="#" class="btn btn-action w-230 col-auto mr-30 mb-30 active" data-id="allPackage">
+                            <i class="fas fa-folder"></i>  تفعيل النظام 
+                        </a>
+                        <a href="#" class="btn btn-action w-230 col-auto mr-30 mb-30" data-id="addPackage">
+                            <i class="fas fa-folder-plus"></i> الدعم الفني  
+                        </a>
+                        <a onclick="getAsyncData()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="allTests">
+                            <i class="far fa-microscope"></i>  مزامنة 
+                        </a>
+                        <a onclick="updateSystem()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="addTest">
+                            <i class="far fa-microscope"></i> تحديث النظام  
+                        </a>
+                    </div>
                 </div>
                 <div class="row layout-spacing">
                     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto modal-body page"  id="active">
@@ -172,22 +186,6 @@
     <script src="js/exe.js"></script>
     <script src="js/factory3.js"></script>
     <script>
-        $('.page-body').html(`
-            <div class="row justify-content-center buttons m-auto">
-                <a href="#" class="btn btn-action w-230 col-auto mr-30 mb-30 active" data-id="allPackage">
-                    <i class="fas fa-folder"></i>  تفعيل النظام 
-                </a>
-                <a href="#" class="btn btn-action w-230 col-auto mr-30 mb-30" data-id="addPackage">
-                    <i class="fas fa-folder-plus"></i> الدعم الفني  
-                </a>
-                <a onclick="getAsyncData()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="allTests">
-                    <i class="far fa-microscope"></i>  مزامنة 
-                </a>
-                <a onclick="updateSystem()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="addTest">
-                    <i class="far fa-microscope"></i> تحديث النظام  
-                </a>
-            </div>
-        `);
         $(".action").click(function() {
             $(".action").removeClass("active");
             $(this).addClass("active");
@@ -321,7 +319,7 @@
                     position: "top-end",
                     showConfirmButton: false,
                     timer: 5000,
-                    icon: "success",12
+                    icon: "success",
                     title: "تم ارسال المشكلة بنجاح",
                 })
             }).catch(err=>{
