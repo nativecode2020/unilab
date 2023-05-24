@@ -47,7 +47,7 @@ class Reports_model extends CI_Model
         $this->db->order_by('v.visit_date', 'DESC');
         $this->db->order_by('v.id', 'DESC');
         if ($search != '') {
-            $this->db->like('name', $search);
+            $this->db->like('v.name', $search);
         }
         if ($startDate != '') {
             $this->db->where('visit_date >=', $startDate);

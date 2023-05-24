@@ -70,9 +70,48 @@ $(function () {
         dropdownParent: $('#user').parent(),
         width: "100%"
     });
+
+    // do function after 2 seconds
+    setTimeout(() => {
+        updateFooter();;
+    }, 500);
 });
 
 
 const search = () => {
     incomes.dataTable.ajax.reload();
+    updateFooter();
 };
+
+const updateFooter = () => {
+    let totalPriceTh = $('#incomes-table').find('tbody').find('tr').find('td:nth-child(6)');
+    let totalPrice = 0;
+    totalPriceTh.each(function () {
+        totalPrice += parseInt($(this).text());
+    });
+    $('#totalPrice').text(totalPrice);
+    // discount
+    let discountTh = $('#incomes-table').find('tbody').find('tr').find('td:nth-child(5)');
+    let discount = 0;
+    discountTh.each(function () {
+        discount += parseInt($(this).text());
+    });
+    $('#totalDiscount').text(discount);
+    // net price
+    let netPriceTh = $('#incomes-table').find('tbody').find('tr').find('td:nth-child(4)');
+    let netPrice = 0;
+    netPriceTh.each(function () {
+        netPrice += parseInt($(this).text());
+    });
+    $('#totalFinalPrice').text(netPrice);
+};
+
+$('#incomes-table').on('page.dt', function () {
+    updateFooter();
+});
+
+$('input[type="search"]').on('keydown', function () {
+    setTimeout(() => {
+        updateFooter();;
+    }, 500);
+});

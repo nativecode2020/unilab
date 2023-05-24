@@ -15,123 +15,124 @@
         5- results
 */
 /* root */
-:root{
+:root {
     --fontSize: 1.5rem;
     --tableBorderRadius: 8px;
     --blackColor: #000;
     --whiteColor: #fff;
-    --mainColor:#6F8EFC;
-    --secondaryColor:#3460FD;
-    --grayColor:rgba(0, 0, 0, 0.4);
+    --mainColor: #6F8EFC;
+    --secondaryColor: #3460FD;
+    --grayColor: rgba(0, 0, 0, 0.4);
     --errorColor: #F41717;
-    --fontFamily:'Avenir Arabic';
+    --fontFamily: 'Avenir Arabic';
 }
 
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-  }
-  
-  /* color of the scrollbar track */
-  ::-webkit-scrollbar-track {
+}
+
+/* color of the scrollbar track */
+::-webkit-scrollbar-track {
     background-color: #f1f1f1;
-  }
-  
-  /* color of the scrollbar handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* color of the scrollbar handle */
+::-webkit-scrollbar-thumb {
     background-color: var(--mainColor);
     border-radius: 20px;
-  }
-  
-  /* hover effect on the scrollbar handle */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* hover effect on the scrollbar handle */
+::-webkit-scrollbar-thumb:hover {
     background-color: var(--secondaryColor);
-  }
+}
 
 /* width */
-.w-230{
+.w-230 {
     width: 230px;
 }
 
 
 
 /* margin */
-.m-45{
+.m-45 {
     margin: 45px;
 }
 
-.mt-45{
+.mt-45 {
     margin-top: 45px;
 }
 
-.mr-45{
+.mr-45 {
     margin-right: 45px;
 }
 
-.mb-45{
+.mb-45 {
     margin-bottom: 45px;
 }
 
-.ml-45{
+.ml-45 {
     margin-left: 45px;
 }
 
-.m-48{
+.m-48 {
     margin: 48px;
 }
 
-.mt-48{
+.mt-48 {
     margin-top: 48px;
 }
 
-.mr-48{
+.mr-48 {
     margin-right: 48px;
 }
 
-.mb-48{
+.mb-48 {
     margin-bottom: 48px;
 }
 
-.ml-48{
+.ml-48 {
     margin-left: 48px;
 }
 
-.m-30{
+.m-30 {
     margin: 30px;
 }
 
-.mt-30{
+.mt-30 {
     margin-top: 30px;
 }
 
-.mr-30{
+.mr-30 {
     margin-right: 30px;
 }
 
-.mb-30{
+.mb-30 {
     margin-bottom: 30px;
 }
 
-.ml-30{
+.ml-30 {
     margin-left: 30px;
 }
 
-.m-15{
+.m-15 {
     margin: 15px;
 }
 
-.mt-15{
+.mt-15 {
     margin-top: 15px;
 }
 
-.mr-15{
+.mr-15 {
     margin-right: 15px;
 }
 
-.mb-15{
+.mb-15 {
     margin-bottom: 15px;
 }
-.ml-15{
+
+.ml-15 {
     margin-left: 15px;
 }
 
@@ -139,11 +140,12 @@
     font-family: Avenir Arabic;
     src: url('../assets/fonts/alfont_com_AlFont_com_AvenirArabic-Medium.otf');
 }
+
 /* 
     2- buttons
 */
 
-.btn-outline-print{
+.btn-outline-print {
     background: transparent;
     border: 0.5px solid rgba(0, 0, 0, 0.2);
     font-family: var(--fontFamily);
@@ -154,11 +156,11 @@
     color: var(--blackColor);
 }
 
-.btn-outline-print i{
+.btn-outline-print i {
     color: var(--secondaryColor);
 }
 
-.btn-add{
+.btn-add {
     background: var(--secondaryColor);
     border-radius: 4px;
     font-family: var(--fontFamily);
@@ -169,7 +171,7 @@
     color: var(--whiteColor);
 }
 
-.btn-delete{
+.btn-delete {
     background: var(--errorColor);
     font-family: var(--fontFamily);
     font-style: normal;
@@ -179,7 +181,7 @@
     color: var(--whiteColor);
 }
 
-.btn-main-add{
+.btn-main-add {
     background-color: var(--mainColor);
     color: var(--whiteColor);
     width: 239px;
@@ -194,12 +196,12 @@
     padding: 0 2.5rem !important;
 }
 
-.btn-main-add:hover{
+.btn-main-add:hover {
     background-color: var(--mainColor);
     color: var(--whiteColor);
 }
 
-.btn-action{
+.btn-action {
     background: var(--whiteColor);
     border: 0.5px solid rgba(52, 96, 253, 0.2);
     border-radius: var(--tableBorderRadius);
@@ -213,7 +215,7 @@
     opacity: 0.6;
 }
 
-.btn-action.active{
+.btn-action.active {
     background: var(--secondaryColor);
     color: var(--whiteColor);
     opacity: 1;
@@ -223,7 +225,7 @@
     3- tables
 */
 
-.table-title{
+.table-title {
     font-style: normal;
     font-weight: 500;
     font-size: 28px;
@@ -231,7 +233,7 @@
     color: var(--blackColor);
 }
 
-table.style1{
+table.style1 {
     border-spacing: 0;
     border-collapse: collapse;
     border-style: hidden;
@@ -242,7 +244,7 @@ table.style1{
 
 }
 
-table.style1 thead{
+table.style1 thead {
     width: 100% !important;
     background-color: var(--mainColor);
     color: var(--white);
@@ -254,7 +256,7 @@ table.style1 thead{
     line-height: 39px;
 }
 
-table.style1 tbody tr{
+table.style1 tbody tr {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 300;
@@ -267,7 +269,7 @@ table.style1 tbody tr{
 
 /* make button circle */
 table.style1 tbody tr td a.btn-action,
-table.information-2 tbody tr td a.btn-action{
+table.information-2 tbody tr td a.btn-action {
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -283,54 +285,76 @@ table.information-2 tbody tr td a.btn-action{
     /* pointer */
     cursor: pointer;
 }
+
 table.style1 tbody tr td a.btn-action:hover,
-table.information-2 tbody tr td a.btn-action:hover{
+table.information-2 tbody tr td a.btn-action:hover {
     background-color: var(--mainColor);
     color: var(--whiteColor);
 }
 
 table.style1 tbody tr td a.btn-action.delete:hover,
-table.information-2 tbody tr td a.btn-action.delete:hover{
+table.information-2 tbody tr td a.btn-action.delete:hover {
     background-color: var(--errorColor);
     color: var(--whiteColor);
 }
 
-table.style1 tbody tr:hover{
+table.style1 tbody tr:hover {
     color: var(--mainColor);
 }
 
-table.style1 tbody tr:hover a{
+table.style1 tbody tr:hover a {
     color: var(--mainColor);
 }
 
-table.style1 thead th{
+table.style1 thead th {
     text-align: center;
 }
 
 /* first th */
-table.style1 thead th:first-child{
+table.style1 thead th:first-child {
     border-top-right-radius: var(--tableBorderRadius);
     text-align: right;
 }
+
 /* last th */
-table.style1 thead th:last-child{
+table.style1 thead th:last-child {
     border-top-left-radius: var(--tableBorderRadius);
 }
 
 /* before last */
-table.style1 thead th:nth-last-child(2){
+table.style1 thead th:nth-last-child(2) {
     border-top-left-radius: var(--tableBorderRadius);
 }
 
-table.style1 tbody td{
+table.style1 tbody td {
     text-align: center;
 }
 
-table.style1 tbody td:first-child{
+table.style1 tbody td:first-child {
     border-top-right-radius: var(--tableBorderRadius);
     text-align: right;
 }
 
+
+table.style1 tfoot {
+    width: 100% !important;
+    background-color: var(--mainColor);
+    color: var(--white);
+    border-radius: 8px;
+    font-family: var(--fontFamily);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 39px;
+}
+
+table.style1 tfoot tr th:visible:last {
+    border-bottom-left-radius: var(--tableBorderRadius);
+}
+
+table.style1 tfoot tr th:visible:first {
+    border-bottom-right-radius: var(--tableBorderRadius);
+}
 
 div.dataTables_wrapper div.dataTables_info {
     border: none;
@@ -352,12 +376,12 @@ div.dataTables_wrapper div.dataTables_paginate {
 4- cards 
 */
 
-.custom-card{
+.custom-card {
     background: #FFFFFF;
     border-radius: 8px;
 }
 
-.custom-card-header .title{
+.custom-card-header .title {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 500;
@@ -370,7 +394,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 /* 
     start information table 1
 */
-table.information-1{
+table.information-1 {
     width: 100%;
     margin: 1rem 0;
     border-collapse: inherit;
@@ -379,7 +403,7 @@ table.information-1{
     border-radius: 10px;
 }
 
-table.information-1 tr td{
+table.information-1 tr td {
     font-family: var(--fontFamily);
     font-style: normal;
     font-size: 20px;
@@ -392,7 +416,7 @@ table.information-1 tr td{
 /* 
 first td in the table
 */
-table.information-1 td:first-child{
+table.information-1 td:first-child {
     font-weight: 500;
     border-left: 0.5px solid rgba(0, 0, 0, 0.2);
 }
@@ -400,7 +424,7 @@ table.information-1 td:first-child{
 /*
 second td in the table
 */
-table.information-1 td:nth-child(2){
+table.information-1 td:nth-child(2) {
     font-weight: 300;
     opacity: 0.7;
 }
@@ -408,7 +432,7 @@ table.information-1 td:nth-child(2){
 /*
 last td in the table
 */
-table.information-1 tr:last-child td{
+table.information-1 tr:last-child td {
     border-bottom: none;
 }
 
@@ -420,7 +444,7 @@ table.information-1 tr:last-child td{
     start information table 2
 */
 
-table.information-2{
+table.information-2 {
     width: 100%;
     margin: 1rem 0;
     border-collapse: inherit !important;
@@ -429,7 +453,7 @@ table.information-2{
     border-radius: 10px;
 }
 
-table.information-2 tr th{
+table.information-2 tr th {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 500;
@@ -442,7 +466,7 @@ table.information-2 tr th{
     text-align: center;
 }
 
-table.information-2 tr th sub{
+table.information-2 tr th sub {
     color: var(--secondaryColor);
     font-size: 14px;
 }
@@ -451,24 +475,26 @@ table.information-2 tr th sub{
     first th in the table
 */
 
-table.information-2 th:first-child{
+table.information-2 th:first-child {
     text-align: right;
 }
+
 /*
     last th in the table
 */
-table.information-2 tr th:last-child{
-    border-left: none;
-}
-table.information-2 th:nth-last-child(2){
+table.information-2 tr th:last-child {
     border-left: none;
 }
 
-table.information-2 tr:hover td{
+table.information-2 th:nth-last-child(2) {
+    border-left: none;
+}
+
+table.information-2 tr:hover td {
     color: var(--secondaryColor);
 }
 
-table.information-2 tr td{
+table.information-2 tr td {
     font-family: var(--fontFamily);
     font-style: normal;
     font-size: 20px;
@@ -483,35 +509,36 @@ table.information-2 tr td{
 /*
     first td in the table
 */
-table.information-2 td:first-child{
+table.information-2 td:first-child {
     text-align: right;
 }
+
 /* before last td  */
-table.information-2 td:nth-last-child(2){
+table.information-2 td:nth-last-child(2) {
     border-left: none;
 }
 
 /*
     last td in the table
 */
-table.information-2 tr td:last-child{
+table.information-2 tr td:last-child {
     border-left: none;
 }
 
 /*
     last tr in the table
 */
-table.information-2 tr:last-child td{
+table.information-2 tr:last-child td {
     border-bottom: none;
 }
 
-.custom-card-footer{
+.custom-card-footer {
     border-radius: 0 0 8px 8px;
     padding: 1rem 0;
 }
 
 
-.hr{
+.hr {
     border-bottom: 0.1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -522,7 +549,7 @@ table.information-2 tr:last-child td{
 /*
     5- add results
 */
-.results{
+.results {
     border: 0.5px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     font-family: var(--fontFamily);
@@ -530,7 +557,7 @@ table.information-2 tr:last-child td{
 }
 
 /* all results child */
-.results > *{
+.results>* {
     font-style: normal;
     font-weight: 500;
     font-size: 23px;
@@ -541,22 +568,22 @@ table.information-2 tr:last-child td{
     6- modal
 */
 
-.modal{
+.modal {
     /* background: #EAEDF2; */
     border-radius: 8px;
 }
 
-.modal-content{
+.modal-content {
     background: #FFFFFF;
     border-radius: 8px;
 }
 
 .modal-header {
-    border:none !important;
+    border: none !important;
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.2) !important;
 }
 
-.modal-header .modal-title{
+.modal-header .modal-title {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 800;
@@ -565,7 +592,7 @@ table.information-2 tr:last-child td{
     color: var(--secondaryColor);
 }
 
-.modal-body form label{
+.modal-body form label {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 300;
@@ -574,7 +601,7 @@ table.information-2 tr:last-child td{
     color: var(--blackColor);
 }
 
-.modal-body form input{
+.modal-body form input {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 300;
@@ -584,25 +611,25 @@ table.information-2 tr:last-child td{
     opacity: 1;
 }
 
-.modal-body form input:checked + label{
+.modal-body form input:checked+label {
     color: var(--secondaryColor);
 }
 
 .modal-footer {
     display: flex;
     justify-content: start;
-    border:none !important;
+    border: none !important;
 }
 
 /*
     Test Page
 */
 
-#test-form{
+#test-form {
     border-left: 0.5px solid rgba(0, 0, 0, 0.2);
 }
 
-#test-form .title{
+#test-form .title {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 500;
@@ -612,7 +639,7 @@ table.information-2 tr:last-child td{
     margin: 30px 0 43px;
 }
 
-#test-form label{
+#test-form label {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 300;
@@ -621,13 +648,13 @@ table.information-2 tr:last-child td{
     color: var(--blackColor);
 }
 
-#test-form label sub{
+#test-form label sub {
     color: var(--secondaryColor);
     font-size: 14px;
 }
 
 #test-form input,
-#test-form select{
+#test-form select {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 300;
@@ -639,8 +666,7 @@ table.information-2 tr:last-child td{
 
 #row-tests .form-check,
 #row-packages .form-check,
-#selected-tests .form-check
-{
+#selected-tests .form-check {
     background: var(--whiteColor);
     border: 0.5px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -649,7 +675,7 @@ table.information-2 tr:last-child td{
 
 #row-tests .form-check label,
 #row-packages .form-check label,
-#selected-tests .form-check label{
+#selected-tests .form-check label {
     margin: 13px 20px 10px 11px;
     font-family: var(--fontFamily);
     font-style: normal;
@@ -661,8 +687,7 @@ table.information-2 tr:last-child td{
 
 #row-tests .form-check input,
 #row-packages .form-check input,
-#selected-tests .form-check input
-{
+#selected-tests .form-check input {
     margin: 19px 0px 0;
 }
 
@@ -670,10 +695,9 @@ table.information-2 tr:last-child td{
 #row-tests .form-check:has(input:checked),
 #row-packages .form-check:has(input:checked),
 #selected-tests .form-check:has(input:checked),
-.items:has(input:checked)
-{
+.items:has(input:checked) {
     background-color: #ddf5f0 !important;
-    border-color:#ddf5f0 ;
+    border-color: #ddf5f0;
 }
 
 #row-tests .form-check:has(input:checked) label,
@@ -681,22 +705,19 @@ table.information-2 tr:last-child td{
 #selected-tests .form-check:has(input:checked) label,
 #row-tests .form-check:has(input:checked) input,
 #row-packages .form-check:has(input:checked) input,
-#selected-tests .form-check:has(input:checked) input
-{
+#selected-tests .form-check:has(input:checked) input {
     color: var(--whiteColor);
 }
 
 #row-tests .form-check:has(input:checked) input,
 #row-packages .form-check:has(input:checked) input,
-#selected-tests .form-check:has(input:checked) input
-{
+#selected-tests .form-check:has(input:checked) input {
     accent-color: var(--whiteColor);
 }
 
 #row-tests .test-col-header,
 #row-packages .test-col-header,
-#selected-tests .test-col-header
-{
+#selected-tests .test-col-header {
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 500;
@@ -707,9 +728,7 @@ table.information-2 tr:last-child td{
     margin: 38px 0 11px;
 }
 
-.border-print-hover{
+.border-print-hover {
     border: 7px dashed var(--color-orange);
     border-radius: 4px;
 }
-
-
