@@ -5,8 +5,7 @@ let getData = run(`SELECT name,birth,hash FROM lab_patient WHERE lab_id='${local
                    SELECT name,price,note,catigory_id as type, 
                           (select DISTINCT name from devices where id=lab_pakage_tests.lab_device_id) as device_name,
                           (select DISTINCT name from kits where id=lab_pakage_tests.kit_id) as kit_name,
-                          lab_package.hash as hash
-                   FROM lab_package 
+                          lab_package.hash as hash                   FROM lab_package 
                    inner join lab_pakage_tests on lab_package.hash=lab_pakage_tests.package_id 
                    inner join lab_test on lab_pakage_tests.test_id=lab_test.hash
                    WHERE lab_package.lab_id='${localStorage.getItem('lab_hash')}' and test_type <>'3';
@@ -544,11 +543,11 @@ class Visit extends Factory {
     createForm() {
         return `
         <div class="statbox widget box box-shadow bg-white main-visit-form">
-            <div class="widget-content widget-content-area m-auto">
-                <div class="modal-header d-flex justify-content-center">
+            <div class="widget-content widget-content-area m-auto"  style="width: 95%;">
+                <div class="modal-header" >
                     <h5 class="modal-title" id="${this.modalId}">اضافة مريض</h5>
                 </div>
-                <div class="modal-body style="width: 95%;"">
+                <div class="modal-body">
                     <form id="${this.formId}">
                         <div class="row justify-content-sm-between">
                         <div class="col-md-12  my-4">
@@ -652,18 +651,15 @@ class Visit extends Factory {
         </div>
     </div>
     <div class="statbox widget box box-shadow bg-white main-visit-tests mt-4">
-        <div class="widget-content widget-content-area m-auto h-100" >
-            <div class="modal-header d-flex justify-content-center">
-                <h3 class="modal-title">التحاليل</h3>
-            </div>
-            <div class="row justify-content-center h-100 m-auto" style="width: 95%;">
+        <div class="widget-content widget-content-area m-auto h-100"  style="width: 95%;">
+            <div class="row justify-content-center h-100">
                 <div class="col-12 mt-3">
                     <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
                 </div>
-                <div class="col-6" style="overflow-y: scroll; height:60%;">
+                <div class="col-6 h-75" style="overflow-y: scroll;">
                     <div class="row justify-content-between">
                         <div class=" col-md-12  my-3 px-5">
-                            <h3>التحاليل</h3>
+                            <h1>التحاليل</h1>
                         </div>
                         <div class="col-md-12">
                             <div class="searchable-container packages-search">
@@ -686,10 +682,10 @@ class Visit extends Factory {
                         </div>
                     </div>
                 </div>
-                <div class="col-6" style="overflow-y: scroll;height:60%;">
+                <div class="col-6 h-75" style="overflow-y: scroll;">
                     <div class="row justify-content-between">
                         <div class=" col-md-12  my-3 px-5">
-                            <h3>العروض</h3>
+                            <h1>العروض</h1>
                         </div>
                         <div class="col-md-12">
                             <div class="searchable-container packages-search">

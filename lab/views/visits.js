@@ -77,7 +77,6 @@ $(function () {
 
   $('.dt-buttons').addClass('btn-group');
   $('div.addCustomItem').html(`
-    <span class="table-title">قائمة الزيارات</span>
     <span class="h-22 ml-4 mt-1">الكل</span>
     <label class="d-inline switch s-icons s-outline s-outline-invoice-slider mx-3 mt-2">
         <input type="checkbox" name="currentDay" id="currentDay" checked="" onchange="lab_visits.dataTable.ajax.reload()">

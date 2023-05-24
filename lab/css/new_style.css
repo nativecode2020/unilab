@@ -581,6 +581,7 @@ table.information-2 tr:last-child td {
 .modal-header {
     border: none !important;
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.2) !important;
+    background-color: var(--mainColor);
 }
 
 .modal-header .modal-title {
@@ -589,7 +590,7 @@ table.information-2 tr:last-child td {
     font-weight: 800;
     font-size: 23px;
     line-height: 39px;
-    color: var(--secondaryColor);
+    color: var(--whiteColor);
 }
 
 .modal-body form label {

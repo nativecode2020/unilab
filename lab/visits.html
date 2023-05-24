@@ -95,8 +95,12 @@
                     <div class="col-lg-5">
                         <div class="statbox widget box box-shadow bg-white main-visit-list">
                             <div class="widget-content widget-content-area m-auto visits-tabble h-100"
-                                style="width: 95%;overflow-y: scroll;">
-                                <table id="lab_visits-table" class="style1">
+                                style="overflow-y: scroll;">
+                                <div class="modal-header d-flex justify-content-center">
+                                    <h5 class="modal-title">قائمة الزيارات</h5>
+                                </div>
+                                <div class="m-auto" style="width: 95%;">
+                                <table id="lab_visits-table" class="style1" >
                                     <thead>
                                         <tr>
                                             <th>المريض</th>
@@ -108,14 +112,17 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
+                            </div>
 
                         </div>
                         <div class="statbox widget box box-shadow bg-white mt-4 main-visit-selected-tests">
-                            <div class="widget-content widget-content-area m-auto h-100" style="width: 95%;">
-                                <h3 class="text-center my-3">التحاليل المختارة</h3>
-                                <div id="show_selected_tests" class="row" style="overflow-y: scroll; height:65%">
+                            <div class="widget-content widget-content-area m-auto h-100">
+                                <div class="modal-header d-flex justify-content-center">
+                                    <h3 class="modal-title">التحاليل المختارة</h3>
                                 </div>
-                                <div class="row h-25">
+                                <div id="show_selected_tests" class="row m-auto" style="overflow-y: scroll;width: 95%; height:65%">
+                                </div>
+                                <div class="row h-25 m-auto" style="width: 95%;">
                                     <div class="col-4">
                                         <!-- السعر -->
                                         <div class="form-group">
