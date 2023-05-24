@@ -117,17 +117,17 @@
     <script>
         $('.page-body').html(`
             <div class="row justify-content-center buttons m-auto">
+                <a href="${front_url}active.html" class="btn btn-action w-230 col-auto mr-30 mb-30 active" data-id="allPackage">
+                    <i class="fas fa-folder"></i>  تفعيل النظام 
+                </a>
+                <a href="${front_url}contact-us.html" class="btn btn-action w-230 col-auto mr-30 mb-30" data-id="addPackage">
+                    <i class="fas fa-folder-plus"></i> الدعم الفني  
+                </a>
                 <a onclick="getAsyncData()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="allTests">
                     <i class="far fa-microscope"></i>  مزامنة 
                 </a>
                 <a onclick="updateSystem()" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="addTest">
                     <i class="far fa-microscope"></i> تحديث النظام  
-                </a>
-                <a href="${front_url}active.html" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="allPackage">
-                    <i class="fas fa-folder"></i>  تفعيل النظام 
-                </a>
-                <a href="${front_url}contact-us.html" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="addPackage">
-                    <i class="fas fa-folder-plus"></i> الدعم الفني  
                 </a>
             </div>
         `);
