@@ -246,9 +246,8 @@ table.style1 {
 
 table.style1 thead {
     width: 100% !important;
-    background-color: var(--mainColor);
-    color: var(--white);
-    border-radius: 8px;
+    color: var(--mainColor);
+    border-radius: 10px;
     font-family: var(--fontFamily);
     font-style: normal;
     font-weight: 500;
@@ -582,6 +581,7 @@ table.information-2 tr:last-child td {
     border: none !important;
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.2) !important;
     background-color: var(--mainColor);
+    border-radius: 15px 15px 0 0;
 }
 
 .modal-header .modal-title {
@@ -732,4 +732,12 @@ table.information-2 tr:last-child td {
 .border-print-hover {
     border: 7px dashed var(--color-orange);
     border-radius: 4px;
+}
+
+.widget-content-area {
+    border-radius: 15px !important;
+}
+
+.widget {
+    border-radius: 15px !important;
 }
