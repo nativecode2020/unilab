@@ -845,7 +845,7 @@ function fireSwalConfirm(fun, ...args) {
     let condition = 1;
     Swal.fire({
         icon: "question",
-        html: 'هل انت متاكد من الحذف ',
+        html: 'هل انت متاكد من التحديث ',
         showDenyButton: false,
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
