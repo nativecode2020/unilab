@@ -873,7 +873,6 @@ function showInvoice(hash) {
     // workSpace.html('');
     // $('.action').removeClass('active');
     // $('#invoice_button').addClass('active');
-    run(`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`);
     let data = run(`select 
                         age,
                         lab_patient.name as name,

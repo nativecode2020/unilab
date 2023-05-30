@@ -15,8 +15,6 @@ const testTest = {
 
     data: {
         __init__(hash) {
-            run(`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`);
-
             let visit = run(this.getVisitQuery(hash)).result[0].query0[0];
             let patient = run(this.getPatientQuery(visit.visits_patient_id)).result[0].query0[0];
             return { visit, patient };
