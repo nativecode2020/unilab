@@ -83,6 +83,7 @@ class Tests_model extends CI_Model
         $devices = $this->getDevicesForLab($lab_id);
         $kits = $this->getKitsForLab($devices);
         $kits = implode(',', $kits);
+        $set_full = $this->db->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")->result_array();
         $query = $this->db->query(
             "
             SELECT

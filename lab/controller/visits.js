@@ -287,8 +287,8 @@ function showAddResult(hash, animate = true) {
     let workSpace = $('#work-sapce');
     workSpace.html('');
     let data = run(`select age,
-                          (select gender from lab_patient where hash=lab_visits.visits_patient_id) as gender,
-                          (select phone from lab_patient where hash=lab_visits.visits_patient_id) as phone,
+                          (select gender from lab_patient where hash=lab_visits.visits_patient_id limit 1) as gender,
+                          (select phone from lab_patient where hash=lab_visits.visits_patient_id limit 1) as phone,
                            name,
                            DATE(visit_date) as date,
                            TIME(visit_date) as time,
