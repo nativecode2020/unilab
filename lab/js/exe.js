@@ -217,7 +217,7 @@ async function updateSystem() {
     }
     const body = document.getElementsByTagName("body")[0];
     body.insertAdjacentHTML("beforeend", waitElement);
-    await fetch(`${base_url}LocalApi/pullUpdate`)
+    await fetch(`${base_url}pull/pull`)
         .then(response => response.json())
         .then(async data => {
             await new Promise(resolve => setTimeout(() => {

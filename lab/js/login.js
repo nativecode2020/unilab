@@ -46,7 +46,7 @@ const waitLoginElement = `<div id="alert_screen" class="alert_screen">
 </div>
 </div>`
 async function updateLoginSystem() {
-    await fetch(`${base_url}LocalApi/pullUpdate`)
+    await fetch(`${base_url}pull/pull`)
         .then(async response => {
             reloadScripts();
         })
