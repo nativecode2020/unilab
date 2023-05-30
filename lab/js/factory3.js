@@ -841,6 +841,46 @@ function fireSwalForDelete(fun, ...args) {
     });
 }
 
+function fireSwalConfirm(fun, ...args) {
+    let condition = 1;
+    Swal.fire({
+        icon: "question",
+        html: 'هل انت متاكد من الحذف ',
+        showDenyButton: false,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "نعم",
+        cancelButtonText: "كلا",
+        didClose: () => {
+            if (condition) {
+                Swal.close();
+                Swal.fire({
+                    title: "الرجاء الانتظار",
+                    text: "يتم الان اجراء العملية",
+                    timer: 100,
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                    willClose: () => {
+                        if (fun.call(this, ...args) != false) {
+
+                        }
+                    },
+                })
+            }
+        },
+    }).then((result) => {
+        if (result.isDismissed) {
+            condition = 0;
+        }
+    });
+}
+
 function setServerTable(id = 'table', endPoint, attrFun = () => { return {} }, columns = [], options = {}) {
     return $(`#${id}`).DataTable({
         'processing': true,
