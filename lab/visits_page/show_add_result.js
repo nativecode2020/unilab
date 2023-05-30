@@ -12,6 +12,8 @@ const showAddResult = {
     },
     data: {
         __init__(hash) {
+            run(`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`);
+
             let data = run(this.getVisitQuery(hash) + this.getVisitTestsQuery(hash));
             let visit = data.result[0].query0[0];
             let visitPackages = data.result[1].query1;
