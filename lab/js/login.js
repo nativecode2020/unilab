@@ -20,6 +20,12 @@ async function offlineLogin() {
                 localStorage.setItem("lab_name", result.lab_name);
                 localStorage.setItem("logo", result.logo);
                 await updateExpireDate();
+                let user_type = result.user_type;
+                if (user_type == "2" || user_type == "111") {
+                    location.href = `${__domain__}lab/index.html`;
+                } else {
+                    document.getElementById("message").innerHTML = "ليس لديك صلاحية دخول جرب مرة اخري";
+                }
             }
         },
         error: function () {
@@ -127,12 +133,7 @@ const login = async () => {
             location.href = `${__domain__}lab/index.html`;
         }
     } else {
-        await offlineLogin();
-        await updateExpireDate()
-        let user_type = localStorage.getItem("user_type");
-        if (user_type == "2" || user_type == "111") {
-            location.href = `${__domain__}lab/index.html`;
-        }
+        await offlineLogin()
     }
 
     document.getElementById("alert_screen").remove();
