@@ -1,5 +1,4 @@
 async function offlineLogin() {
-    console.log("offlineLogin");
     var username = $("#username").val();
     var password = $("#password").val();
     //console.log(username+" --  "+password);

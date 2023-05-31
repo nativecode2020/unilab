@@ -35,13 +35,13 @@ class Invoice extends CI_Controller
         $visit = $this->db->query(
             "select 
                 age,
-                (select gender from lab_patient where hash=lab_visits.visits_patient_id) as gender,
+                (select gender from lab_patient where hash=lab_visits.visits_patient_id limit 1) as gender,
                 name,
                 DATE(visit_date) as date,
                 TIME(visit_date) as time,
                 (select name from lab_doctor where hash=lab_visits.doctor_hash) as doctor,
                 hash
-            from lab_visits where hash = '$hash'"
+            from lab_visits where hash = '$hash' and isdeleted='0';"
         )->row_array();
         $visitTests = $this->db->query(
             "select 

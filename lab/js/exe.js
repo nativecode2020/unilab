@@ -305,22 +305,25 @@ async function updateExpireDate() {
             "Authorization": "Bearer " + localStorage.getItem("token")
         },
         body: formDate
-    }).then(res => res.json()).then(async (res) => {
-        let date = res.data
-        if (!date) {
-            console.log('no date');
-            return false;
-        }
-        let newFormDate = new FormData();
-        newFormDate.append('lab', localStorage.getItem('lab_hash'));
-        newFormDate.append('date', date);
-        await fetch(`${base_url}LocalApi/update_expire`, {
-            method: 'POST',
-            body: newFormDate
-        }).then(res => res.json()).then(res => {
-            console.log(res);
-        });
-    });
+    })
+        .then(res => res.json()).then(async (res) => {
+            let date = res.data
+            if (!date) {
+                return false;
+            }
+            let newFormDate = new FormData();
+            newFormDate.append('lab', localStorage.getItem('lab_hash'));
+            newFormDate.append('date', date);
+            await fetch(`${base_url}LocalApi/update_expire`, {
+                method: 'POST',
+                body: newFormDate
+            }).then(res => res.json()).then(res => {
+                console.log(res);
+            });
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
 
 function syncOnline() {
