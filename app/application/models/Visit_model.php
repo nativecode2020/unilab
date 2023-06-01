@@ -14,7 +14,6 @@ class Visit_model extends CI_Model
     public function record_count($search, $current = 0)
     {
         if ($this->migration->latest() === FALSE) {
-            show_error($this->migration->error_string());
         }
         $this->db->select('count(*) as count');
         $this->db->from('lab_visits');
