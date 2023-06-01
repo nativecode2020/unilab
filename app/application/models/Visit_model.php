@@ -8,6 +8,10 @@ class Visit_model extends CI_Model
         $this->load->database();
         $this->load->database('unimedica', TRUE);
         $this->load->library('session');
+        $this->load->library('migration');
+        if ($this->migration->latest() === FALSE) {
+            show_error($this->migration->error_string());
+        }
     }
 
     public function record_count($search, $current = 0)
