@@ -48,7 +48,7 @@ $(document).ready(function () {
         width: "100%"
     });
     $('.dt-buttons').addClass('btn-group');
-    $('div.addCustomItem').html(`<span class="table-title">قائمة التحاليل</span><button onclick="lab_test.newItem();" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> أضافة تحليل</button>`);
+    // $('div.addCustomItem').html(`<span class="table-title">قائمة التحاليل</span><button onclick="lab_test.newItem();" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> أضافة تحليل</button>`);
 
 })
 
