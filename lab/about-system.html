@@ -81,6 +81,10 @@
                         <a href="#" class="btn btn-action action w-230 col-auto mr-30 mb-30 active" data-id="active">
                             <i class="fas fa-folder"></i>  تفعيل النظام 
                         </a>
+                        <a href="#" class="btn btn-action action w-230 col-auto mr-30 mb-30 active" data-id="network">
+                            <i class="fas fa-network-wired"></i>
+                              ربط شبكي
+                        </a>
                         <a href="#" class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="contact">
                             <i class="fas fa-folder-plus"></i> الدعم الفني  
                         </a>
@@ -152,6 +156,21 @@
                         <div class="row mt-4 justify-content-center">
                             <div class="col-auto">
                                 <h4 class="text-center"> ارسل رسالة عبر الواتساب</h4>
+                                <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto modal-body page" style="display: none;" id="network">
+                        <h2 class="text-center mb-4">الربط الشبكي</h2>
+                        <div class="row mt-4 justify-content-center">
+                            <div class="col-auto network-wired">
+                                <h4>انسخ الرابط التالي للاتصال من جهاز اخر</h4>
+                                <h5>
+                                    يرجي مراعاة ربط الجهاز الاخر بنفس الشبكة (نفس الراوتر)
+                                </h5>
+                                <p class="netWork_link">
+                                    http://127.0.0.1:8007
+                                </p>
                                 <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300">
                             </div>
                         </div>
@@ -340,6 +359,10 @@
                 })
             }
         }
+    </script>
+    <script>
+        const networkElement = document.querySelector('.network-wired');
+        
     </script>
 </body>
 
