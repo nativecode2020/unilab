@@ -171,7 +171,9 @@
                                 <h3 class="netWork_link text-success">
                                     http://127.0.0.1:8007
                                 </h3>
-                                <!-- <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300" class="netWork_img"> -->
+                                <div id="netWork_img">
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -200,6 +202,7 @@
     <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
     <script src="plugins/select2/select2.min.js"></script>
     <script src="assets/js/scrollspyNav.js"></script>
+    <script src="assets/js/qrcode.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
         $(document).ready(function() {
@@ -362,11 +365,18 @@
     </script>
     <script>
         const networkLink = document.querySelector('.netWork_link');
-        const networkImg = document.querySelector('.netWork_img');
         fetch(`${base_url}Network`)
         .then(res => res.json())
         .then(res => {
             networkLink.innerHTML = res.url;
+            var qrcode = new QRCode("netWork_img", {
+                text: res.url,
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
         })
         .catch(err => {
             console.log(err);
