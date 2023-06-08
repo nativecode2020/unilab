@@ -38,7 +38,7 @@ class pull extends CI_Controller
             );
             die();
             // pull is done by check updating work not /updating/ or changed files
-        } else if ((strpos($output, 'Updating') !== false || (strpos($output, 'changed') !== false)) && strpos($output, 'fatal') == false) {
+        } else if ((strpos($output, 'Updating') !== false || (strpos($output, 'changed') !== false)) && strpos($output, 'fatal') == false || strpos($output, 'create mode') !== false) {
             echo json_encode(
                 array(
                     'status' => 200,
