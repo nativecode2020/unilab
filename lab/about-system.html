@@ -363,15 +363,15 @@
     <script>
         const networkLink = document.querySelector('.netWork_link');
         const networkImg = document.querySelector('.netWork_img');
-        const networkData = await fetch(`${base_url}Network`)
+        fetch(`${base_url}Network`)
         .then(res => res.json())
         .then(res => {
-            return res;
+            networkLink.innerHTML = res.url;
         })
         .catch(err => {
             console.log(err);
         })
-        networkLink.innerHTML = networkData.url;
+        
     </script>
 </body>
 
