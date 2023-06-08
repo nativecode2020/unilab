@@ -168,10 +168,10 @@
                                 <h5>
                                     يرجي مراعاة ربط الجهاز الاخر بنفس الشبكة (نفس الراوتر)
                                 </h5>
-                                <p class="netWork_link">
+                                <h3 class="netWork_link">
                                     http://127.0.0.1:8007
-                                </p>
-                                <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300">
+                                </h3>
+                                <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300" class="netWork_img">
                             </div>
                         </div>
                     </div>
@@ -361,8 +361,13 @@
         }
     </script>
     <script>
-        const networkElement = document.querySelector('.network-wired');
-        
+        const networkLink = document.querySelector('.netWork_link');
+        const networkImg = document.querySelector('.netWork_img');
+        const link = fetch('${base_url}Network')
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+        });
     </script>
 </body>
 
