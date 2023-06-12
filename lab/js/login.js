@@ -69,9 +69,19 @@ const login = async () => {
     let userCount = await fetch(`${base_url}LocalApi/getUserCount`, {
         method: 'POST',
         body: dataForm
-    }).then(res => res.json()).then(res => res.data);
-
-    if (userCount == 0) {
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.status == false) {
+            message.innerHTML = "يرجى التاكد من اسم الحساب او الرمز السري";
+            document.getElementById("alert_screen").remove();
+            return 100;
+        }
+        return res.data
+    });
+    if(userCount == 100){
+        return;
+    }else if (userCount == 0) {
         await clean_db();
         addAlert("تم اكمال 20 % من عملية تنزيل البيانات");
         // Check if the user is online
