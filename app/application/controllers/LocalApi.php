@@ -12,6 +12,12 @@ class LocalApi extends CI_Controller
         header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description, Authorization');
         // json response
         header('Content-Type: application/json');
+        $this->load->database(); // Load the database library
+        if ($this->db->conn_id) {
+            echo "Database connection is successful!";
+        } else {
+            echo "Failed to connect to the database.";
+        }
     }
 
     public function getUserCount()
