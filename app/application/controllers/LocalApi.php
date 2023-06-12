@@ -8,7 +8,7 @@ class LocalApi extends CI_Controller
         parent::__construct();
         $this->load->model('User_model');
         $this->load->database(); // Load the database library
-        if ($this->db->conn_id) {
+        if (!$this->db->conn_id) {
             echo json_encode(
                 array(
                     'status' => false,
