@@ -73,13 +73,13 @@ const login = async () => {
     .then(res => res.json())
     .then(res => {
         if (res.status == false) {
-            message.innerHTML = "يرجى التاكد من اسم الحساب او الرمز السري";
+            message.innerHTML = "هناك مشكلة في الاتصال بقاعدة البيانات";
             document.getElementById("alert_screen").remove();
             return 100;
         }
         return res.data
     }).catch(e=>{
-        message.innerHTML = "يرجى التاكد من اسم الحساب او الرمز السري";
+        message.innerHTML = "الرجاء تشغيل السيرفر اولا";
         document.getElementById("alert_screen").remove();
         return 100;
     });
