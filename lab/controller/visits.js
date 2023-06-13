@@ -300,6 +300,7 @@ function showAddResult(hash, animate = true) {
                         option_test as options,
                         test_name as name,
                         kit_id,
+                        (select name from kits where kits.id =kit_id) as kit_name,
                         (select name from lab_test_units where hash=lab_pakage_tests.unit) as unit_name,
                         (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
                         unit,
@@ -545,6 +546,7 @@ function manageRange(reference) {
 
 function generateFieldForTest(test, resultList, reference, testType) {
     console.log(test);
+    console.log(reference)
     return `
     <div class="col-md-11 results test-normalTests mb-15 ">
         <div class="row align-items-center">
