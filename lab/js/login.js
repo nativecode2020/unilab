@@ -90,7 +90,7 @@ const login = async () => {
         addAlert("تم اكمال 20 % من عملية تنزيل البيانات");
         // Check if the user is online
         if (!navigator.onLine) {
-            message.innerHTML = "يرجى التاكد من الاتصال بلانترنت";
+            message.innerHTML = "الرجاء التاكد من الاتصال بالانترنت";
             document.getElementById("alert_screen").remove();
             return;
         }
@@ -98,7 +98,11 @@ const login = async () => {
         let res = await fetch(`http://umc.native-code-iq.com/app/index.php/Offline/login`, {
             method: 'POST',
             body: dataForm
-        }).then(res => res.json());
+        }).then(res => res.json()).catch(e => {
+            message.innerHTML = "الرجاء التاكد من الاتصال بالانترنت";
+            document.getElementById("alert_screen").remove();
+            return;
+        });
         addAlert("تم اكمال 40 % من عملية تنزيل البيانات");
         if (res.status == false) {
             message.innerHTML = "يرجى التاكد من اسم الحساب او الرمز السري";
