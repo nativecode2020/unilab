@@ -79,7 +79,7 @@ const login = async () => {
         }
         return res.data
     }).catch(e=>{
-        message.innerHTML = "الرجاء تشغيل السيرفر اولا";
+        message.innerHTML = "الرجاء تشغيل البرنامج الموجود على سطح المكتب";
         document.getElementById("alert_screen").remove();
         return 100;
     });
