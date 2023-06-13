@@ -551,9 +551,9 @@ function generateFieldForTest(test, resultList, reference, testType) {
     return `
     <div class="col-md-11 results test-normalTests mb-15 ">
         <div class="row align-items-center">
-            <div class="col-md-3 h6">
+            <div class="col-md-3 h6 text-center">
                 ${testType == 'normal' ? `${test?.kit_name??''}`:''}
-                ${testType == 'normal' ? `${test?.device_name??''}`:''}
+                (${testType == 'normal' ? `${test?.device_name??''}`:''})
             </div>
             
             <div class="col-md-6">
