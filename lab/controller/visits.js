@@ -300,6 +300,7 @@ function showAddResult(hash, animate = true) {
                         option_test as options,
                         test_name as name,
                         kit_id,
+                        (select name from devices where devices.id=lab_device_id) as device_name,
                         (select name from kits where kits.id =kit_id) as kit_name,
                         (select name from lab_test_units where hash=lab_pakage_tests.unit) as unit_name,
                         (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
@@ -552,6 +553,7 @@ function generateFieldForTest(test, resultList, reference, testType) {
         <div class="row align-items-center">
             <div class="col-md-3 h6">
                 ${testType == 'normal' ? `${test?.kit_name??''}`:''}
+                ${testType == 'normal' ? `${test?.device_name??''}`:''}
             </div>
             
             <div class="col-md-6">
