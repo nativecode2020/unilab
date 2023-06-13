@@ -546,14 +546,12 @@ function manageRange(reference) {
 */}
 
 function generateFieldForTest(test, resultList, reference, testType) {
-    console.log(test);
-    console.log(reference)
     return `
     <div class="col-md-11 results test-normalTests mb-15 ">
         <div class="row align-items-center">
             <div class="col-md-3 h6 text-center">
-                ${testType == 'normal' ? `${test?.kit_name??''}`:''}
-                (${testType == 'normal' ? `${test?.device_name??''}`:''})
+                ${testType == 'normal' ? `${test?.kit_name??'NO KIT'}`:''}
+                ${testType == 'normal' ? `(${test?.device_name??'NO DEVICE'})`:''}
             </div>
             
             <div class="col-md-6">
