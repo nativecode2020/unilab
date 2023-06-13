@@ -78,6 +78,10 @@ const login = async () => {
             return 100;
         }
         return res.data
+    }).catch(e=>{
+        message.innerHTML = "يرجى التاكد من اسم الحساب او الرمز السري";
+        document.getElementById("alert_screen").remove();
+        return 100;
     });
     if(userCount == 100){
         return;
