@@ -1974,11 +1974,10 @@ function showResult(visit, visitTests) {
 }
 
 function getCurrentInvoice(ele) {
-  if (!ele) {
-    console.log("here");
+  // if no ele get first button
+  if (ele?.length ?? 0 == 0) {
     ele = $("#invoice-tests-buttons").find("button").first();
   }
-  console.log($("#invoice-tests-buttons").find("button").first());
   console.log(ele);
   let elementId = ele.attr("id");
   localStorage.setItem("currentInvoice", elementId);
