@@ -15,9 +15,7 @@ class Network extends CI_Controller
         $computerName = gethostname();
         $port = 8807;
         $url = "http://" . $computerName . ":" . $port;
-        $serverName = $_SERVER['SERVER_NAME'];
-        $serverPort = $_SERVER['SERVER_PORT'];
-        $ip = "http://" . $serverName . ":" . $serverPort;
+        $ip = "http://" . $_SERVER['SERVER_ADDR'] . ":" . $port;
         echo json_encode(
             array(
                 "computerName" => $computerName,
