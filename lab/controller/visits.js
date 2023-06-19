@@ -682,12 +682,15 @@ function generateFieldForTest(test, resultList, reference, testType) {
                                   .map((option) => {
                                     console.log(
                                       resultList?.[test.name],
+                                      "<>",
                                       reference?.[0]?.right_options[0],
+                                      "<>",
                                       option,
+                                      "<>",
                                       resultList?.[test.name] ==
                                         reference?.[0]?.right_options[0]
                                         ? "selected"
-                                        : ""
+                                        : "NOT SELECTED"
                                     );
                                     return `<option value="${option}" ${
                                       resultList?.[test.name]
