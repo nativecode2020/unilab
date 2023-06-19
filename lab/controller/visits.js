@@ -1977,7 +1977,7 @@ function getCurrentInvoice(ele) {
   if (!ele) {
     ele = $("#invoice-tests-buttons").find("button").first();
   }
-  console.log($("#invoice-tests-buttons").find("button"));
+  console.log($("#invoice-tests-buttons").find("button")).first();
   console.log(ele);
   let elementId = ele.attr("id");
   localStorage.setItem("currentInvoice", elementId);
