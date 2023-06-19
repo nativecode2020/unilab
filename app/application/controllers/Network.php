@@ -15,14 +15,14 @@ class Network extends CI_Controller
         $computerName = gethostname();
         $port = 8807;
         $url = "http://" . $computerName . ":" . $port;
-        $ip = $_SERVER['SERVER_ADDR'];
-        $ipUrl = "http://" . $ip . ":" . $port;
+        $serverName = $_SERVER['SERVER_NAME'];
+        $serverPort = $_SERVER['SERVER_PORT'];
+        $ip = "http://" . $serverName . ":" . $serverPort;
         echo json_encode(
             array(
                 "computerName" => $computerName,
                 "url" => $url,
-                "ip" => $ip,
-                "ipUrl" => $ipUrl
+                "ip" => $ip
             ),
             JSON_UNESCAPED_UNICODE
         );
