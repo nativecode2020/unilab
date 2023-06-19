@@ -2467,7 +2467,7 @@ function printAfterSelect() {
   // loop over all invoices
   __invoces.each(function (index, invoice) {
     // invice clone
-    if (invoice.querySelector(".tester").childElementCount >= 1) {
+    if (invoice.querySelector(".tester").childElementCount <= 1) {
       return;
     }
     let clone = $(invoice).clone();
