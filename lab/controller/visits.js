@@ -688,7 +688,7 @@ function generateFieldForTest(test, resultList, reference, testType) {
                                       option,
                                       "<>",
                                       resultList?.[test.name] ==
-                                        reference?.[0]?.right_options[0]
+                                        option
                                         ? "selected"
                                         : "NOT SELECTED"
                                     );
