@@ -436,16 +436,7 @@ function showAddResult(hash, animate = true) {
   $(`.test-${$(".book-result").first().attr("id").split("-")[1]}`).show();
   $("#print-invoice-result").attr("onclick", `printOneInvoice()`);
   $("#print-all-invoice-result").attr("onclick", `printAll();`);
-  getCurrentInvoice(
-    $(
-      `#${
-        localStorage.getItem("currentInvoice") == "undefined" ||
-        !localStorage.getItem("currentInvoice")
-          ? $("#invoice-tests-buttons").find("button").first().attr("id")
-          : localStorage.getItem("currentInvoice")
-      }`
-    )
-  );
+  getCurrentInvoice($(`#${localStorage.getItem("currentInvoice")}`));
   $(".results select").each(function () {
     $(this).select2({
       width: "100%",
@@ -1983,6 +1974,9 @@ function showResult(visit, visitTests) {
 }
 
 function getCurrentInvoice(ele) {
+  if (!ele) {
+    $("#invoice-tests-buttons").find("button").first().attr("id");
+  }
   console.log(ele);
   let elementId = ele.attr("id");
   localStorage.setItem("currentInvoice", elementId);
