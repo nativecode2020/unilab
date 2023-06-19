@@ -1975,6 +1975,7 @@ function showResult(visit, visitTests) {
 
 function getCurrentInvoice(ele) {
   if (!ele) {
+    console.log("here");
     ele = $("#invoice-tests-buttons").find("button").first();
   }
   console.log($("#invoice-tests-buttons").find("button").first());
