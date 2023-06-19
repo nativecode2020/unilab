@@ -680,18 +680,11 @@ function generateFieldForTest(test, resultList, reference, testType) {
                               }" name="${test.name}">
                                 ${reference?.[0]?.options
                                   .map((option) => {
-                                    console.log(
-                                      "<>",
-                                      reference?.[0]?.right_options,
-                                      "</>"
-                                    );
                                     return `<option value="${option}" ${
-                                      resultList?.[test.name]
-                                        ? reference?.[0]?.right_options[0] ==
-                                          option
-                                          ? "selected"
-                                          : ""
-                                        : ""
+                                        resultList?.[test.name] ? 
+                                        resultList?.[test.name] == option ?
+                                        'selected' : ''
+                                        :  refrence?.[0]?.right_options.includes(option) ? 'selected' : ''
                                     }>${option}</option>`;
                                   })
                                   .join("")}
