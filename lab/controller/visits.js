@@ -1974,10 +1974,7 @@ function showResult(visit, visitTests) {
 }
 
 function getCurrentInvoice(ele) {
-  // if no ele get first button
-  console.log(ele.length, ele?.length == 0);
-  if (ele && (ele.length == 0)) {
-    console.log("no ele");
+  if (ele && ele.length == 0) {
     ele = $("#invoice-tests-buttons").find("button").first();
   }
   let elementId = ele.attr("id");
