@@ -2460,7 +2460,6 @@ function downloadPdf() {
 
 function printAfterSelect() {
   let __invoces = $("#work-sapce .book-result");
-  console.log(__invoces);
   // modal body
   let body = $("#print-dialog .modal-body");
   // empty body
@@ -2468,6 +2467,9 @@ function printAfterSelect() {
   // loop over all invoices
   __invoces.each(function (index, invoice) {
     // invice clone
+    if (invoice.querySelector(".tester").childElementCount >= 1) {
+      return;
+    }
     let clone = $(invoice).clone();
     let id = clone.attr("id");
     clone.removeAttr("id");
