@@ -681,10 +681,15 @@ function generateFieldForTest(test, resultList, reference, testType) {
                                 ${reference?.[0]?.options
                                   .map((option) => {
                                     return `<option value="${option}" ${
-                                        resultList?.[test.name] ? 
-                                        resultList?.[test.name] == option ?
-                                        'selected' : ''
-                                        :  refrence?.[0]?.right_options.includes(option) ? 'selected' : ''
+                                      resultList?.[test.name]
+                                        ? resultList?.[test.name] == option
+                                          ? "selected"
+                                          : ""
+                                        : refrence?.[0]?.right_options.includes(
+                                            option
+                                          )
+                                        ? "selected"
+                                        : ""
                                     }>${option}</option>`;
                                   })
                                   .join("")}
@@ -2455,6 +2460,7 @@ function downloadPdf() {
 
 function printAfterSelect() {
   let __invoces = $("#work-sapce .book-result");
+  console.log(__invoces);
   // modal body
   let body = $("#print-dialog .modal-body");
   // empty body
