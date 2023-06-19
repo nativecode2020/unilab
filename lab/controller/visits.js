@@ -678,18 +678,28 @@ function generateFieldForTest(test, resultList, reference, testType) {
                             ? `<select class="form-control result" id="result_${
                                 test.hash
                               }" name="${test.name}">
-                ${reference?.[0]?.options
-                  .map((option) => {
-                    return `<option value="${option}" ${
-                      resultList?.[test.name]
-                        ? reference?.[0]?.right_options[0] == option
-                          ? "selected"
-                          : ""
-                        : ""
-                    }>${option}</option>`;
-                  })
-                  .join("")}
-            </select>`
+                                ${reference?.[0]?.options
+                                  .map((option) => {
+                                    console.log(
+                                      resultList?.[test.name],
+                                      reference?.[0]?.right_options[0],
+                                      option,
+                                      resultList?.[test.name] ==
+                                        reference?.[0]?.right_options[0]
+                                        ? "selected"
+                                        : ""
+                                    );
+                                    return `<option value="${option}" ${
+                                      resultList?.[test.name]
+                                        ? reference?.[0]?.right_options[0] ==
+                                          option
+                                          ? "selected"
+                                          : ""
+                                        : ""
+                                    }>${option}</option>`;
+                                  })
+                                  .join("")}
+                              </select>`
                             : `<input type="number" class="form-control result text-center" id="result_${
                                 test.hash
                               }" name="${
