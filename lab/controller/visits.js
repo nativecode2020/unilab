@@ -753,100 +753,107 @@ function addNormalResult(
 }
 
 function addStrcResult(component, test, result_test, resultForm) {
-  // add button to open modal
   let type = "";
   let results = {};
-  resultForm.push(`
+
+  let componentMarkup = component
+    .map((comp) => {
+      let typeDiff = comp.type != type;
+      type = typeDiff ? comp.type : type;
+      let input = "";
+      let editable = "";
+      let result = result_test?.[comp.name] ?? "";
+
+      if (comp?.calc) {
+        comp.eq = comp.eq.map((item) => {
+          if (!isNaN(item)) {
+            return item;
+          } else if (!calcOperator.includes(item)) {
+            item = result_test?.[item] ?? 0;
+          }
+          return item;
+        });
+
+        try {
+          result = eval(comp.eq.join("")).toFixed(2);
+          result = isFinite(result) ? (isNaN(result) ? "*" : result) : "*";
+        } catch (e) {
+          result = 0;
+        }
+
+        results[comp.name] = result;
+        editable = "readonly";
+      }
+
+      switch (comp.result) {
+        case "result":
+          input = `
+          <select class="form-control result text-center h6" ${editable} name="${
+            comp.name
+          }" id="result_${test.hash}" ${comp.multi === true ? "multiple" : ""}>
+            ${comp.options
+              .map((option, index) => {
+                let selected = "";
+
+                if (!result) {
+                  selected = index == 0 ? "selected" : "";
+                } else {
+                  selected = result == option ? "selected" : "";
+
+                  if (comp.multi === true) {
+                    selected = result.includes(option) ? "selected" : "";
+                  }
+                }
+
+                return `<option value="${option}" ${selected}>${option}</option>`;
+              })
+              .join("")}
+          </select>`;
+          break;
+        case "number":
+          input = `
+          <input type="number" class="form-control result text-center" ${editable} id="result_${test.hash}" name="${comp.name}"
+            placeholder="ادخل النتيجة" value="${result}">`;
+          break;
+        default:
+          input = `
+          <input type="text" class="form-control result text-center" ${editable} value="${result}" id="result_${test.hash}" name="${comp.name}"
+            placeholder="ادخل النتيجة">`;
+          break;
+      }
+
+      let typeMarkup = typeDiff
+        ? `<div class="col-md-12 text-center">${comp.type}</div>`
+        : "";
+
+      return `
+      ${typeMarkup}
+      <div class="${
+        comp.type == "Notes" ? "col-md-12" : "col-md-4"
+      } mb-3 text-left">
+        <label for="result" class="w-100 text-center text-black font-weight-bold h5">${
+          comp.name
+        } ${comp.unit ? `(${comp.unit})` : ""}</label>
+        ${input}
+      </div>`;
+    })
+    .join("");
+
+  let resultFormMarkup = `
     <div class="col-md-11 results test-${test.name
       .replace(/\s/g, "")
       .replace(/[^a-zA-Z0-9]/g, "")} mb-15 ">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-md-12">
-                <h4 class="text-center mt-15">${test.name}</h4>
-            </div>
-    ${component
-      .map((comp) => {
-        let typeDiff = comp.type != type;
-        type = typeDiff ? comp.type : type;
-        let input = "";
-        let editable = "";
-        let result = result_test?.[comp.name] ?? "";
-        if (comp?.calc) {
-          comp.eq = comp.eq.map((item) => {
-            if (!isNaN(item)) {
-              return item;
-            } else if (!calcOperator.includes(item)) {
-              item = result_test?.[item] ?? 0;
-            }
-            return item;
-          });
-          try {
-            result = eval(comp.eq.join("")).toFixed(2);
-            result = isFinite(result) ? (isNaN(result) ? "*" : result) : "*";
-          } catch (e) {
-            result = 0;
-          }
-          results[comp.name] = result;
-          editable = "readonly";
-        }
-        switch (comp.result) {
-          case "result":
-            input = `
-                <select class="form-control result text-center h6" ${editable} name="${
-              comp.name
-            }" id="result_${test.hash}" ${
-              comp.multi === true ? "multiple" : ""
-            }>
-                ${comp.options
-                  .map((option, index) => {
-                    let selected = "";
-                    if (!result) {
-                      selected = index == 0 ? "selected" : "";
-                    } else {
-                      selected = result == option ? "selected" : "";
-                      // check if multiple options
-                      if (comp.multi === true) {
-                        selected = result.includes(option) ? "selected" : "";
-                      }
-                    }
-                    return `<option value="${option}" ${selected}>${option}</option>`;
-                  })
-                  .join("")}
-                </select>`;
-            break;
-          case "nubmer":
-            input = `<input type="number" class="form-control result text-center" ${editable}
-                     id="result_${test.hash}"  name="${comp.name}"
-                     placeholder="ادخل النتيجة"
-                     value="${result}">`;
-            break;
-          default:
-            input = `<input type="text" class="form-control result text-center" ${editable}
-                     value="${result}"
-                     id="result_${test.hash}" name="${comp.name}"
-                    placeholder="ادخل النتيجة">`;
-            break;
-        }
-        return `
-        ${
-          typeDiff
-            ? `<div class="col-md-12 text-center">${comp.type}</div>`
-            : ""
-        }
-        <div class="${
-          comp.type == "Notes" ? "col-md-12" : "col-md-4"
-        } mb-3 text-left">
-            <label for="result" class="w-100 text-center text-black font-weight-bold h5">${
-              comp.name
-            } ${comp.unit ? `(${comp.unit})` : ""}</label>
-            ${input}
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-12">
+          <h4 class="text-center mt-15">${test.name}</h4>
         </div>
-        `;
-      })
-      .join("")}
-        </div>
+        ${componentMarkup}
+      </div>
     </div>
-    `);
+  `;
+
+  resultForm.push(resultFormMarkup);
+
   return resultForm;
 }
 
