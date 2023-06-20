@@ -331,15 +331,16 @@ function showAddResult(hash, animate = true) {
   let workSpace = $("#work-sapce");
   workSpace.html("");
   let data = run(`select age,
-                          (select gender from lab_patient where hash=lab_visits.visits_patient_id limit 1) as gender,
-                          (select phone from lab_patient where hash=lab_visits.visits_patient_id limit 1) as phone,
-                           name,
+                           gender,
+                           phone,
+                           lab_patient.name,
                            DATE(visit_date) as date,
                            TIME(visit_date) as time,
                            (select name from lab_doctor where hash=lab_visits.doctor_hash) as doctor,
                            visits_patient_id as patient,
-                           hash
-                        from lab_visits where hash = '${hash}';
+                           lab_visits.hash
+                        from lab_visits where lab_visits.hash = '${hash}'
+                        inner join lab_patient on lab_patient.hash = lab_visits.visits_patient_id;
                     select 
                         option_test as options,
                         test_name as name,
