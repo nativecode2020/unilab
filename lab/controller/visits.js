@@ -791,26 +791,23 @@ function addStrcResult(component, test, result_test, resultForm) {
           let htmlOptions = "";
           let multi = comp.multi === true ? "multiple" : "";
           // check if options is array or object
-          if (typeof options == "object") {
-          } else if (typeof options == "array") {
-            htmlOptions = options
-              .map((option, index) => {
-                let selected = "";
+          htmlOptions = options
+            .map((option, index) => {
+              let selected = "";
 
-                if (!result) {
-                  selected = index == 0 ? "selected" : "";
-                } else {
-                  selected = result == option ? "selected" : "";
+              if (!result) {
+                selected = index == 0 ? "selected" : "";
+              } else {
+                selected = result == option ? "selected" : "";
 
-                  if (comp.multi === true) {
-                    selected = result.includes(option) ? "selected" : "";
-                  }
+                if (comp.multi === true) {
+                  selected = result.includes(option) ? "selected" : "";
                 }
+              }
 
-                return `<option value="${option}" ${selected}>${option}</option>`;
-              })
-              .join("");
-          }
+              return `<option value="${option}" ${selected}>${option}</option>`;
+            })
+            .join("");
           input = `
           <select 
             class="form-control result text-center h6"
