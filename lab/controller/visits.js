@@ -799,10 +799,10 @@ function addStrcResult(component, test, result_test, resultForm) {
                 if (!result) {
                   selected = index == 0 ? "selected" : "";
                 } else {
-                  selected = result == option ? "selected" : "";
-
                   if (comp.multi === true) {
                     selected = result.includes(option) ? "selected" : "";
+                  } else {
+                    selected = result == option ? "selected" : "";
                   }
                 }
 
@@ -817,10 +817,10 @@ function addStrcResult(component, test, result_test, resultForm) {
                 if (!result) {
                   selected = key == 0 ? "selected" : "";
                 } else {
-                  selected = result == key ? "selected" : "";
-
                   if (comp.multi === true) {
                     selected = result.includes(key) ? "selected" : "";
+                  } else {
+                    selected = result == key ? "selected" : "";
                   }
                 }
 
