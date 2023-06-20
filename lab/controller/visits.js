@@ -787,11 +787,13 @@ function addStrcResult(component, test, result_test, resultForm) {
 
       switch (comp.result) {
         case "result":
-          input = `
-          <select class="form-control result text-center h6" ${editable} name="${
-            comp.name
-          }" id="result_${test.hash}" ${comp.multi === true ? "multiple" : ""}>
-            ${comp.options
+          let options = comp.options;
+          let htmlOptions = "";
+          let multi = comp.multi === true ? "multiple" : "";
+          // check if options is array or object
+          if (typeof options == "object") {
+          } else if (typeof options == "array") {
+            htmlOptions = options
               .map((option, index) => {
                 let selected = "";
 
@@ -807,18 +809,40 @@ function addStrcResult(component, test, result_test, resultForm) {
 
                 return `<option value="${option}" ${selected}>${option}</option>`;
               })
-              .join("")}
+              .join("");
+          }
+          input = `
+          <select 
+            class="form-control result text-center h6"
+            ${editable} 
+            name="${comp.name}"
+            id="result_${test.hash}" 
+            ${multi}
+          >
+            ${htmlOptions}
           </select>`;
           break;
         case "number":
-          input = `
-          <input type="number" class="form-control result text-center" ${editable} id="result_${test.hash}" name="${comp.name}"
-            placeholder="ادخل النتيجة" value="${result}">`;
+          input = `<input 
+                      type="number" 
+                      class="form-control result text-center" 
+                      ${editable} 
+                      id="result_${test.hash}" 
+                      name="${comp.name}"
+                      placeholder="ادخل النتيجة" 
+                      value="${result}"
+                  >`;
           break;
         default:
-          input = `
-          <input type="text" class="form-control result text-center" ${editable} value="${result}" id="result_${test.hash}" name="${comp.name}"
-            placeholder="ادخل النتيجة">`;
+          input = `<input 
+                      type="text" 
+                      class="form-control result text-center" 
+                      ${editable} 
+                      value="${result}" 
+                      id="result_${test.hash}" 
+                      name="${comp.name}"
+                      placeholder="ادخل النتيجة"
+                  >`;
           break;
       }
 
