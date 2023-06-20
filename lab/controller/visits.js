@@ -1886,7 +1886,7 @@ function showResult(visit, visitTests) {
             unit: reference?.unit ?? "",
             flag: flag,
             font: font,
-            history: {}, // his 
+            history: his
           });
         }
       }
@@ -2395,12 +2395,12 @@ function manageTestType(type, test = {}) {
                     ${normal}
                     </p>
                 </div>
-                ${""
-                //   history != "" && history && history != "{}"
-                //     ? `<div class="testprice col-12 h5 text-right text-info">
-                //     ${history} ${history != "" ? unit : ""}
-                // </div>`
-                //     : ""
+                ${
+                  history != "" && history && history != "{}"
+                    ? `<div class="testprice col-12 h5 text-right text-info">
+                    ${history} ${history != "" ? unit : ""}
+                </div>`
+                    : ""
                 }
             </div>
             `;
@@ -2412,7 +2412,7 @@ function manageTestType(type, test = {}) {
                     </div>
                     <div class="testresult col-4 justify-content-center">
                         <p class="w-75 text-center ${color}">${result.toString()} </p>
-                        <span class="text-info">${history.toString()}</span>
+                        <!--<span class="text-info">${history.toString()}</span>-->
                     </div>
                     <div class="testname col-2" >
                         <p>${unit ?? ""}</p>
@@ -2430,7 +2430,7 @@ function manageTestType(type, test = {}) {
                     </div>
                     <div class="testresult col-6 justify-content-center">
                         <p class="w-75 text-center ${color}">${result.toString()} </p>
-                        <span class="text-info">${history.toString()}</span>
+                        <!--<span class="text-info">${history.toString()}</span>-->
                     </div>
                     <div class="testnormal col-2">
                         <p>${normal}</p>
