@@ -712,36 +712,45 @@ function addNormalResult(
   testType = "normal"
 ) {
   let reference = component?.[0]?.reference ?? [];
+
   if (result_test?.options !== undefined) {
     reference = result_test.options;
   } else {
     if (reference) {
-      // filter with kit
+      // تصفية باستخدام الكيت
       reference = filterWithKit(reference, test.kit_id);
-      // filter with unit
-      if (options.type != "calc") {
+
+      // تصفية باستخدام الوحدة
+      if (options.type !== "calc") {
         reference = filterWithUnit(reference, test.unit);
       }
-      // filter with age
+
+      // تصفية باستخدام العمر
       reference = filterWithAge(reference, visit.age, "عام");
-      // filter with gender
+
+      // تصفية باستخدام الجنس
       reference = filterWithGender(reference, visit.gender);
     }
   }
+
   __VISIT_TESTS__.push({ hash: test.hash, options: reference });
-  if ((options.result = "number")) {
+
+  if (options.result === "number") {
     resultForm.push(
       generateFieldForTest(test, result_test, reference, testType)
     );
   } else if (0) {
+    // قم بإضافة شيء آخر هنا إذا لزم الأمر
   }
+
   return resultForm;
 }
 
 function addStrcResult(component, test, result_test, resultForm) {
-  // add button to open modal
+  // إضافة زر لفتح النموذج المنبثق
   let type = "";
   let results = {};
+
   resultForm.push(`
     <div class="col-md-11 results test-${test.name
       .replace(/\s/g, "")
@@ -752,11 +761,12 @@ function addStrcResult(component, test, result_test, resultForm) {
             </div>
     ${component
       .map((comp) => {
-        let typeDiff = comp.type != type;
+        let typeDiff = comp.type !== type;
         type = typeDiff ? comp.type : type;
         let input = "";
         let editable = "";
         let result = result_test?.[comp.name] ?? "";
+
         if (comp?.calc) {
           comp.eq = comp.eq.map((item) => {
             if (!isNaN(item)) {
@@ -766,15 +776,18 @@ function addStrcResult(component, test, result_test, resultForm) {
             }
             return item;
           });
+
           try {
             result = eval(comp.eq.join("")).toFixed(2);
             result = isFinite(result) ? (isNaN(result) ? "*" : result) : "*";
           } catch (e) {
             result = 0;
           }
+
           results[comp.name] = result;
           editable = "readonly";
         }
+
         switch (comp.result) {
           case "result":
             input = `
@@ -786,33 +799,31 @@ function addStrcResult(component, test, result_test, resultForm) {
                 ${comp.options
                   .map((option, index) => {
                     let selected = "";
+
                     if (!result) {
-                      selected = index == 0 ? "selected" : "";
+                      selected = index === 0 ? "selected" : "";
                     } else {
                       selected = result == option ? "selected" : "";
-                      // check if multiple options
+
+                      // التحقق في حالة وجود خيارات متعددة
                       if (comp.multi === true) {
                         selected = result.includes(option) ? "selected" : "";
                       }
                     }
+
                     return `<option value="${option}" ${selected}>${option}</option>`;
                   })
                   .join("")}
                 </select>`;
             break;
-          case "nubmer":
-            input = `<input type="number" class="form-control result text-center" ${editable}
-                     id="result_${test.hash}"  name="${comp.name}"
-                     placeholder="ادخل النتيجة"
-                     value="${result}">`;
+          case "number":
+            input = `<input type="number" class="form-control result text-center" ${editable} id="result_${test.hash}"  name="${comp.name}" placeholder="ادخل النتيجة" value="${result}">`;
             break;
           default:
-            input = `<input type="text" class="form-control result text-center" ${editable}
-                     value="${result}"
-                     id="result_${test.hash}" name="${comp.name}"
-                    placeholder="ادخل النتيجة">`;
+            input = `<input type="text" class="form-control result text-center" ${editable} value="${result}" id="result_${test.hash}" name="${comp.name}" placeholder="ادخل النتيجة">`;
             break;
         }
+
         return `
         ${
           typeDiff
@@ -820,7 +831,7 @@ function addStrcResult(component, test, result_test, resultForm) {
             : ""
         }
         <div class="${
-          comp.type == "Notes" ? "col-md-12" : "col-md-4"
+          comp.type === "Notes" ? "col-md-12" : "col-md-4"
         } mb-3 text-left">
             <label for="result" class="w-100 text-center text-black font-weight-bold h5">${
               comp.name
@@ -833,23 +844,35 @@ function addStrcResult(component, test, result_test, resultForm) {
         </div>
     </div>
     `);
+
   return resultForm;
 }
 
 function addResult(visit, visitTests) {
-  // clear __VISIT_TESTS__
+  // مسح قائمة __VISIT_TESTS__
   __VISIT_TESTS__ = [];
+
+  // فرز visitTests بناءً على الفئة
   visitTests = visitTests.sort((a, b) => {
-    let type = JSON.parse(a?.options)?.type;
-    //if (type == "calc") return 1;
+    let typeA = JSON.parse(a?.options)?.type;
+    let typeB = JSON.parse(b?.options)?.type;
+
+    if (typeA == "calc") return 1;
+    if (typeB == "calc") return -1;
+
     return a.category > b.category ? 1 : -1;
   });
+
   let resultForm = [
-    `<div class="col-11 my-3">
-    <input type="text" class="w-100 form-control search-class test-normalTests results product-search br-30" id="input-search-3" placeholder="ابحث عن التحليل" onkeyup="addTestSearch(this)">
-</div>`,
+    `
+    <div class="col-11 my-3">
+      <input type="text" class="w-100 form-control search-class test-normalTests results product-search br-30" id="input-search-3" placeholder="ابحث عن التحليل" onkeyup="addTestSearch(this)">
+    </div>
+    `,
   ];
+
   let result_tests = [];
+
   visitTests.forEach((test) => {
     let options = JSON.parse(test.options);
     let { type, component, value } = options;
@@ -858,12 +881,14 @@ function addResult(visit, visitTests) {
       name: test.name,
       result: result_test?.[test.name],
     });
+
     if (type == "calc") {
-      let result = 0;
+      let finalResult = {};
+
       try {
         let equ = value
           .map((item) => {
-            // check if item is number
+            // التحقق إذا كان العنصر رقمًا
             if (!isNaN(item)) {
               return item;
             } else if (!calcOperator.includes(item)) {
@@ -876,9 +901,9 @@ function addResult(visit, visitTests) {
           ?.join("");
 
         let result = eval(equ) ?? 0;
-        // to fixed 2
-        result = result.toFixed(1);
-        finalResult = {};
+        // قصر النتيجة إلى 2 أرقام بعد العلامة العشرية
+        result = result.toFixed(2);
+
         finalResult[test.name] = result;
         finalResult["checked"] = result_test["checked"];
       } catch (error) {
@@ -907,11 +932,13 @@ function addResult(visit, visitTests) {
       );
     }
   });
+
   return resultForm.join("");
 }
 
 function saveResult(hash) {
   let result = {};
+
   $(".result").each(function () {
     let name = $(this).attr("name");
     let value = $(this).val();
@@ -919,18 +946,24 @@ function saveResult(hash) {
     let checked =
       $(`input[type=checkbox][name=check_normal_${_hash_}]`).is(":checked") ??
       undefined;
+
     if (result[_hash_] == undefined) {
       result[_hash_] = {};
     }
+
     result[_hash_][name] = value;
+
     if (checked != undefined) {
       result[_hash_]["checked"] = checked;
     }
+
     let __visit_test__ = __VISIT_TESTS__.find((test) => test.hash == _hash_);
+
     if (__visit_test__ != undefined) {
       result[_hash_]["options"] = __visit_test__.options;
     }
   });
+
   let query = Object.entries(result)
     .map(([hash, result]) => {
       if (hash == "") {
@@ -941,21 +974,22 @@ function saveResult(hash) {
       )}' where hash = '${hash}'`;
     })
     .join(";");
+
   run(query);
   showAddResult(hash, false);
   // $(`#${localStorage.getItem('currentInvoice')}`).click();
 }
 
 function focusInput(type) {
-  let list = $(`input.result:visible`);
-  let index = list.index($(`input.result:visible:focus`));
+  let list = $("input.result:visible");
+  let index = list.index($("input.result:visible:focus"));
+
   if (type == "add") {
     index = (index + 1) % list.length;
   } else {
-    index = (index - 1) % list.length;
+    index = (index - 1 + list.length) % list.length;
   }
-  index = index == -1 ? list.length - 1 : index;
-  // list.eq(index).focus();
+
   // focus with animation
   $("html, body").animate(
     {
