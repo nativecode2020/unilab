@@ -2395,12 +2395,12 @@ function manageTestType(type, test = {}) {
                     ${normal}
                     </p>
                 </div>
-                ${
-                  history != "" && history && history != "{}"
-                    ? `<div class="testprice col-12 h5 text-right text-info">
-                    ${history} ${history != "" ? unit : ""}
-                </div>`
-                    : ""
+                ${""
+                //   history != "" && history && history != "{}"
+                //     ? `<div class="testprice col-12 h5 text-right text-info">
+                //     ${history} ${history != "" ? unit : ""}
+                // </div>`
+                //     : ""
                 }
             </div>
             `;
