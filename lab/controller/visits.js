@@ -621,103 +621,99 @@ function manageRange(reference) {
 }
 
 function generateFieldForTest(test, resultList, reference, testType) {
-  let resultField;
-
-  if (testType === "normal") {
-    const kitName = test?.kit_name ?? "NO KIT";
-    const deviceName = test?.device_name ?? "NO DEVICE";
-
-    resultField = `
-      <div class="col-md-3 h6 text-center">
-        ${kitName}<br>
-        (${deviceName})
-      </div>
-    `;
-  } else {
-    resultField = "";
-  }
-
-  const checked = resultList?.checked ?? true;
-  const toggleTestFunction =
-    testType === "normal" ? "toggleTest.call(this)" : "";
-
-  const referenceResult =
-    reference?.[0]?.result === "result"
-      ? reference?.[0]?.right_options
-      : manageRange(reference);
-
-  const unitName =
-    reference?.[0]?.result?.trim() === "result"
-      ? ""
-      : testType === "normal"
-      ? test?.unit_name ?? ""
-      : units.find((item) => reference?.[0]?.unit === item?.hash)?.name ?? "";
-
-  const resultInput =
-    reference?.[0]?.result?.trim() === "result"
-      ? `
-      <select class="form-control result" id="result_${test.hash}" name="${
-          test.name
-        }">
-        ${reference?.[0]?.options
-          .map((option) => {
-            const isSelected = resultList?.[test.name]
-              ? resultList[test.name] === option
-              : reference?.[0]?.right_options.includes(option);
-            return `<option value="${option}" ${
-              isSelected ? "selected" : ""
-            }>${option}</option>`;
-          })
-          .join("")}
-      </select>
-    `
-      : `
-      <input type="number" class="form-control result text-center" id="result_${
-        test.hash
-      }" name="${test.name}" placeholder="ادخل النتيجة" ${
-          testType === "calc" ? "readonly" : ""
-        } value="${
-          testType === "normal" ? resultList?.[test.name] : resultList
-        }">
-    `;
-
   return `
-    <div class="col-md-11 results test-normalTests mb-15">
-      <div class="row align-items-center">
-        ${resultField}
-        <div class="col-md-6">
-          <h4 class="text-center mt-15">${test.name}</h4>
-        </div>
-        <div class="col-md-3 text-center">
-          <label class="text-dark">عرض النتيجة</label>
-          <br>
-          <label class="d-inline switch s-icons s-outline s-outline-invoice-slider mr-5">
-            <input type="checkbox" id="check_normal_${
-              test.hash
-            }" name="check_normal_${test.hash}" ${
-    checked ? "checked" : ""
-  } onclick="${toggleTestFunction}">
-            <span class="slider invoice-slider"></span>
-          </label>
-        </div>
-        <div class="col-md-7 mb-3 text-center" dir="ltr">
-          <label for="range" class="text-dark">المرجع</label>
-          <h5 class="text-center">${referenceResult}</h5>
-        </div>
-        <div class="col-md-5 mb-3">
-          <div class="row">
-            <div class="col-md-4 text-center d-flex justify-content-center align-items-end">
-              <span>${unitName}</span>
+    <div class="col-md-11 results test-normalTests mb-15 ">
+        <div class="row align-items-center">
+            <div class="col-md-3 h6 text-center">
+                ${testType == "normal" ? `${test?.kit_name ?? "NO KIT"}` : ""}
+                <br>
+                ${
+                  testType == "normal"
+                    ? `(${test?.device_name ?? "NO DEVICE"})`
+                    : ""
+                }
             </div>
-            <div class="col-md-8">
-              <label for="result" class="w-100 text-center text-dark">النتيجة</label>
-              ${resultInput}
+            
+            <div class="col-md-6">
+                <h4 class="text-center mt-15">${test.name}</h4>
             </div>
-          </div>
+            <div class="col-md-3 text-center">
+                <label class="text-dark">عرض النتيجة</label>
+                <br>
+                <label class="d-inline switch s-icons s-outline s-outline-invoice-slider mr-5">
+                    <input type="checkbox" id="check_normal_${
+                      test.hash
+                    }" name="check_normal_${test.hash}" ${
+    resultList?.checked ?? true ? "checked" : ""
+  } onclick="toggleTest.call(this)">
+                    <span class="slider invoice-slider"></span>
+                </label>
+            </div>
+            <div class="col-md-7 mb-3 text-center" dir="ltr">
+                <label for="range" class="text-dark">المرجع</label>
+                <h5 class="text-center">${
+                  reference?.[0]?.result == "result"
+                    ? reference?.[0]?.right_options
+                    : manageRange(reference)
+                }</h5>
+            </div>
+           
+            <div class="col-md-5 mb-3">
+                <div class="row">
+                    <div class="col-md-4 text-center d-flex justify-content-center align-items-end">
+                        <span class="">${
+                          reference?.[0]?.result?.trim() == "result"
+                            ? ""
+                            : testType == "normal"
+                            ? test?.unit_name ?? ""
+                            : units.find(
+                                (item) => reference?.[0]?.unit == item?.hash
+                              )?.name ?? ""
+                        }</span>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="result" class="w-100 text-center text-dark">النتيجة</label>
+                        ${
+                          reference?.[0]?.result?.trim() == "result"
+                            ? `<select class="form-control result" id="result_${
+                                test.hash
+                              }" name="${test.name}">
+                                ${reference?.[0]?.options
+                                  .map((option) => {
+                                    return `<option value="${option}" ${
+                                      resultList?.[test.name]
+                                        ? resultList?.[test.name] == option
+                                          ? "selected"
+                                          : ""
+                                        : refrence?.[0]?.right_options.includes(
+                                            option
+                                          )
+                                        ? "selected"
+                                        : ""
+                                    }>${option}</option>`;
+                                  })
+                                  .join("")}
+                              </select>`
+                            : `<input type="number" class="form-control result text-center" id="result_${
+                                test.hash
+                              }" name="${
+                                test.name
+                              }" placeholder="ادخل النتيجة" ${
+                                testType == "calc" ? "readonly" : ""
+                              } value="${
+                                testType == "normal"
+                                  ? resultList?.[test.name]
+                                  : resultList
+                              }">`
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+            
         </div>
-      </div>
     </div>
-  `;
+`;
 }
 
 function addNormalResult(
@@ -730,37 +726,29 @@ function addNormalResult(
   testType = "normal"
 ) {
   let reference = component?.[0]?.reference ?? [];
-
   if (result_test?.options !== undefined) {
     reference = result_test.options;
   } else {
     if (reference) {
-      // Filter with kit
+      // filter with kit
       reference = filterWithKit(reference, test.kit_id);
-
-      // Filter with unit
-      if (options.type !== "calc") {
+      // filter with unit
+      if (options.type != "calc") {
         reference = filterWithUnit(reference, test.unit);
       }
-
-      // Filter with age
+      // filter with age
       reference = filterWithAge(reference, visit.age, "عام");
-
-      // Filter with gender
+      // filter with gender
       reference = filterWithGender(reference, visit.gender);
     }
   }
-
   __VISIT_TESTS__.push({ hash: test.hash, options: reference });
-
-  if (options.result === "number") {
+  if ((options.result = "number")) {
     resultForm.push(
       generateFieldForTest(test, result_test, reference, testType)
     );
   } else if (0) {
-    // Add any additional conditions here if needed
   }
-
   return resultForm;
 }
 
