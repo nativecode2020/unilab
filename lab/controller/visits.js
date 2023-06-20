@@ -1886,7 +1886,7 @@ function showResult(visit, visitTests) {
             unit: reference?.unit ?? "",
             flag: flag,
             font: font,
-            history: his,
+            history: {}, // his 
           });
         }
       }
