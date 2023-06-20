@@ -339,8 +339,9 @@ function showAddResult(hash, animate = true) {
                            (select name from lab_doctor where hash=lab_visits.doctor_hash) as doctor,
                            visits_patient_id as patient,
                            lab_visits.hash
-                        from lab_visits where lab_visits.hash = '${hash}'
-                        inner join lab_patient on lab_patient.hash = lab_visits.visits_patient_id;
+                        from lab_visits 
+                        inner join lab_patient on lab_patient.hash = lab_visits.visits_patient_id
+                        where lab_visits.hash = '${hash}';
                     select 
                         option_test as options,
                         test_name as name,
