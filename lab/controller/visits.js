@@ -621,99 +621,103 @@ function manageRange(reference) {
 }
 
 function generateFieldForTest(test, resultList, reference, testType) {
+  let resultField;
+
+  if (testType === "normal") {
+    const kitName = test?.kit_name ?? "NO KIT";
+    const deviceName = test?.device_name ?? "NO DEVICE";
+
+    resultField = `
+      <div class="col-md-3 h6 text-center">
+        ${kitName}<br>
+        (${deviceName})
+      </div>
+    `;
+  } else {
+    resultField = "";
+  }
+
+  const checked = resultList?.checked ?? true;
+  const toggleTestFunction =
+    testType === "normal" ? "toggleTest.call(this)" : "";
+
+  const referenceResult =
+    reference?.[0]?.result === "result"
+      ? reference?.[0]?.right_options
+      : manageRange(reference);
+
+  const unitName =
+    reference?.[0]?.result?.trim() === "result"
+      ? ""
+      : testType === "normal"
+      ? test?.unit_name ?? ""
+      : units.find((item) => reference?.[0]?.unit === item?.hash)?.name ?? "";
+
+  const resultInput =
+    reference?.[0]?.result?.trim() === "result"
+      ? `
+      <select class="form-control result" id="result_${test.hash}" name="${
+          test.name
+        }">
+        ${reference?.[0]?.options
+          .map((option) => {
+            const isSelected = resultList?.[test.name]
+              ? resultList[test.name] === option
+              : reference?.[0]?.right_options.includes(option);
+            return `<option value="${option}" ${
+              isSelected ? "selected" : ""
+            }>${option}</option>`;
+          })
+          .join("")}
+      </select>
+    `
+      : `
+      <input type="number" class="form-control result text-center" id="result_${
+        test.hash
+      }" name="${test.name}" placeholder="ادخل النتيجة" ${
+          testType === "calc" ? "readonly" : ""
+        } value="${
+          testType === "normal" ? resultList?.[test.name] : resultList
+        }">
+    `;
+
   return `
-    <div class="col-md-11 results test-normalTests mb-15 ">
-        <div class="row align-items-center">
-            <div class="col-md-3 h6 text-center">
-                ${testType == "normal" ? `${test?.kit_name ?? "NO KIT"}` : ""}
-                <br>
-                ${
-                  testType == "normal"
-                    ? `(${test?.device_name ?? "NO DEVICE"})`
-                    : ""
-                }
-            </div>
-            
-            <div class="col-md-6">
-                <h4 class="text-center mt-15">${test.name}</h4>
-            </div>
-            <div class="col-md-3 text-center">
-                <label class="text-dark">عرض النتيجة</label>
-                <br>
-                <label class="d-inline switch s-icons s-outline s-outline-invoice-slider mr-5">
-                    <input type="checkbox" id="check_normal_${
-                      test.hash
-                    }" name="check_normal_${test.hash}" ${
-    resultList?.checked ?? true ? "checked" : ""
-  } onclick="toggleTest.call(this)">
-                    <span class="slider invoice-slider"></span>
-                </label>
-            </div>
-            <div class="col-md-7 mb-3 text-center" dir="ltr">
-                <label for="range" class="text-dark">المرجع</label>
-                <h5 class="text-center">${
-                  reference?.[0]?.result == "result"
-                    ? reference?.[0]?.right_options
-                    : manageRange(reference)
-                }</h5>
-            </div>
-           
-            <div class="col-md-5 mb-3">
-                <div class="row">
-                    <div class="col-md-4 text-center d-flex justify-content-center align-items-end">
-                        <span class="">${
-                          reference?.[0]?.result?.trim() == "result"
-                            ? ""
-                            : testType == "normal"
-                            ? test?.unit_name ?? ""
-                            : units.find(
-                                (item) => reference?.[0]?.unit == item?.hash
-                              )?.name ?? ""
-                        }</span>
-                    </div>
-                    <div class="col-md-8">
-                        <label for="result" class="w-100 text-center text-dark">النتيجة</label>
-                        ${
-                          reference?.[0]?.result?.trim() == "result"
-                            ? `<select class="form-control result" id="result_${
-                                test.hash
-                              }" name="${test.name}">
-                                ${reference?.[0]?.options
-                                  .map((option) => {
-                                    return `<option value="${option}" ${
-                                      resultList?.[test.name]
-                                        ? resultList?.[test.name] == option
-                                          ? "selected"
-                                          : ""
-                                        : refrence?.[0]?.right_options.includes(
-                                            option
-                                          )
-                                        ? "selected"
-                                        : ""
-                                    }>${option}</option>`;
-                                  })
-                                  .join("")}
-                              </select>`
-                            : `<input type="number" class="form-control result text-center" id="result_${
-                                test.hash
-                              }" name="${
-                                test.name
-                              }" placeholder="ادخل النتيجة" ${
-                                testType == "calc" ? "readonly" : ""
-                              } value="${
-                                testType == "normal"
-                                  ? resultList?.[test.name]
-                                  : resultList
-                              }">`
-                        }
-                        
-                    </div>
-                </div>
-            </div>
-            
+    <div class="col-md-11 results test-normalTests mb-15">
+      <div class="row align-items-center">
+        ${resultField}
+        <div class="col-md-6">
+          <h4 class="text-center mt-15">${test.name}</h4>
         </div>
+        <div class="col-md-3 text-center">
+          <label class="text-dark">عرض النتيجة</label>
+          <br>
+          <label class="d-inline switch s-icons s-outline s-outline-invoice-slider mr-5">
+            <input type="checkbox" id="check_normal_${
+              test.hash
+            }" name="check_normal_${test.hash}" ${
+    checked ? "checked" : ""
+  } onclick="${toggleTestFunction}">
+            <span class="slider invoice-slider"></span>
+          </label>
+        </div>
+        <div class="col-md-7 mb-3 text-center" dir="ltr">
+          <label for="range" class="text-dark">المرجع</label>
+          <h5 class="text-center">${referenceResult}</h5>
+        </div>
+        <div class="col-md-5 mb-3">
+          <div class="row">
+            <div class="col-md-4 text-center d-flex justify-content-center align-items-end">
+              <span>${unitName}</span>
+            </div>
+            <div class="col-md-8">
+              <label for="result" class="w-100 text-center text-dark">النتيجة</label>
+              ${resultInput}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-`;
+  `;
 }
 
 function addNormalResult(
@@ -726,29 +730,37 @@ function addNormalResult(
   testType = "normal"
 ) {
   let reference = component?.[0]?.reference ?? [];
+
   if (result_test?.options !== undefined) {
     reference = result_test.options;
   } else {
     if (reference) {
-      // filter with kit
+      // Filter with kit
       reference = filterWithKit(reference, test.kit_id);
-      // filter with unit
-      if (options.type != "calc") {
+
+      // Filter with unit
+      if (options.type !== "calc") {
         reference = filterWithUnit(reference, test.unit);
       }
-      // filter with age
+
+      // Filter with age
       reference = filterWithAge(reference, visit.age, "عام");
-      // filter with gender
+
+      // Filter with gender
       reference = filterWithGender(reference, visit.gender);
     }
   }
+
   __VISIT_TESTS__.push({ hash: test.hash, options: reference });
-  if ((options.result = "number")) {
+
+  if (options.result === "number") {
     resultForm.push(
       generateFieldForTest(test, result_test, reference, testType)
     );
   } else if (0) {
+    // Add any additional conditions here if needed
   }
+
   return resultForm;
 }
 
@@ -850,82 +862,107 @@ function addStrcResult(component, test, result_test, resultForm) {
   return resultForm;
 }
 
-function addResult(visit, visitTests) {
-  // clear __VISIT_TESTS__
-  __VISIT_TESTS__ = [];
-  visitTests = visitTests.sort((a, b) => {
-    let type = JSON.parse(a?.options)?.type;
-    //if (type == "calc") return 1;
-    return a.category > b.category ? 1 : -1;
-  });
-  let resultForm = [
-    `<div class="col-11 my-3">
-    <input type="text" class="w-100 form-control search-class test-normalTests results product-search br-30" id="input-search-3" placeholder="ابحث عن التحليل" onkeyup="addTestSearch(this)">
-</div>`,
-  ];
-  let result_tests = [];
-  visitTests.forEach((test) => {
-    let options = JSON.parse(test.options);
-    let { type, component, value } = options;
-    let result_test = JSON.parse(test.result_test);
-    result_tests.push({
-      name: test.name,
-      result: result_test?.[test.name],
-    });
-    if (type == "calc") {
-      let result = 0;
-      try {
-        let equ = value
-          .map((item) => {
-            // check if item is number
-            if (!isNaN(item)) {
-              return item;
-            } else if (!calcOperator.includes(item)) {
-              let finalResult =
-                result_tests.find((test) => test.name == item)?.result ?? 0;
-              return finalResult == "" ? 0 : finalResult;
-            }
-            return item;
-          })
-          ?.join("");
+function addStrcResult(component, test, result_test, resultForm) {
+  let type = "";
+  let results = {};
 
-        let result = eval(equ) ?? 0;
-        // to fixed 2
-        result = result.toFixed(1);
-        finalResult = {};
-        finalResult[test.name] = result;
-        finalResult["checked"] = result_test["checked"];
-      } catch (error) {
-        // console.log(error);
+  const componentMarkup = component
+    .map((comp) => {
+      let typeDiff = comp.type !== type;
+      type = typeDiff ? comp.type : type;
+      let input = "";
+      let editable = "";
+      let result = result_test?.[comp.name] ?? "";
+
+      if (comp?.calc) {
+        comp.eq = comp.eq.map((item) => {
+          if (!isNaN(item)) {
+            return item;
+          } else if (!calcOperator.includes(item)) {
+            item = result_test?.[item] ?? 0;
+          }
+          return item;
+        });
+
+        try {
+          result = eval(comp.eq.join("")).toFixed(2);
+          result = isFinite(result) ? (isNaN(result) ? "*" : result) : "*";
+        } catch (e) {
+          result = 0;
+        }
+
+        results[comp.name] = result;
+        editable = "readonly";
       }
 
-      addNormalResult(
-        component,
-        test,
-        visit,
-        finalResult,
-        options,
-        resultForm,
-        "calc"
-      );
-    } else if (type == "type") {
-      resultForm = addStrcResult(component, test, result_test, resultForm);
-    } else {
-      resultForm = addNormalResult(
-        component,
-        test,
-        visit,
-        result_test,
-        options,
-        resultForm
-      );
-    }
-  });
-  return resultForm.join("");
+      switch (comp.result) {
+        case "result":
+          input = `
+            <select class="form-control result text-center h6" ${editable} name="${
+            comp.name
+          }" id="result_${test.hash}" ${comp.multi === true ? "multiple" : ""}>
+              ${comp.options
+                .map((option, index) => {
+                  let selected = "";
+                  if (!result) {
+                    selected = index === 0 ? "selected" : "";
+                  } else {
+                    selected = result == option ? "selected" : "";
+
+                    if (comp.multi === true) {
+                      selected = result.includes(option) ? "selected" : "";
+                    }
+                  }
+                  return `<option value="${option}" ${selected}>${option}</option>`;
+                })
+                .join("")}
+            </select>`;
+          break;
+        case "number":
+          input = `<input type="number" class="form-control result text-center" ${editable} id="result_${test.hash}" name="${comp.name}" placeholder="ادخل النتيجة" value="${result}">`;
+          break;
+        default:
+          input = `<input type="text" class="form-control result text-center" ${editable} value="${result}" id="result_${test.hash}" name="${comp.name}" placeholder="ادخل النتيجة">`;
+          break;
+      }
+
+      const typeMarkup = typeDiff
+        ? `<div class="col-md-12 text-center">${comp.type}</div>`
+        : "";
+
+      return `
+        ${typeMarkup}
+        <div class="${
+          comp.type == "Notes" ? "col-md-12" : "col-md-4"
+        } mb-3 text-left">
+          <label for="result" class="w-100 text-center text-black font-weight-bold h5">${
+            comp.name
+          } ${comp.unit ? `(${comp.unit})` : ""}</label>
+          ${input}
+        </div>
+      `;
+    })
+    .join("");
+
+  resultForm.push(`
+    <div class="col-md-11 results test-${test.name
+      .replace(/\s/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "")} mb-15 ">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-12">
+          <h4 class="text-center mt-15">${test.name}</h4>
+        </div>
+        ${componentMarkup}
+      </div>
+    </div>
+  `);
+
+  return resultForm;
 }
 
 function saveResult(hash) {
   let result = {};
+
   $(".result").each(function () {
     let name = $(this).attr("name");
     let value = $(this).val();
@@ -933,21 +970,27 @@ function saveResult(hash) {
     let checked =
       $(`input[type=checkbox][name=check_normal_${_hash_}]`).is(":checked") ??
       undefined;
-    if (result[_hash_] == undefined) {
+
+    if (result[_hash_] === undefined) {
       result[_hash_] = {};
     }
+
     result[_hash_][name] = value;
-    if (checked != undefined) {
+
+    if (checked !== undefined) {
       result[_hash_]["checked"] = checked;
     }
+
     let __visit_test__ = __VISIT_TESTS__.find((test) => test.hash == _hash_);
-    if (__visit_test__ != undefined) {
+
+    if (__visit_test__ !== undefined) {
       result[_hash_]["options"] = __visit_test__.options;
     }
   });
+
   let query = Object.entries(result)
     .map(([hash, result]) => {
-      if (hash == "") {
+      if (hash === "") {
         return;
       }
       return `update lab_visits_tests set result_test = '${JSON.stringify(
@@ -955,6 +998,7 @@ function saveResult(hash) {
       )}' where hash = '${hash}'`;
     })
     .join(";");
+
   run(query);
   showAddResult(hash, false);
   // $(`#${localStorage.getItem('currentInvoice')}`).click();
