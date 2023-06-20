@@ -862,107 +862,82 @@ function addStrcResult(component, test, result_test, resultForm) {
   return resultForm;
 }
 
-function addStrcResult(component, test, result_test, resultForm) {
-  let type = "";
-  let results = {};
-
-  const componentMarkup = component
-    .map((comp) => {
-      let typeDiff = comp.type !== type;
-      type = typeDiff ? comp.type : type;
-      let input = "";
-      let editable = "";
-      let result = result_test?.[comp.name] ?? "";
-
-      if (comp?.calc) {
-        comp.eq = comp.eq.map((item) => {
-          if (!isNaN(item)) {
+function addResult(visit, visitTests) {
+  // clear __VISIT_TESTS__
+  __VISIT_TESTS__ = [];
+  visitTests = visitTests.sort((a, b) => {
+    let type = JSON.parse(a?.options)?.type;
+    //if (type == "calc") return 1;
+    return a.category > b.category ? 1 : -1;
+  });
+  let resultForm = [
+    `<div class="col-11 my-3">
+    <input type="text" class="w-100 form-control search-class test-normalTests results product-search br-30" id="input-search-3" placeholder="ابحث عن التحليل" onkeyup="addTestSearch(this)">
+</div>`,
+  ];
+  let result_tests = [];
+  visitTests.forEach((test) => {
+    let options = JSON.parse(test.options);
+    let { type, component, value } = options;
+    let result_test = JSON.parse(test.result_test);
+    result_tests.push({
+      name: test.name,
+      result: result_test?.[test.name],
+    });
+    if (type == "calc") {
+      let result = 0;
+      try {
+        let equ = value
+          .map((item) => {
+            // check if item is number
+            if (!isNaN(item)) {
+              return item;
+            } else if (!calcOperator.includes(item)) {
+              let finalResult =
+                result_tests.find((test) => test.name == item)?.result ?? 0;
+              return finalResult == "" ? 0 : finalResult;
+            }
             return item;
-          } else if (!calcOperator.includes(item)) {
-            item = result_test?.[item] ?? 0;
-          }
-          return item;
-        });
+          })
+          ?.join("");
 
-        try {
-          result = eval(comp.eq.join("")).toFixed(2);
-          result = isFinite(result) ? (isNaN(result) ? "*" : result) : "*";
-        } catch (e) {
-          result = 0;
-        }
-
-        results[comp.name] = result;
-        editable = "readonly";
+        let result = eval(equ) ?? 0;
+        // to fixed 2
+        result = result.toFixed(1);
+        finalResult = {};
+        finalResult[test.name] = result;
+        finalResult["checked"] = result_test["checked"];
+      } catch (error) {
+        // console.log(error);
       }
 
-      switch (comp.result) {
-        case "result":
-          input = `
-            <select class="form-control result text-center h6" ${editable} name="${
-            comp.name
-          }" id="result_${test.hash}" ${comp.multi === true ? "multiple" : ""}>
-              ${comp.options
-                .map((option, index) => {
-                  let selected = "";
-                  if (!result) {
-                    selected = index === 0 ? "selected" : "";
-                  } else {
-                    selected = result == option ? "selected" : "";
-
-                    if (comp.multi === true) {
-                      selected = result.includes(option) ? "selected" : "";
-                    }
-                  }
-                  return `<option value="${option}" ${selected}>${option}</option>`;
-                })
-                .join("")}
-            </select>`;
-          break;
-        case "number":
-          input = `<input type="number" class="form-control result text-center" ${editable} id="result_${test.hash}" name="${comp.name}" placeholder="ادخل النتيجة" value="${result}">`;
-          break;
-        default:
-          input = `<input type="text" class="form-control result text-center" ${editable} value="${result}" id="result_${test.hash}" name="${comp.name}" placeholder="ادخل النتيجة">`;
-          break;
-      }
-
-      const typeMarkup = typeDiff
-        ? `<div class="col-md-12 text-center">${comp.type}</div>`
-        : "";
-
-      return `
-        ${typeMarkup}
-        <div class="${
-          comp.type == "Notes" ? "col-md-12" : "col-md-4"
-        } mb-3 text-left">
-          <label for="result" class="w-100 text-center text-black font-weight-bold h5">${
-            comp.name
-          } ${comp.unit ? `(${comp.unit})` : ""}</label>
-          ${input}
-        </div>
-      `;
-    })
-    .join("");
-
-  resultForm.push(`
-    <div class="col-md-11 results test-${test.name
-      .replace(/\s/g, "")
-      .replace(/[^a-zA-Z0-9]/g, "")} mb-15 ">
-      <div class="row align-items-center justify-content-center">
-        <div class="col-md-12">
-          <h4 class="text-center mt-15">${test.name}</h4>
-        </div>
-        ${componentMarkup}
-      </div>
-    </div>
-  `);
-
-  return resultForm;
+      addNormalResult(
+        component,
+        test,
+        visit,
+        finalResult,
+        options,
+        resultForm,
+        "calc"
+      );
+    } else if (type == "type") {
+      resultForm = addStrcResult(component, test, result_test, resultForm);
+    } else {
+      resultForm = addNormalResult(
+        component,
+        test,
+        visit,
+        result_test,
+        options,
+        resultForm
+      );
+    }
+  });
+  return resultForm.join("");
 }
 
 function saveResult(hash) {
   let result = {};
-
   $(".result").each(function () {
     let name = $(this).attr("name");
     let value = $(this).val();
@@ -970,27 +945,21 @@ function saveResult(hash) {
     let checked =
       $(`input[type=checkbox][name=check_normal_${_hash_}]`).is(":checked") ??
       undefined;
-
-    if (result[_hash_] === undefined) {
+    if (result[_hash_] == undefined) {
       result[_hash_] = {};
     }
-
     result[_hash_][name] = value;
-
-    if (checked !== undefined) {
+    if (checked != undefined) {
       result[_hash_]["checked"] = checked;
     }
-
     let __visit_test__ = __VISIT_TESTS__.find((test) => test.hash == _hash_);
-
-    if (__visit_test__ !== undefined) {
+    if (__visit_test__ != undefined) {
       result[_hash_]["options"] = __visit_test__.options;
     }
   });
-
   let query = Object.entries(result)
     .map(([hash, result]) => {
-      if (hash === "") {
+      if (hash == "") {
         return;
       }
       return `update lab_visits_tests set result_test = '${JSON.stringify(
@@ -998,7 +967,6 @@ function saveResult(hash) {
       )}' where hash = '${hash}'`;
     })
     .join(";");
-
   run(query);
   showAddResult(hash, false);
   // $(`#${localStorage.getItem('currentInvoice')}`).click();
