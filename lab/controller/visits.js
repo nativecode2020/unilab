@@ -687,7 +687,7 @@ function generateFieldForTest(test, resultList, reference, testType) {
                                       ? resultList?.[test.name] == option
                                         ? "selected"
                                         : ""
-                                      : refrence?.[0]?.right_options.includes(
+                                      : reference?.[0]?.right_options.includes(
                                           option
                                         )
                                       ? "selected"
