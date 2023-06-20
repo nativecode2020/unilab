@@ -621,38 +621,17 @@ function manageRange(reference) {
 }
 
 function generateFieldForTest(test, resultList, reference, testType) {
-  const kitName = testType === "normal" ? test?.kit_name ?? "NO KIT" : "";
-  const deviceName =
-    testType === "normal" ? `(${test?.device_name ?? "NO DEVICE"})` : "";
-  const resultChecked = resultList?.checked ?? true ? "checked" : "";
-  const resultValue =
-    testType === "normal" ? resultList?.[test.name] : resultList;
-  const resultInputType =
-    reference?.[0]?.result?.trim() === "result" ? "select" : "input";
-  const resultOptions = reference?.[0]?.options
-    .map((option) => {
-      const isSelected = resultList?.[test.name]
-        ? resultList?.[test.name] === option
-        : reference?.[0]?.right_options.includes(option);
-      return `<option value="${option}" ${
-        isSelected ? "selected" : ""
-      }>${option}</option>`;
-    })
-    .join("");
-  const resultPlaceholder = "ادخل النتيجة";
-  const resultReadonly = testType === "calc" ? "readonly" : "";
-  const resultUnit =
-    reference?.[0]?.result?.trim() === "result"
-      ? ""
-      : testType === "normal"
-      ? test?.unit_name ?? ""
-      : units.find((item) => reference?.[0]?.unit === item?.hash)?.name ?? "";
-
   return `
-    <div class="col-md-11 results test-normalTests mb-15">
+    <div class="col-md-11 results test-normalTests mb-15 ">
         <div class="row align-items-center">
             <div class="col-md-3 h6 text-center">
-                ${kitName}<br>${deviceName}
+                ${testType == "normal" ? `${test?.kit_name ?? "NO KIT"}` : ""}
+                <br>
+                ${
+                  testType == "normal"
+                    ? `(${test?.device_name ?? "NO DEVICE"})`
+                    : ""
+                }
             </div>
             
             <div class="col-md-6">
@@ -664,16 +643,16 @@ function generateFieldForTest(test, resultList, reference, testType) {
                 <label class="d-inline switch s-icons s-outline s-outline-invoice-slider mr-5">
                     <input type="checkbox" id="check_normal_${
                       test.hash
-                    }" name="check_normal_${
-    test.hash
-  }" ${resultChecked} onclick="toggleTest.call(this)">
+                    }" name="check_normal_${test.hash}" ${
+    resultList?.checked ?? true ? "checked" : ""
+  } onclick="toggleTest.call(this)">
                     <span class="slider invoice-slider"></span>
                 </label>
             </div>
             <div class="col-md-7 mb-3 text-center" dir="ltr">
                 <label for="range" class="text-dark">المرجع</label>
                 <h5 class="text-center">${
-                  reference?.[0]?.result === "result"
+                  reference?.[0]?.result == "result"
                     ? reference?.[0]?.right_options
                     : manageRange(reference)
                 }</h5>
@@ -682,17 +661,52 @@ function generateFieldForTest(test, resultList, reference, testType) {
             <div class="col-md-5 mb-3">
                 <div class="row">
                     <div class="col-md-4 text-center d-flex justify-content-center align-items-end">
-                        <span class="">${resultUnit}</span>
+                        <span class="">${
+                          reference?.[0]?.result?.trim() == "result"
+                            ? ""
+                            : testType == "normal"
+                            ? test?.unit_name ?? ""
+                            : units.find(
+                                (item) => reference?.[0]?.unit == item?.hash
+                              )?.name ?? ""
+                        }</span>
                     </div>
                     <div class="col-md-8">
                         <label for="result" class="w-100 text-center text-dark">النتيجة</label>
                         ${
-                          resultInputType === "select"
-                            ? `<select class="form-control result" id="result_${test.hash}" name="${test.name}">
-                              ${resultOptions}
-                          </select>`
-                            : `<input type="number" class="form-control result text-center" id="result_${test.hash}" name="${test.name}" placeholder="${resultPlaceholder}" ${resultReadonly} value="${resultValue}">`
+                          reference?.[0]?.result?.trim() == "result"
+                            ? `<select class="form-control result" id="result_${
+                                test.hash
+                              }" name="${test.name}">
+                                ${reference?.[0]?.options
+                                  .map((option) => {
+                                    return `<option value="${option}" ${
+                                      resultList?.[test.name]
+                                        ? resultList?.[test.name] == option
+                                          ? "selected"
+                                          : ""
+                                        : refrence?.[0]?.right_options.includes(
+                                            option
+                                          )
+                                        ? "selected"
+                                        : ""
+                                    }>${option}</option>`;
+                                  })
+                                  .join("")}
+                              </select>`
+                            : `<input type="number" class="form-control result text-center" id="result_${
+                                test.hash
+                              }" name="${
+                                test.name
+                              }" placeholder="ادخل النتيجة" ${
+                                testType == "calc" ? "readonly" : ""
+                              } value="${
+                                testType == "normal"
+                                  ? resultList?.[test.name]
+                                  : resultList
+                              }">`
                         }
+                        
                     </div>
                 </div>
             </div>
@@ -712,45 +726,36 @@ function addNormalResult(
   testType = "normal"
 ) {
   let reference = component?.[0]?.reference ?? [];
-
   if (result_test?.options !== undefined) {
     reference = result_test.options;
   } else {
     if (reference) {
-      // تصفية باستخدام الكيت
+      // filter with kit
       reference = filterWithKit(reference, test.kit_id);
-
-      // تصفية باستخدام الوحدة
-      if (options.type !== "calc") {
+      // filter with unit
+      if (options.type != "calc") {
         reference = filterWithUnit(reference, test.unit);
       }
-
-      // تصفية باستخدام العمر
+      // filter with age
       reference = filterWithAge(reference, visit.age, "عام");
-
-      // تصفية باستخدام الجنس
+      // filter with gender
       reference = filterWithGender(reference, visit.gender);
     }
   }
-
   __VISIT_TESTS__.push({ hash: test.hash, options: reference });
-
-  if (options.result === "number") {
+  if ((options.result = "number")) {
     resultForm.push(
       generateFieldForTest(test, result_test, reference, testType)
     );
   } else if (0) {
-    // قم بإضافة شيء آخر هنا إذا لزم الأمر
   }
-
   return resultForm;
 }
 
 function addStrcResult(component, test, result_test, resultForm) {
-  // إضافة زر لفتح النموذج المنبثق
+  // add button to open modal
   let type = "";
   let results = {};
-
   resultForm.push(`
     <div class="col-md-11 results test-${test.name
       .replace(/\s/g, "")
@@ -761,12 +766,11 @@ function addStrcResult(component, test, result_test, resultForm) {
             </div>
     ${component
       .map((comp) => {
-        let typeDiff = comp.type !== type;
+        let typeDiff = comp.type != type;
         type = typeDiff ? comp.type : type;
         let input = "";
         let editable = "";
         let result = result_test?.[comp.name] ?? "";
-
         if (comp?.calc) {
           comp.eq = comp.eq.map((item) => {
             if (!isNaN(item)) {
@@ -776,18 +780,15 @@ function addStrcResult(component, test, result_test, resultForm) {
             }
             return item;
           });
-
           try {
             result = eval(comp.eq.join("")).toFixed(2);
             result = isFinite(result) ? (isNaN(result) ? "*" : result) : "*";
           } catch (e) {
             result = 0;
           }
-
           results[comp.name] = result;
           editable = "readonly";
         }
-
         switch (comp.result) {
           case "result":
             input = `
@@ -799,31 +800,33 @@ function addStrcResult(component, test, result_test, resultForm) {
                 ${comp.options
                   .map((option, index) => {
                     let selected = "";
-
                     if (!result) {
-                      selected = index === 0 ? "selected" : "";
+                      selected = index == 0 ? "selected" : "";
                     } else {
                       selected = result == option ? "selected" : "";
-
-                      // التحقق في حالة وجود خيارات متعددة
+                      // check if multiple options
                       if (comp.multi === true) {
                         selected = result.includes(option) ? "selected" : "";
                       }
                     }
-
                     return `<option value="${option}" ${selected}>${option}</option>`;
                   })
                   .join("")}
                 </select>`;
             break;
-          case "number":
-            input = `<input type="number" class="form-control result text-center" ${editable} id="result_${test.hash}"  name="${comp.name}" placeholder="ادخل النتيجة" value="${result}">`;
+          case "nubmer":
+            input = `<input type="number" class="form-control result text-center" ${editable}
+                     id="result_${test.hash}"  name="${comp.name}"
+                     placeholder="ادخل النتيجة"
+                     value="${result}">`;
             break;
           default:
-            input = `<input type="text" class="form-control result text-center" ${editable} value="${result}" id="result_${test.hash}" name="${comp.name}" placeholder="ادخل النتيجة">`;
+            input = `<input type="text" class="form-control result text-center" ${editable}
+                     value="${result}"
+                     id="result_${test.hash}" name="${comp.name}"
+                    placeholder="ادخل النتيجة">`;
             break;
         }
-
         return `
         ${
           typeDiff
@@ -831,7 +834,7 @@ function addStrcResult(component, test, result_test, resultForm) {
             : ""
         }
         <div class="${
-          comp.type === "Notes" ? "col-md-12" : "col-md-4"
+          comp.type == "Notes" ? "col-md-12" : "col-md-4"
         } mb-3 text-left">
             <label for="result" class="w-100 text-center text-black font-weight-bold h5">${
               comp.name
@@ -844,35 +847,23 @@ function addStrcResult(component, test, result_test, resultForm) {
         </div>
     </div>
     `);
-
   return resultForm;
 }
 
 function addResult(visit, visitTests) {
-  // مسح قائمة __VISIT_TESTS__
+  // clear __VISIT_TESTS__
   __VISIT_TESTS__ = [];
-
-  // فرز visitTests بناءً على الفئة
   visitTests = visitTests.sort((a, b) => {
-    let typeA = JSON.parse(a?.options)?.type;
-    let typeB = JSON.parse(b?.options)?.type;
-
-    if (typeA == "calc") return 1;
-    if (typeB == "calc") return -1;
-
+    let type = JSON.parse(a?.options)?.type;
+    //if (type == "calc") return 1;
     return a.category > b.category ? 1 : -1;
   });
-
   let resultForm = [
-    `
-    <div class="col-11 my-3">
-      <input type="text" class="w-100 form-control search-class test-normalTests results product-search br-30" id="input-search-3" placeholder="ابحث عن التحليل" onkeyup="addTestSearch(this)">
-    </div>
-    `,
+    `<div class="col-11 my-3">
+    <input type="text" class="w-100 form-control search-class test-normalTests results product-search br-30" id="input-search-3" placeholder="ابحث عن التحليل" onkeyup="addTestSearch(this)">
+</div>`,
   ];
-
   let result_tests = [];
-
   visitTests.forEach((test) => {
     let options = JSON.parse(test.options);
     let { type, component, value } = options;
@@ -881,14 +872,12 @@ function addResult(visit, visitTests) {
       name: test.name,
       result: result_test?.[test.name],
     });
-
     if (type == "calc") {
-      let finalResult = {};
-
+      let result = 0;
       try {
         let equ = value
           .map((item) => {
-            // التحقق إذا كان العنصر رقمًا
+            // check if item is number
             if (!isNaN(item)) {
               return item;
             } else if (!calcOperator.includes(item)) {
@@ -901,9 +890,9 @@ function addResult(visit, visitTests) {
           ?.join("");
 
         let result = eval(equ) ?? 0;
-        // قصر النتيجة إلى 2 أرقام بعد العلامة العشرية
-        result = result.toFixed(2);
-
+        // to fixed 2
+        result = result.toFixed(1);
+        finalResult = {};
         finalResult[test.name] = result;
         finalResult["checked"] = result_test["checked"];
       } catch (error) {
@@ -932,13 +921,11 @@ function addResult(visit, visitTests) {
       );
     }
   });
-
   return resultForm.join("");
 }
 
 function saveResult(hash) {
   let result = {};
-
   $(".result").each(function () {
     let name = $(this).attr("name");
     let value = $(this).val();
@@ -946,24 +933,18 @@ function saveResult(hash) {
     let checked =
       $(`input[type=checkbox][name=check_normal_${_hash_}]`).is(":checked") ??
       undefined;
-
     if (result[_hash_] == undefined) {
       result[_hash_] = {};
     }
-
     result[_hash_][name] = value;
-
     if (checked != undefined) {
       result[_hash_]["checked"] = checked;
     }
-
     let __visit_test__ = __VISIT_TESTS__.find((test) => test.hash == _hash_);
-
     if (__visit_test__ != undefined) {
       result[_hash_]["options"] = __visit_test__.options;
     }
   });
-
   let query = Object.entries(result)
     .map(([hash, result]) => {
       if (hash == "") {
@@ -974,22 +955,21 @@ function saveResult(hash) {
       )}' where hash = '${hash}'`;
     })
     .join(";");
-
   run(query);
   showAddResult(hash, false);
   // $(`#${localStorage.getItem('currentInvoice')}`).click();
 }
 
 function focusInput(type) {
-  let list = $("input.result:visible");
-  let index = list.index($("input.result:visible:focus"));
-
+  let list = $(`input.result:visible`);
+  let index = list.index($(`input.result:visible:focus`));
   if (type == "add") {
     index = (index + 1) % list.length;
   } else {
-    index = (index - 1 + list.length) % list.length;
+    index = (index - 1) % list.length;
   }
-
+  index = index == -1 ? list.length - 1 : index;
+  // list.eq(index).focus();
   // focus with animation
   $("html, body").animate(
     {
