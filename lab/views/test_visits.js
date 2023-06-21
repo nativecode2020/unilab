@@ -71,9 +71,7 @@ $(function () {
   );
   let tests = run(`
         SELECT test_id,(select name from lab_package where package_id=lab_package.hash) as name FROM lab_pakage_tests
-        where lab_pakage_tests.lab_id = ${localStorage.getItem(
-          "lab_hash"
-        )} and is_deleted =0
+        where lab_pakage_tests.lab_id = ${localStorage.getItem("lab_hash")}
         group by name ;
     `).result[0].query0;
   tests.forEach((test) => {
