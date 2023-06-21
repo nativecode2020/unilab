@@ -171,4 +171,26 @@ class Tests_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    function getVistsByTest($lab, $test, $start, $length, $search)
+    {
+        $query = $this->db->query("
+        SELECT (select name from lab_patient where lab_patient.hash = lab_visits.visits_patient_id) as name ,lab_visits.hash,visit_date, tests_id FROM lab_visits_tests 
+        inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        where tests_id='$test' and lab_id='$lab'
+        and (name like '%$search%' or visit_date like '%$search%')
+        order by id desc
+        limit $start,$length
+        ");
+        $count = $this->db->query("
+        SELECT count(*) as count FROM lab_visits_tests
+        inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        where tests_id='$test' and lab_id='$lab'
+        and (name like '%$search%' or visit_date like '%$search%')
+        order by id desc
+        ");
+        $count = $count->result_array();
+        $count = $count[0]['count'];
+        return array('count' => $count, 'data' => $query->result_array());
+    }
 }

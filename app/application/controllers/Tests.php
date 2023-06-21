@@ -17,12 +17,15 @@ class Tests extends CI_Controller
         $token = str_replace("Bearer ", "", $token);
         $decoded_array = $this->jwt_dec($token);
         if ($decoded_array == 0) {
-            echo json_encode(array(
-                "status" => false,
-                "message" => "Invalid token",
-                "isAuth" => false,
-                "data" => null
-            ), JSON_UNESCAPED_UNICODE);
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => false,
+                    "data" => null
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
             exit();
         } else {
             $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
@@ -97,6 +100,29 @@ class Tests extends CI_Controller
         );
 
         echo json_encode($output);
+        exit();
+    }
+
+    public function getVistsByTest()
+    {
+        $test = $this->input->post('test_id');
+        $lab = $this->input->post('lab_id');
+        $search = $this->input->post('search');
+        $search = $search['value'];
+        $draw = intval($this->input->post("draw"));
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+        // Tests_model->getVistsByTest return data and count
+        $array = $this->Tests_model->getVistsByTest($lab, $test, $start, $length, $search);
+        $total_rows = $array["count"];
+        $packages = $array["data"];
+        $output = array(
+            "draw" => $draw,
+            "recordsTotal" => $total_rows,
+            "recordsFiltered" => $total_rows,
+            "data" => $packages,
+            "search" => $search
+        );
         exit();
     }
 
