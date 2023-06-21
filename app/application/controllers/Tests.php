@@ -123,6 +123,7 @@ class Tests extends CI_Controller
             "data" => $packages,
             "search" => $search
         );
+        echo json_encode($output);
         exit();
     }
 
