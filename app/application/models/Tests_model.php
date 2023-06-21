@@ -193,8 +193,18 @@ class Tests_model extends CI_Model
         group by lab_visits.hash,tests_id
         order by lab_visits.id desc
         ");
+        // get only one row
         $count = $count->result_array();
-        $count = $count[0]['count'];
-        return array('count' => $count, 'data' => $query->result_array());
+        if (count($count) > 0) {
+            return array(
+                'count' => $count[0]['count'],
+                'data' => $query->result_array()
+            );
+        } else {
+            return array(
+                'count' => 0,
+                'data' => []
+            );
+        }
     }
 }
