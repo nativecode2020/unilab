@@ -114,7 +114,7 @@ class Tests extends CI_Controller
         $length = intval($this->input->post("length"));
         // Tests_model->getVistsByTest return data and count
         $array = $this->Tests_model->getVistsByTest($lab, $test, $start, $length, $search);
-        $total_rows = $array["count"];
+        $total_rows = $array["count"]??0;
         $packages = $array["data"];
         $output = array(
             "draw" => $draw,
