@@ -810,6 +810,7 @@ function addStrcResult(component, test, result_test, resultForm) {
               })
               .join("");
           } else if (typeof options == "object") {
+            console.log(options);
             htmlOptions = Object.keys(options)
               .map((key) => {
                 let selected = "";
