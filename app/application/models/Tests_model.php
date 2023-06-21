@@ -179,17 +179,17 @@ class Tests_model extends CI_Model
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         where tests_id='$test' and lab_id='$lab'
         and (name like '%$search%' or visit_date like '%$search%')
+        group by lab_visits.hash
         order by lab_visits.id desc
         limit $start,$length
-        group by lab_visits.hash
         ");
         $count = $this->db->query("
         SELECT count(*) as count FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         where tests_id='$test' and lab_id='$lab'
         and (name like '%$search%' or visit_date like '%$search%')
-        order by lab_visits.id desc
         group by lab_visits.hash
+        order by lab_visits.id desc
         ");
         $count = $count->result_array();
         $count = $count[0]['count'];
