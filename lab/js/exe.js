@@ -275,16 +275,6 @@ async function getAsyncData() {
   }
   // ask user to confirm
   const body = document.getElementsByTagName("body")[0];
-  Swal.fire({
-    title: "هل انت متأكد من تحديث البيانات ؟",
-    text: "سيتم تحديث جميع القيم الطبيعية",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "نعم",
-    cancelButtonText: "لا",
-  });
   body.insertAdjacentHTML("beforeend", waitElement);
   let fromData = new FormData();
   fromData.append(
