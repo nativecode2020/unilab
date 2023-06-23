@@ -301,8 +301,8 @@ async function getAsyncData() {
     .then(() => {
       body.removeChild(document.getElementById("alert_screen"));
     });
+  const syncBodyModal = document.getElementById("sync_body");
   if (updates.length > 0) {
-    const syncBodyModal = document.getElementById("sync_body");
     let updatesTests =
       run(
         `select test_name,hash from lab_test where hash in(${updates
@@ -341,6 +341,15 @@ async function getAsyncData() {
         </div>
         `;
     }
+  } else {
+    syncBodyModal.innerHTML = "";
+    syncBodyModal.innerHTML += `
+      <div id="update_tests" class="row">
+          <div class="col-12">
+              <h5 class="text-center"> لا يوجد تحديثات </h5>
+          </div>
+      </div>
+      `;
   }
 
   $("#sync").modal("show");
