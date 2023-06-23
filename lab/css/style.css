@@ -456,3 +456,12 @@ body {
 .col-cus-md-6 .certificate{
   font-size: 14px;
 }
+
+#sync .active{
+  background-color: var(--mainColor);
+}
+
+#sync .active p{
+  color: #fff;
+}
+

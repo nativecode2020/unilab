@@ -328,7 +328,10 @@ async function getAsyncData() {
                 ${updatesTests
                   .map(
                     (item) =>
-                      `<div class="col-12 border rounded p-2 my-2">
+                      `<div class="col-12 border rounded p-2 my-2" style="cursor: pointer;"
+                        data-hash="${item.hash}"
+                        onclick="$(this).toggleClass('active');"
+                       >
                             <p class="text-center">
                                 <span class="h4">${item.test_name}</span>
                             </p>
