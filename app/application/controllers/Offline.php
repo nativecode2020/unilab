@@ -41,7 +41,7 @@ class Offline extends CI_Controller
             $patients = $this->db->query("select * from lab_patient where lab_id='$lab_id'")->result();
             $package_tests = $this->db->query("select * from lab_pakage_tests where lab_id='$lab_id'")->result();
             $packages = $this->db->query("select * from lab_package where lab_id='$lab_id'")->result();
-            $visits =   $this->db->query("select * from lab_visits where labId='$lab_id'")->result();
+            $visits = $this->db->query("select * from lab_visits where labId='$lab_id'")->result();
             $visits_packages = $this->db->query("select * from lab_visits_package where lab_id='$lab_id'")->result();
             $visits_tests = $this->db->query("select * from lab_visits_tests where lab_id='$lab_id'")->result();
             $workers = $this->db->query("select * from lab_invoice_worker where lab_hash='$lab_id'")->result();
@@ -185,13 +185,45 @@ class Offline extends CI_Controller
             "SET SESSION group_concat_max_len = 100000;"
         );
         $date = $this->input->post('date');
-        $queries = $this->db->query("select query from offline_sync where lab_id='0' and date_time>='$date' and table_name not in ('lab')")->result();
+        $queries = $this->db->query("select query,operation from offline_sync where lab_id='0' and date_time>='$date' and table_name not in ('lab')")->result();
+        $inserts = array();
+        $updates = array();
+        $deletes = array();
+        array_map(function ($query) use (&$inserts, &$updates, &$deletes) {
+            if ($query->operation == 'insert') {
+                array_push($inserts, $query);
+            } else {
+
+                if ($query->operation == 'update') {
+                    $pattern = '/hash=([0-9]+)/';
+                    preg_match($pattern, $query->query, $matches);
+                    if (count($matches) > 0) {
+                        $hash = $matches[1];
+                    } else {
+                        $pattern = "/hash='([0-9]+)/";
+                        preg_match($pattern, $query->query, $matches);
+                        if (count($matches) > 0) {
+                            $hash = $matches[1];
+                        } else {
+                            $hash = 0;
+                        }
+                    }
+                    $query->hash = $hash;
+                    array_push($updates, $query);
+                } else if ($query->operation == 'delete') {
+                    array_push($deletes, $query);
+                }
+            }
+        }, $queries);
         echo json_encode(
             array(
                 'status' => true,
                 'message' => 'عرض البيانات',
                 'data' => $queries,
-                'isAuth' => true
+                'isAuth' => true,
+                'inserts' => $inserts,
+                'updates' => $updates,
+                'deletes' => $deletes
             ),
             JSON_UNESCAPED_UNICODE
         );
