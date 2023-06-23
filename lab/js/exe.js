@@ -317,9 +317,8 @@ async function getAsyncData() {
               <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
           </div>
           ${updatesTests
-            .map(
-              (item) =>
-                `<div class="col-12 border rounded p-2 my-2" style="cursor: pointer;"
+            .map((item) => {
+              return `<div class="col-12 border rounded p-2 my-2" style="cursor: pointer;"
                   data-hash="${item.hash}"
                   onclick="$(this).toggleClass('active');"
                  >
@@ -327,8 +326,8 @@ async function getAsyncData() {
                           <span class="h4">${item.test_name}</span>
                       </p>
                   </div>
-                  `
-            )
+                  `;
+            })
             .join("")}
       </div>
       `;
@@ -338,7 +337,7 @@ async function getAsyncData() {
 
 async function runAsyncData() {
   const body = document.getElementsByTagName("body")[0];
-  //   body.insertAdjacentHTML("beforeend", waitElement);
+  body.insertAdjacentHTML("beforeend", waitElement);
   queries = inserts.map((query) => query.query);
   let updatesSelected = document.querySelectorAll("#update_tests .active");
   if (updatesSelected.length > 0) {
@@ -350,22 +349,21 @@ async function runAsyncData() {
     );
     queries = [...queries, ...updateTests.map((item) => item.query)];
   }
-  console.log(queries);
-  //   let queriesForm = new FormData();
-  //   queriesForm.append("queries", JSON.stringify(queries));
-  //   let quer = await fetch(`${base_url}LocalApi/run_queries`, {
-  //     method: "POST",
-  //     body: queriesForm,
-  //   })
-  //     .then((res) => res.json())
-  //     .then(() => {
-  //       body.removeChild(document.getElementById("alert_screen"));
-  //     });
-  //   run(
-  //     `insert into system_users_type (title,insert_record_date) values ('update by ${
-  //       localStorage.getItem("name") ?? ""
-  //     }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
-  //   );
+  let queriesForm = new FormData();
+  queriesForm.append("queries", JSON.stringify(queries));
+  let quer = await fetch(`${base_url}LocalApi/run_queries`, {
+    method: "POST",
+    body: queriesForm,
+  })
+    .then((res) => res.json())
+    .then(() => {
+      body.removeChild(document.getElementById("alert_screen"));
+    });
+  run(
+    `insert into system_users_type (title,insert_record_date) values ('update by ${
+      localStorage.getItem("name") ?? ""
+    }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
+  );
 }
 
 async function updateExpireDate() {
