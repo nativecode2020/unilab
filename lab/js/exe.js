@@ -328,7 +328,7 @@ async function getAsyncData() {
                 ${updatesTests
                   .map(
                     (item) =>
-                      `<div class="col-12 col-md-6 col-lg-4 border rounded p-2 my-4">
+                      `<div class="col-12 border rounded p-2 my-2">
                             <p class="text-center">
                                 <span class="h4">${item.test_name}</span>
                             </p>
