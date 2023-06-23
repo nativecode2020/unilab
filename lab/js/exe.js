@@ -310,6 +310,7 @@ async function getAsyncData() {
     ).result[0]?.query0 ?? [];
   const syncBodyModal = document.getElementById("sync_body");
   if (updatesTests.length > 0) {
+    syncBodyModal.innerHTML = "";
     syncBodyModal.innerHTML += `
       <div id="update_tests" class="row">
           <div class="col-12">
@@ -337,7 +338,7 @@ async function getAsyncData() {
 
 async function runAsyncData() {
   const body = document.getElementsByTagName("body")[0];
-  body.insertAdjacentHTML("beforeend", waitElement);
+  //   body.insertAdjacentHTML("beforeend", waitElement);
   queries = inserts.map((query) => query.query);
   let updatesSelected = document.querySelectorAll("#update_tests .active");
   if (updatesSelected.length > 0) {

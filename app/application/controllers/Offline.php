@@ -195,12 +195,12 @@ class Offline extends CI_Controller
             } else {
 
                 if ($query->operation == 'update') {
-                    $pattern = '/hash=([0-9]+)/';
+                    $pattern = '/\bhash=([0-9]+)/';
                     preg_match($pattern, $query->query, $matches);
                     if (count($matches) > 0) {
                         $hash = $matches[1];
                     } else {
-                        $pattern = "/hash='([0-9]+)/";
+                        $pattern = "/\bhash='([0-9]+)/";
                         preg_match($pattern, $query->query, $matches);
                         if (count($matches) > 0) {
                             $hash = $matches[1];
