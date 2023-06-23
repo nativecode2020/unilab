@@ -312,13 +312,13 @@ async function getAsyncData() {
     if (updatesTests.length > 0) {
       syncBodyModal.innerHTML = "";
       syncBodyModal.innerHTML += `
-      <div id="update_tests" class="row">
+      <div id="update_tests" class="row justify-content-between">
           <div class="col-12">
               <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
           </div>
           ${updatesTests
             .map((item) => {
-              return `<div class="col-12 border rounded p-2 my-2" style="cursor: pointer;"
+              return `<div class="col-5 border rounded p-2 my-2" style="cursor: pointer;"
                   data-hash="${item.hash}"
                   onclick="$(this).toggleClass('active');"
                  >
