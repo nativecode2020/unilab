@@ -302,13 +302,13 @@ async function getAsyncData() {
       body.removeChild(document.getElementById("alert_screen"));
     });
   if (updates.length > 0) {
+    const syncBodyModal = document.getElementById("sync_body");
     let updatesTests =
       run(
         `select test_name,hash from lab_test where hash in(${updates
           .map((item) => item.hash)
           .join(",")});`
       ).result[0]?.query0 ?? [];
-    const syncBodyModal = document.getElementById("sync_body");
     if (updatesTests.length > 0) {
       syncBodyModal.innerHTML = "";
       syncBodyModal.innerHTML += `
