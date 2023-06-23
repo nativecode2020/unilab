@@ -312,7 +312,7 @@ async function getAsyncData() {
     if (updatesTests.length > 0) {
       syncBodyModal.innerHTML = "";
       syncBodyModal.innerHTML += `
-      <div id="update_tests" class="row justify-content-between">
+      <div id="update_tests" class="row justify-content-around">
           <div class="col-12">
               <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
           </div>
