@@ -301,17 +301,17 @@ async function getAsyncData() {
     .then(() => {
       body.removeChild(document.getElementById("alert_screen"));
     });
-
-  let updatesTests =
-    run(
-      `select test_name,hash from lab_test where hash in(${updates
-        .map((item) => item.hash)
-        .join(",")});`
-    ).result[0]?.query0 ?? [];
-  const syncBodyModal = document.getElementById("sync_body");
-  if (updatesTests.length > 0) {
-    syncBodyModal.innerHTML = "";
-    syncBodyModal.innerHTML += `
+  if (updates.length > 0) {
+    let updatesTests =
+      run(
+        `select test_name,hash from lab_test where hash in(${updates
+          .map((item) => item.hash)
+          .join(",")});`
+      ).result[0]?.query0 ?? [];
+    const syncBodyModal = document.getElementById("sync_body");
+    if (updatesTests.length > 0) {
+      syncBodyModal.innerHTML = "";
+      syncBodyModal.innerHTML += `
       <div id="update_tests" class="row">
           <div class="col-12">
               <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
@@ -331,7 +331,18 @@ async function getAsyncData() {
             .join("")}
       </div>
       `;
+    } else {
+      syncBodyModal.innerHTML = "";
+      syncBodyModal.innerHTML += `
+        <div id="update_tests" class="row">
+            <div class="col-12">
+                <h5 class="text-center"> لا يوجد تحديثات </h5>
+            </div>
+        </div>
+        `;
+    }
   }
+
   $("#sync").modal("show");
 }
 
@@ -358,6 +369,7 @@ async function runAsyncData() {
     .then((res) => res.json())
     .then(() => {
       body.removeChild(document.getElementById("alert_screen"));
+      $("#sync").modal("hide");
     });
   run(
     `insert into system_users_type (title,insert_record_date) values ('update by ${
