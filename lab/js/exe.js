@@ -318,7 +318,7 @@ async function getAsyncData() {
           </div>
           ${updatesTests
             .map((item) => {
-              return `<div class="col-5 border rounded p-2 my-2" style="cursor: pointer;"
+              return `<div class="col-5 border rounded p-2 my-2 d-flex justify-content-center align-items-center " style="cursor: pointer;"
                   data-hash="${item.hash}"
                   onclick="$(this).toggleClass('active');"
                  >
