@@ -307,7 +307,7 @@ async function getAsyncData() {
       run(
         `select test_name,hash from lab_test where hash in(${updates
           .map((item) => item.hash)
-          .join(",")});`
+          .join(",")}) group by hash;`
       ).result[0]?.query0 ?? [];
     if (updatesTests.length > 0) {
       syncBodyModal.innerHTML = "";
