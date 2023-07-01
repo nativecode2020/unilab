@@ -305,53 +305,19 @@ async function getAsyncData() {
           }
         )
           .then((res) => res.json())
-          .then((res) => {
-            updates = res.updates;
-            inserts = res.inserts;
-            deletes = res.deletes;
-            return res;
-          });
-
-        let updatesTests =
-          run(
-            `select test_name,hash from lab_test where hash in(${updates
-              .map((item) => item.hash)
-              .join(",")});`
-          ).result[0]?.query0 ?? [];
-        const syncBodyModal = document.getElementById("sync_body");
-        if (updatesTests.length > 0) {
-          syncBodyModal.innerHTML += `
-            <div id="update_tests" class="row">
-                <div class="col-12">
-                    <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
-                </div>
-                ${updatesTests
-                  .map(
-                    (item) =>
-                      `<div class="col-12 col-md-6 col-lg-4">
-                            <p class="text-center">
-                                <span class="badge badge-primary">${item.test_name}</span>
-                            </p>
-                        </div>
-                        `
-                  )
-                  .join("")}
-            </div>
-            `;
-        }
-        $("#sync").modal("show");
-        // queries = queries.map((query) => query.query);
-        // let queriesForm = new FormData();
-        // queriesForm.append("queries", JSON.stringify(queries));
-        // let quer = await fetch(`${base_url}LocalApi/run_queries`, {
-        //   method: "POST",
-        //   body: queriesForm,
-        // }).then((res) => res.json());
-        // run(
-        //   `insert into system_users_type (title,insert_record_date) values ('update by ${
-        //     localStorage.getItem("name") ?? ""
-        //   }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
-        // );
+          .then((res) => res.data);
+        queries = queries.map((query) => query.query);
+        let queriesForm = new FormData();
+        queriesForm.append("queries", JSON.stringify(queries));
+        let quer = await fetch(`${base_url}LocalApi/run_queries`, {
+          method: "POST",
+          body: queriesForm,
+        }).then((res) => res.json());
+        run(
+          `insert into system_users_type (title,insert_record_date) values ('update by ${
+            localStorage.getItem("name") ?? ""
+          }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
+        );
       }
     })
     .then(async () => {
