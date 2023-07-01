@@ -322,6 +322,12 @@ async function getAsyncData() {
     })
     .then(async () => {
       body.removeChild(document.getElementById("alert_screen"));
+      Swal.fire({
+        icon: "success",
+        title: "تم !",
+        text: "تم تحديث البيانات بنجاح",
+        confirmButtonText: "موافق",
+      });
     });
 }
 
