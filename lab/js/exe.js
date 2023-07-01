@@ -275,84 +275,88 @@ async function getAsyncData() {
   }
   // ask user to confirm
   const body = document.getElementsByTagName("body")[0];
-  body.insertAdjacentHTML("beforeend", waitElement);
-  let fromData = new FormData();
-  fromData.append(
-    "date",
-    run(
-      `select insert_record_date as date from system_users_type order by id desc limit 1;`
-    ).result[0]?.query0?.[0]?.date ?? "2023-01-01 00:00:00"
-  );
-  let queries = await fetch(
-    "http://umc.native-code-iq.com/app/index.php/Offline/getAsyncData",
-    {
-      method: "POST",
-      headers: {},
-      body: fromData,
-    }
-  )
-    .then((res) => res.json())
-    .then((res) => {
-      updates = res.updates;
-      inserts = res.inserts;
-      deletes = res.deletes;
-      return res.inserts;
+  Swal.fire({
+    title: "هل انت متأكد من تحديث البيانات ؟",
+    text: "سيتم تحديث جميع القيم الطبيعية",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "نعم",
+    cancelButtonText: "لا",
+  })
+    .then(async (result) => {
+      // if confirmed then
+      if (result.value) {
+        body.insertAdjacentHTML("beforeend", waitElement);
+        let fromData = new FormData();
+        fromData.append(
+          "date",
+          run(
+            `select insert_record_date as date from system_users_type order by id desc limit 1;`
+          ).result[0]?.query0?.[0]?.date ?? "2023-01-01 00:00:00"
+        );
+        let queries = await fetch(
+          "http://umc.native-code-iq.com/app/index.php/Offline/getAsyncData",
+          {
+            method: "POST",
+            headers: {},
+            body: fromData,
+          }
+        )
+          .then((res) => res.json())
+          .then((res) => {
+            updates = res.updates;
+            inserts = res.inserts;
+            deletes = res.deletes;
+            return res;
+          });
+
+        let updatesTests =
+          run(
+            `select test_name,hash from lab_test where hash in(${updates
+              .map((item) => item.hash)
+              .join(",")});`
+          ).result[0]?.query0 ?? [];
+        const syncBodyModal = document.getElementById("sync_body");
+        if (updatesTests.length > 0) {
+          syncBodyModal.innerHTML += `
+            <div id="update_tests" class="row">
+                <div class="col-12">
+                    <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
+                </div>
+                ${updatesTests
+                  .map(
+                    (item) =>
+                      `<div class="col-12 col-md-6 col-lg-4">
+                            <p class="text-center">
+                                <span class="badge badge-primary">${item.test_name}</span>
+                            </p>
+                        </div>
+                        `
+                  )
+                  .join("")}
+            </div>
+            `;
+        }
+        $("#sync").modal("show");
+        // queries = queries.map((query) => query.query);
+        // let queriesForm = new FormData();
+        // queriesForm.append("queries", JSON.stringify(queries));
+        // let quer = await fetch(`${base_url}LocalApi/run_queries`, {
+        //   method: "POST",
+        //   body: queriesForm,
+        // }).then((res) => res.json());
+        // run(
+        //   `insert into system_users_type (title,insert_record_date) values ('update by ${
+        //     localStorage.getItem("name") ?? ""
+        //   }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
+        // );
+      }
     })
-    .then(() => {
+    .then(async () => {
       body.removeChild(document.getElementById("alert_screen"));
     });
-  const syncBodyModal = document.getElementById("sync_body");
-  if (updates.length > 0) {
-    let updatesTests =
-      run(
-        `select test_name,hash from lab_test where hash in(${updates
-          .map((item) => item.hash)
-          .join(",")}) group by hash;`
-      ).result[0]?.query0 ?? [];
-    if (updatesTests.length > 0) {
-      syncBodyModal.innerHTML = "";
-      syncBodyModal.innerHTML += `
-      <div id="update_tests" class="row justify-content-around">
-          <div class="col-12">
-              <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
-          </div>
-          ${updatesTests
-            .map((item) => {
-              return `<div class="col-5 border rounded p-2 my-2 d-flex justify-content-center align-items-center " style="cursor: pointer;"
-                  data-hash="${item.hash}"
-                  onclick="$(this).toggleClass('active');"
-                 >
-                      <p class="text-center">
-                          <span class="h4">${item.test_name}</span>
-                      </p>
-                  </div>
-                  `;
-            })
-            .join("")}
-      </div>
-      `;
-    } else {
-      syncBodyModal.innerHTML = "";
-      syncBodyModal.innerHTML += `
-        <div id="update_tests" class="row">
-            <div class="col-12">
-                <h5 class="text-center"> لا يوجد تحديثات </h5>
-            </div>
-        </div>
-        `;
-    }
-  } else {
-    syncBodyModal.innerHTML = "";
-    syncBodyModal.innerHTML += `
-      <div id="update_tests" class="row">
-          <div class="col-12">
-              <h5 class="text-center"> لا يوجد تحديثات </h5>
-          </div>
-      </div>
-      `;
-  }
-
-  $("#sync").modal("show");
 }
 
 async function runAsyncData() {
