@@ -18,7 +18,7 @@ async function offlineLogin() {
         localStorage.setItem("user_type", result.user_type);
         localStorage.setItem("name", result.name);
         localStorage.setItem("lab_hash", result.lab_id);
-        localStorage.setItem("lab_name", result?.lab_name ?? "اسم المختبر");
+        localStorage.setItem("lab_name", result.lab_name);
         localStorage.setItem("logo", result.logo);
         await updateExpireDate();
         let user_type = result.user_type;
