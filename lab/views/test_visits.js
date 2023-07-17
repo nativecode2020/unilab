@@ -1,5 +1,7 @@
 "use strict";
 
+$("#startDate").val(new Date().toISOString().slice(0, 10));
+$("#endDate").val(new Date().toISOString().slice(0, 10));
 // override Factory class
 class Visit extends Factory {
   init() {
@@ -26,7 +28,7 @@ class Visit extends Factory {
                         `;
           },
         },
-        // { data: "doctor" },
+        { data: "doctor" },
         { data: "visit_date" },
         {
           data: null,
