@@ -2417,7 +2417,7 @@ function manageTestType(type, test = {}) {
                     <div class="testname col-4">
                         <p>${name}</p>
                     </div>
-                    <div class="testresult col-4 justify-content-center">
+                    <div class="testresult result-field col-4 justify-content-center">
                         <p class="w-75 text-center ${color}">${result.toString()} </p>
                         <!--<span class="text-info">${history.toString()}</span>-->
                     </div>
@@ -2435,7 +2435,7 @@ function manageTestType(type, test = {}) {
                     <div class="testname col-4">
                         <p>${name}</p>
                     </div>
-                    <div class="testresult col-6 justify-content-center">
+                    <div class="testresult result-field col-6 justify-content-center">
                         <p class="w-75 text-center ${color}">${result.toString()} </p>
                         <!--<span class="text-info">${history.toString()}</span>-->
                     </div>
