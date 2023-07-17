@@ -1903,7 +1903,7 @@ function showResult(visit, visitTests) {
         category = test.category;
         if (category) {
           invoices.normalTests += `
-                        <div class="test typetest pt-5 category_${category
+                        <div class="test typetest category_${category
                           ?.split(" ")
                           ?.join("_")}">
                             <p>${category}</p>
