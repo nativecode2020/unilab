@@ -105,3 +105,7 @@ $(function () {
 $("#test").on("change", function () {
   lab_visits.dataTable.ajax.reload();
 });
+
+const search = () => {
+  incomes.dataTable.ajax.reload();
+};
