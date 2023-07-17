@@ -131,7 +131,7 @@ $('input[type="search"]').on("keydown", function () {
   }, 300);
 });
 
-$("select[]name=incomes-table_length").on("change", function () {
+$("select[name='incomes-table_length']").on("change", function () {
   setTimeout(() => {
     updateFooter();
   }, 300);
