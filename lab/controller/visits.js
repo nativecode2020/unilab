@@ -2150,7 +2150,7 @@ function manageInvoiceHeight(invoiceId = null) {
   let cloneInvoice = $(".book-result:visible .page").first().clone();
   cloneInvoice.find(".center2 .tester").empty();
   let center2 = $(".book-result:visible .center2:last");
-  let center2Scroll = center2.height() - 500;
+  let center2Scroll = center2.height() - 400;
   let invoices = addTestToInvoice(
     center2Scroll,
     allTestsElements,
