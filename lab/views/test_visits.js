@@ -11,6 +11,9 @@ class Visit extends Factory {
         return {
           lab_id: localStorage.getItem("lab_hash"),
           test_id: $("#test").val(),
+          doctor: $("#doctor").val(),
+          startDate: $("#startDate").val(),
+          endDate: $("#endDate").val(),
         };
       },
       [
@@ -23,6 +26,7 @@ class Visit extends Factory {
                         `;
           },
         },
+        { data: "doctor" },
         { data: "visit_date" },
         {
           data: null,

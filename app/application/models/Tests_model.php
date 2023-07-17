@@ -172,13 +172,22 @@ class Tests_model extends CI_Model
         return $query->result_array();
     }
 
-    function getVistsByTest($lab, $test, $start, $length, $search)
+    function getVistsByTest($lab, $test, $start, $length, $search, $dector, $start_date, $end_date)
     {
         $query = $this->db->query("
-        SELECT (select name from lab_patient where lab_patient.hash = lab_visits.visits_patient_id) as name ,lab_visits.hash,visit_date, tests_id FROM lab_visits_tests 
+        SELECT 
+            (select name from lab_patient where lab_patient.hash = lab_visits.visits_patient_id) as name,
+            lab_doctor.name as doctor,
+            lab_visits.hash,
+            visit_date,
+            tests_id
+        FROM lab_visits_tests 
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
         where tests_id='$test' and lab_id='$lab'
         and (name like '%$search%' or visit_date like '%$search%')
+        and visit_date <= '$end_date' and visit_date >= '$start_date'
+        and doctor_hash = '$dector'
         and lab_visits.isdeleted = 0
         group by lab_visits.hash,tests_id
         order by lab_visits.id desc
@@ -187,8 +196,11 @@ class Tests_model extends CI_Model
         $count = $this->db->query("
         SELECT count(*) as count FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
         where tests_id='$test' and lab_id='$lab'
         and (name like '%$search%' or visit_date like '%$search%')
+        and visit_date <= '$end_date' and visit_date >= '$start_date'
+        and doctor_hash = '$dector'
         and lab_visits.isdeleted = 0
         group by lab_visits.hash,tests_id
         order by lab_visits.id desc
