@@ -2128,7 +2128,6 @@ function manageInvoiceHeight(invoiceId = null) {
   if (invoiceId) {
     $(`#${invoiceId} .page .center2 .tester .test:visible`).each(function () {
       let eleHeight = $(this).outerHeight();
-      console.log($(this), eleHeight);
       allTestsElements.push({
         html: $(this).clone(),
         eleHeight,
@@ -2139,7 +2138,6 @@ function manageInvoiceHeight(invoiceId = null) {
     $(".book-result:visible .page .center2 .tester .test:visible").each(
       function () {
         let eleHeight = $(this).outerHeight();
-        console.log($(this), eleHeight);
         allTestsElements.push({
           html: $(this).clone(),
           eleHeight,
@@ -2213,7 +2211,7 @@ function addTestToInvoice(
         }
       }
       height += test.eleHeight;
-      if (height <= center2Scroll + 30) {
+      if (height <= center2Scroll - 20) {
         invoice.find(".center2 .tester").append(test.html);
         allTestsElements = allTestsElements.slice(1);
       } else {
