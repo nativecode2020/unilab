@@ -243,14 +243,14 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 3px;
+    /* margin-top: 3px; */
     margin-bottom: 3px;
     padding: 2px;
     border-bottom: 2px solid var(--color-orange);
     border-radius: 0px;
     resize: vertical;
     font-weight: bold;
-    margin-top: 35px;
+    margin-top: 40px;
     /* display: flex;
     align-items: center;
     flex-direction: row;
@@ -266,9 +266,9 @@
     justify-content: center; */
 }
 
-/* first test type in tester margin top 10px only */
-.typetest:first-child {
-    margin-top: 10px;
+/* get .tester first chilt with class typetest */
+.typetest:first {
+    margin-left: 15pxpx;
 }
 
 .typetest p {
