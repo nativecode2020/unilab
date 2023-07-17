@@ -2213,12 +2213,12 @@ function addTestToInvoice(
       if (test?.html?.hasClass("typetest")) {
         lastTestType = test;
         test.html = test.html.clone();
-        if (center2Scroll - height < testTypeHeight + testHeadHeight + 30) {
+        if (center2Scroll - height < testTypeHeight + testHeadHeight + 70) {
           break;
         }
       }
       height += test.eleHeight;
-      if (height <= center2Scroll) {
+      if (height <= center2Scroll - 30) {
         invoice.find(".center2 .tester").append(test.html);
         allTestsElements = allTestsElements.slice(1);
       } else {
