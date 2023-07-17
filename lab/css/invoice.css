@@ -250,7 +250,7 @@
     border-radius: 0px;
     resize: vertical;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 10px;
     /* display: flex;
     align-items: center;
     flex-direction: row;
@@ -267,8 +267,8 @@
 }
 
 /* get .tester first chilt with class typetest */
-.tester .typetest:first-child  {
-    margin-top: 15px;
+.tester > .typetest ~ .typetest  {
+    margin-top: 40px;
 }
 
 .typetest p {
