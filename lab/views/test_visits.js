@@ -69,16 +69,31 @@ $(function () {
   $("div.addCustomItem").html(
     `<span class="table-title">قائمة التحاليل</span>`
   );
-  let tests = run(`
+  let data = run(`
         SELECT test_id,(select name from lab_package where package_id=lab_package.hash) as name FROM lab_pakage_tests
         where lab_pakage_tests.lab_id = ${localStorage.getItem("lab_hash")}
         group by name ;
-    `).result[0].query0;
+        SELECT name,hash FROM lab_doctor where lab_id = ${localStorage.getItem(
+          "lab_hash"
+        )} and isdeleted =0;
+    `).result;
+  let tests = data[0].query0;
+  let doctors = data[1].query1;
+  $("#doctor").append(`<option value="">كل الاطباء</option>`);
+  doctors.forEach((doctor) => {
+    $("#doctor").append(
+      `<option value="${doctor.hash}">${doctor.name}</option>`
+    );
+  });
   tests.forEach((test) => {
     $("#test").append(`<option value="${test.test_id}">${test.name}</option>`);
   });
   $("#test").select2({
     dropdownParent: $("#test").parent(),
+    width: "100%",
+  });
+  $("#doctor").select2({
+    dropdownParent: $("#doctor").parent(),
     width: "100%",
   });
 });
