@@ -2150,7 +2150,7 @@ function manageInvoiceHeight(invoiceId = null) {
   let cloneInvoice = $(".book-result:visible .page").first().clone();
   cloneInvoice.find(".center2 .tester").empty();
   let center2 = $(".book-result:visible .center2:last");
-  let center2Scroll = center2.height() - 400;
+  let center2Scroll = center2.height() - 350;
   let invoices = addTestToInvoice(
     center2Scroll,
     allTestsElements,
@@ -2318,11 +2318,11 @@ function manageHead(type) {
                 <div class="col-3">
                     <p class="text-right">Test Name</p>
                 </div>
-                <div class="col-2 justify-content-between">
-                    <p class="text-center w-75">Result</p>
+                <div class="col-3 justify-content-between">
+                    <p class="text-center w-100">Result</p>
                 </div>
-                <div class="col-2 justify-content-between">
-                    <p class="text-center w-75">Flag</p>
+                <div class="col-1 justify-content-between">
+                    <p class="text-center w-100">Flag</p>
                 </div>
                 <div class="col-2">
                     <p class="text-right">Unit</p>
@@ -2378,14 +2378,14 @@ function manageTestType(type, test = {}) {
                 <div class="testname col-3">
                     <p class="text-right w-100">${name}</p>
                 </div>
-                <div class="testresult col-2">
-                    <p class="${color} w-75 text-center">${result ?? ""}</p>
+                <div class="testresult col-3">
+                    <p class="${color} w-100 text-center">${result ?? ""}</p>
                 </div>
-                <div class="testresult col-2">
+                <div class="testresult col-1">
                     ${
                       name == "Blood Group (ABO)"
                         ? ""
-                        : `<p class="${color} w-75 text-center">${flag}</p>`
+                        : `<p class="${color} w-100 text-center">${flag}</p>`
                     }
                 </div>
                 <div class="testresult col-2">
