@@ -1673,7 +1673,7 @@ function getNormalRange(finalResult = "", range = []) {
   } else if (low == "") {
     normalRange = (name ? `${name} : ` : "") + " <= " + high;
   } else if (high == "") {
-    normalRange = (name ? `${name} : ` : "") + low + " >= ";
+    normalRange = (name ? `${name} : ` : "") + low + " <= ";
   }
   if (parseFloat(finalResult) < parseFloat(low)) {
     color = "text-info p-1 border border-dark";
@@ -1718,13 +1718,13 @@ function normalTestRange(finalResult = "", refrence) {
           ...returnResult,
           normalRange: range
             .map((item) => {
-              let { name = "", low = "<=", high = ">=" } = item;
+              let { name = "", low = "<=", high = "<=" } = item;
               if (low != "" && high != "") {
                 return (name ? `${name} : ` : "") + low + " - " + high;
               } else if (low == "") {
                 return (name ? `${name} : ` : "") + " <= " + high;
               } else if (high == "") {
-                return (name ? `${name} : ` : "") + low + " >= ";
+                return (name ? `${name} : ` : "") + low + " <= ";
               }
             })
             .join("<br>"),
