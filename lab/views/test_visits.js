@@ -26,7 +26,7 @@ class Visit extends Factory {
                         `;
           },
         },
-        { data: "doctor" },
+        // { data: "doctor" },
         { data: "visit_date" },
         {
           data: null,
