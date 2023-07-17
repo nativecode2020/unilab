@@ -267,7 +267,7 @@
 }
 
 /* get .tester first chilt with class typetest */
-.typetest:first {
+.tester .typetest:first-child  {
     margin-left: 15px;
 }
 
