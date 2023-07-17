@@ -2206,7 +2206,7 @@ function addTestToInvoice(
       if (test?.html?.hasClass("typetest")) {
         lastTestType = test;
         test.html = test.html.clone();
-        if (center2Scroll - height < testTypeHeight + testHeadHeight + 70) {
+        if (center2Scroll - height < testTypeHeight + testHeadHeight + 100) {
           break;
         }
       }
