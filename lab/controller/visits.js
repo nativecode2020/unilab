@@ -2218,7 +2218,7 @@ function addTestToInvoice(
         }
       }
       height += test.eleHeight;
-      if (height <= center2Scroll - 10) {
+      if (height <= center2Scroll - 20) {
         invoice.find(".center2 .tester").append(test.html);
         allTestsElements = allTestsElements.slice(1);
       } else {
