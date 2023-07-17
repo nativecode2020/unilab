@@ -77,14 +77,14 @@ $(function () {
   // do function after 2 seconds
   setTimeout(() => {
     updateFooter();
-  }, 500);
+  }, 300);
 });
 
 const search = () => {
   incomes.dataTable.ajax.reload();
   setTimeout(() => {
     updateFooter();
-  }, 500);
+  }, 300);
 };
 
 const updateFooter = () => {
@@ -122,11 +122,17 @@ const updateFooter = () => {
 $("#incomes-table").on("page.dt", function () {
   setTimeout(() => {
     updateFooter();
-  }, 500);
+  }, 300);
 });
 
 $('input[type="search"]').on("keydown", function () {
   setTimeout(() => {
     updateFooter();
-  }, 500);
+  }, 300);
+});
+
+$("select[]name=incomes-table_length").on("change", function () {
+  setTimeout(() => {
+    updateFooter();
+  }, 300);
 });
