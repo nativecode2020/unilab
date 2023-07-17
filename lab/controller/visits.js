@@ -599,7 +599,7 @@ function manageRange(reference) {
         } else if (low == "") {
           normalRange = (name ? `${name} : ` : "") + " <= " + high;
         } else if (high == "") {
-          normalRange = (name ? `${name} : ` : "") + low + " >= ";
+          normalRange = (name ? `${name} : ` : "") + low + " <= ";
         }
         return normalRange;
       })
