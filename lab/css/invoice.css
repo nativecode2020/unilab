@@ -583,8 +583,8 @@
     }
 }
 
-.testresult .text-info,
-.testresult .text-danger {
+.result-field.testresult .text-info,
+.result-field.testresult .text-danger {
     box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.75);

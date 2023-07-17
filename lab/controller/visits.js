@@ -2378,7 +2378,7 @@ function manageTestType(type, test = {}) {
                 <div class="testname col-3">
                     <p class="text-right w-100">${name}</p>
                 </div>
-                <div class="testresult col-3">
+                <div class="testresult result-field col-3">
                     <p class="${color} w-100 text-center">${result ?? ""}</p>
                 </div>
                 <div class="testresult col-1">
