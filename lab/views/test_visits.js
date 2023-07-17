@@ -107,5 +107,5 @@ $("#test").on("change", function () {
 });
 
 const search = () => {
-  incomes.dataTable.ajax.reload();
+  lab_visits.dataTable.ajax.reload();
 };
