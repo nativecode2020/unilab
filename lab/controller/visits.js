@@ -1676,10 +1676,10 @@ function getNormalRange(finalResult = "", range = []) {
     normalRange = (name ? `${name} : ` : "") + low + " >= ";
   }
   if (parseFloat(finalResult) < parseFloat(low)) {
-    color = "text-info p-1 ";
+    color = "text-info p-1 border border-dark";
     flag = "L";
   } else if (parseFloat(finalResult) > parseFloat(high)) {
-    color = "text-danger p-1 ";
+    color = "text-danger p-1 border border-dark";
     flag = "H";
   } else {
     color = "text-dark";
@@ -2385,7 +2385,13 @@ function manageTestType(type, test = {}) {
                     ${
                       name == "Blood Group (ABO)"
                         ? ""
-                        : `<p class="${color} w-100 text-center">${flag}</p>`
+                        : `<p class="${
+                            color.includes("text-danger")
+                              ? "text-danger"
+                              : color.includes("text-info")
+                              ? "text-info"
+                              : ""
+                          } w-100 text-center">${flag}</p>`
                     }
                 </div>
                 <div class="testresult col-2">
