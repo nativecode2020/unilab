@@ -2110,7 +2110,6 @@ function setInvoiceStyle() {
 }
 
 function manageInvoiceHeight(invoiceId = null) {
-  // get all categories of tests in current invoice
   const elementsWithClasses = document.querySelectorAll(
     '.typetest[class*="category_"]'
   );
@@ -2124,13 +2123,9 @@ function manageInvoiceHeight(invoiceId = null) {
       $(`.${cat}`).hide();
     }
   }
-
-  // get all tests in current invoice and calculate height
   let allTestsElements = [];
   let allInvoiceTestsHeight = 0;
   if (invoiceId) {
-    // loop on all tests in current invoice and calculate height of all tests
-    // and push them in allTestsElements array
     $(`#${invoiceId} .page .center2 .tester .test:visible`).each(function () {
       let eleHeight = $(this).outerHeight();
       allTestsElements.push({
@@ -2151,13 +2146,11 @@ function manageInvoiceHeight(invoiceId = null) {
       }
     );
   }
-  // clone invoice and empty tests
+
   let cloneInvoice = $(".book-result:visible .page").first().clone();
   cloneInvoice.find(".center2 .tester").empty();
-  let center2 = $(".book-result:visible .center2:last .tester");
-
-  let center2Scroll = center2.height();
-
+  let center2 = $(".book-result:visible .center2:last");
+  let center2Scroll = center2.height() - 200;
   let invoices = addTestToInvoice(
     center2Scroll,
     allTestsElements,
@@ -2228,8 +2221,6 @@ function addTestToInvoice(
     invoices.push(invoice);
   }
   if (allTestsElements.length > 0) {
-    console.log("more tests");
-    console.log(allTestsElements);
     invoices = [
       ...invoices,
       ...addTestToInvoice(
@@ -2240,8 +2231,6 @@ function addTestToInvoice(
         lastTestType
       ),
     ];
-  } else {
-    console.log("no more tests");
   }
   return invoices;
 }
