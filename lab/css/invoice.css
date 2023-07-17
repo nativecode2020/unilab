@@ -268,7 +268,7 @@
 
 /* get .tester first chilt with class typetest */
 .tester .typetest:first-child  {
-    margin-left: 15px;
+    margin-top: 15px;
 }
 
 .typetest p {
