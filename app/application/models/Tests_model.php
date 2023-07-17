@@ -187,8 +187,9 @@ class Tests_model extends CI_Model
         left join lab_patient on lab_patient.hash = lab_visits.patient_hash
         where tests_id='$test' and lab_visits_tests.lab_id='$lab'
         and (lab_patient.name like '%$search%' or visit_date like '%$search%' or lab_doctor.name like '%$search%')
-        and visit_date <= '$end_date' and visit_date >= '$start_date'
-        and doctor_hash = '$dector'
+        " . $start_date == '' ? '' : "and visit_date >= '$start_date'" . "
+        " . $end_date == '' ? '' : "and visit_date <= '$end_date'" . "
+        " . $dector == '' ? '' : "and doctor_hash = '$dector'" . "
         and lab_visits.isdeleted = 0
         group by lab_visits.hash,tests_id
         order by lab_visits.id desc
@@ -201,8 +202,9 @@ class Tests_model extends CI_Model
         left join lab_patient on lab_patient.hash = lab_visits.patient_hash
         where tests_id='$test' and lab_visits_tests.lab_id='$lab'
         and (lab_patient.name like '%$search%' or visit_date like '%$search%' or lab_doctor.name like '%$search%')
-        and visit_date <= '$end_date' and visit_date >= '$start_date'
-        and doctor_hash = '$dector'
+        " . $start_date == '' ? '' : "and visit_date >= '$start_date'" . "
+        " . $end_date == '' ? '' : "and visit_date <= '$end_date'" . "
+        " . $dector == '' ? '' : "and doctor_hash = '$dector'" . "
         and lab_visits.isdeleted = 0
         group by lab_visits.hash,tests_id
         order by lab_visits.id desc

@@ -112,9 +112,9 @@ class Tests extends CI_Controller
         $draw = intval($this->input->post("draw"));
         $start = intval($this->input->post("start")) ?? 0;
         $length = intval($this->input->post("length")) ?? 10;
-        $doctor = $this->input->post("doctor");
-        $from = $this->input->post("startDate") ?? date("Y-m-d");
-        $to = $this->input->post("endDate") ?? date("Y-m-d");
+        $doctor = $this->input->post("doctor") ?? "";
+        $from = $this->input->post("startDate") == "" ? date("Y-m-d") : $this->input->post("startDate");
+        $to = $this->input->post("endDate") == "" ? date("Y-m-d") : $this->input->post("endDate");
         // Tests_model->getVistsByTest return data and count
         $array = $this->Tests_model->getVistsByTest($lab, $test, $start, $length, $search, $doctor, $from, $to);
         $total_rows = $array["count"] ?? 0;
