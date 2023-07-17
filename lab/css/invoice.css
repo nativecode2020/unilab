@@ -266,6 +266,11 @@
     justify-content: center; */
 }
 
+/* first test type in tester margin top 10px only */
+.tester .typetest:first-child {
+    margin-top: 10px;
+}
+
 .typetest p {
     display: block;
     margin-block-start: 5px;
