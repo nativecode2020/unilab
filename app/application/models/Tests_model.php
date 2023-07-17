@@ -176,7 +176,7 @@ class Tests_model extends CI_Model
     {
         $query = $this->db->query("
         SELECT 
-            (select name from lab_patient where lab_patient.hash = lab_visits.visits_patient_id) as name,
+            lab_patient.name as name,
             lab_doctor.name as doctor,
             lab_visits.hash,
             visit_date,
@@ -184,8 +184,9 @@ class Tests_model extends CI_Model
         FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
+        left join lab_patient on lab_patient.hash = lab_visits.patient_hash
         where tests_id='$test' and lab_visits_tests.lab_id='$lab'
-        and (lab_visits_tests.name like '%$search%' or visit_date like '%$search%')
+        and (lab_patient.name like '%$search%' or visit_date like '%$search%' or lab_doctor.name like '%$search%')
         and visit_date <= '$end_date' and visit_date >= '$start_date'
         and doctor_hash = '$dector'
         and lab_visits.isdeleted = 0
@@ -197,8 +198,9 @@ class Tests_model extends CI_Model
         SELECT count(*) as count FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
+        left join lab_patient on lab_patient.hash = lab_visits.patient_hash
         where tests_id='$test' and lab_visits_tests.lab_id='$lab'
-        and (lab_visits_tests.name like '%$search%' or visit_date like '%$search%')
+        and (lab_patient.name like '%$search%' or visit_date like '%$search%' or lab_doctor.name like '%$search%')
         and visit_date <= '$end_date' and visit_date >= '$start_date'
         and doctor_hash = '$dector'
         and lab_visits.isdeleted = 0
