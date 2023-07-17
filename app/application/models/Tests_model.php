@@ -181,7 +181,7 @@ class Tests_model extends CI_Model
             lab_visits.hash,
             visit_date,
             tests_id
-        FROM lab_visits_tests. 
+        FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
         where tests_id='$test' and lab_visits_tests.lab_id='$lab'
