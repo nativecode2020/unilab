@@ -184,7 +184,7 @@ class Tests_model extends CI_Model
         FROM lab_visits_tests 
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
-        where tests_id='$test' and lab_id='$lab'
+        where tests_id='$test' and lab_visits_tests.lab_id='$lab'
         and (name like '%$search%' or visit_date like '%$search%')
         and visit_date <= '$end_date' and visit_date >= '$start_date'
         and doctor_hash = '$dector'
@@ -197,7 +197,7 @@ class Tests_model extends CI_Model
         SELECT count(*) as count FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
-        where tests_id='$test' and lab_id='$lab'
+        where tests_id='$test' and lab_visits_tests.lab_id='$lab'
         and (name like '%$search%' or visit_date like '%$search%')
         and visit_date <= '$end_date' and visit_date >= '$start_date'
         and doctor_hash = '$dector'
