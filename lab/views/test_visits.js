@@ -30,6 +30,8 @@ class Visit extends Factory {
         },
         { data: "doctor" },
         { data: "visit_date" },
+        { data: "cost" },
+
         { data: "price" },
 
         {
