@@ -11,21 +11,26 @@ class ActivateCode extends CI_Model
     }
 
 
-    public function active($lab, $code){
+    public function active($lab, $code)
+    {
         $check = $this->check($code);
-        if($check){
+        if ($check) {
             $this->insert($code, $lab);
             $this->db->where('number', $code);
-            $this->db->update('activation_code', array(
-                'status' => 1,
-            ));
+            $this->db->update(
+                'activation_code',
+                array(
+                    'status' => 1,
+                )
+            );
             return $this->db->affected_rows();
-        }else{
+        } else {
             return false;
         }
     }
 
-    public function check($code){
+    public function check($code)
+    {
         $this->db->select('count(*) as count');
         $this->db->from('activation_code');
         $this->db->where('number', $code);
@@ -33,18 +38,22 @@ class ActivateCode extends CI_Model
         $query = $this->db->get();
         $result = $query->result_array();
         $count = $result[0]['count'];
-        if($count >= 0){
+        if ($count = 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public function insert($code, $lab){
-        $this->db->insert('activation_code_used_by', array(
-            'code_number' => $code,
-            'lab_hash' => $lab,
-        ));
+    public function insert($code, $lab)
+    {
+        $this->db->insert(
+            'activation_code_used_by',
+            array(
+                'code_number' => $code,
+                'lab_hash' => $lab,
+            )
+        );
         return $this->db->affected_rows();
     }
 
