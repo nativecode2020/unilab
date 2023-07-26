@@ -13,7 +13,7 @@ const selectedTestsElement = document.getElementById("test_searsh");
 const doctorElement = document.getElementById("doctor");
 // search button
 const searchButtonElement = document.getElementById("searchQ");
-
+// first day of current month
 $(startDateElement).val(new Date().toISOString().slice(0, 10));
 $(endDateElement).val(new Date().toISOString().slice(0, 10));
 
@@ -53,7 +53,9 @@ const getTests = async () => {
     .then((response) => response.json())
     .then((json) => {
       testsElement.innerHTML = "";
-      console.log(json);
+      json?.data?.forEach((test) => {
+        testsElement.innerHTML += test(test);
+      });
     })
     .catch((error) => {
       console.log(error);
