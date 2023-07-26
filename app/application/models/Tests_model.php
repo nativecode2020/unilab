@@ -220,6 +220,8 @@ class Tests_model extends CI_Model
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
         left join lab_patient on lab_patient.hash = lab_visits.visits_patient_id
+        left join lab_package on lab_package.hash = lab_visits_tests.package_id
+
         where tests_id='$test' and lab_visits_tests.lab_id='$lab'
         and (lab_patient.name like '%$search%' or visit_date like '%$search%' or lab_doctor.name like '%$search%')
         $start_date $end_date $doctor
