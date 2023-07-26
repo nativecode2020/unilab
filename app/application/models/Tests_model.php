@@ -227,7 +227,7 @@ class Tests_model extends CI_Model
         $start_date $end_date $doctor
 
         and lab_visits.isdeleted = 0
-        group by lab_visits.hash,tests_id
+        
         order by lab_visits.id desc
         ");
         // get only one row
