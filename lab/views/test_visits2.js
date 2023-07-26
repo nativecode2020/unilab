@@ -19,7 +19,7 @@ $(endDateElement).val(new Date().toISOString().slice(0, 10));
 
 const addTest = (test) => {
   // show cost and price
-  return `<div class="card col-4">
+  return `<div class="card col-4 my-3">
     <div class="card-header">
       <h5 class="card-title">${test.name}</h5>
     </div>
