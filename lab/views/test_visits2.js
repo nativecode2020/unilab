@@ -18,12 +18,17 @@ $(startDateElement).val(new Date().toISOString().slice(0, 10));
 $(endDateElement).val(new Date().toISOString().slice(0, 10));
 
 const addTest = (test) => {
-  return `<div class="card">
-    <div class="card-body">
-      <h5 class="card-title">${test.test_name}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">${test.price}</h6>
-      <p class="card-text">${test.cost}</p>
+  // show cost and price
+  return `<div class="card col-4">
+    <div class="card-header">
+      <h5 class="card-title">${test.name}</h5>
     </div>
+    <div class="card-body">
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">الزيارات: ${test.count}</li>
+      <li class="list-group-item">التكلفة: ${test.cost}</li>
+      <li class="list-group-item">السعر: ${test.price}</li>
+    </ul>
   </div>`;
 };
 
