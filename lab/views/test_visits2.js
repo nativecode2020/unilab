@@ -81,4 +81,5 @@ $(function () {
     dropdownParent: $(doctorElement).parent(),
     width: "100%",
   });
+  getTests();
 });
