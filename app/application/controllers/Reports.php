@@ -17,12 +17,13 @@ class Reports extends CI_Controller
         $token = str_replace("Bearer ", "", $token);
         $decoded_array = $this->jwt_dec($token);
         if ($decoded_array == 0) {
-            echo json_encode(array(
-                "status" => false,
-                "message" => "Invalid token",
-                "isAuth" => false,
-                "data" => null
-            ), JSON_UNESCAPED_UNICODE);
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => false,
+                    "data" => null
+                ), JSON_UNESCAPED_UNICODE);
             exit();
         } else {
             $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
@@ -46,6 +47,9 @@ class Reports extends CI_Controller
             "draw" => $this->input->post('draw'),
             "recordsTotal" => $data["recordsTotal"],
             "recordsFiltered" => $data["recordsFiltered"],
+            "total_price" => $data["total_price"],
+            "net_price" => $data["net_price"],
+            "dicount" => $data["dicount"],
             "data" => $data["data"],
             "search" => '',
             "user" => $user,

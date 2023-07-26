@@ -29,7 +29,11 @@ class Patient extends Factory {
           className: "text-success center",
           defaultContent: '<i class="fas fa-plus"></i>',
         },
-      ]
+      ],
+      {},
+      (json) => {
+        console.log(json);
+      }
     );
   }
 

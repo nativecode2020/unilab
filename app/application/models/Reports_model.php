@@ -62,8 +62,11 @@ class Reports_model extends CI_Model
         $query = $this->db->get();
         return array(
             "data" => $query->result_array(),
-            "recordsTotal" => $count,
-            "recordsFiltered" => $count,
+            "recordsTotal" => $count['count'],
+            "recordsFiltered" => $count['count'],
+            "total_price" => $count['total_price'],
+            "net_price" => $count['net_price'],
+            "dicount" => $count['dicount'],
             "startDate" => $startDate,
             "endDate" => $endDate
         );
@@ -71,7 +74,8 @@ class Reports_model extends CI_Model
 
     public function getVisitsCount($labId, $search, $startDate, $endDate, $doctor, $user)
     {
-        $this->db->select('count(*) as count');
+        $this->db->select('count(*) as count,sum(total_price) as total_price');
+        $this->db->select('sum(net_price) as net_price,sum(dicount) as dicount');
         $this->db->from('lab_visits');
         $this->db->where('labId', $labId);
         $this->db->where('isdeleted', 0);
@@ -89,6 +93,6 @@ class Reports_model extends CI_Model
         }
         $query = $this->db->get();
         $result = $query->result_array();
-        return $result[0]['count'];
+        return $result[0];
     }
 }

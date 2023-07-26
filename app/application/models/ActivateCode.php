@@ -37,8 +37,15 @@ class ActivateCode extends CI_Model
         $this->db->where('status', 0);
         $query = $this->db->get();
         $result = $query->result_array();
-        $count = $result[0]['count'];
-        if ($count = 0) {
+        $count_of_codes = $result[0]['count'];
+        // get count of codes used by
+        $this->db->select('count(*) as count');
+        $this->db->from('activation_code_used_by');
+        $this->db->where('code_number', $code);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        $count_of_codes_used_by = $result[0]['count'];
+        if ($count_of_codes >= 0 && !$count_of_codes_used_by) {
             return true;
         } else {
             return false;
