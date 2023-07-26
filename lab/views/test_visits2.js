@@ -20,7 +20,7 @@ $(endDateElement).val(new Date().toISOString().slice(0, 10));
 const addTest = (test) => {
   // show cost and price
   return `
-  <div class="col-12 col-md-6 col-lg-4 my-2">
+  <div class="col-12 col-md-4 col-lg-3 col-xl-2 my-4">
     <div class="card">
       <div class="card-header text-center text-capitalize">
         <h5 class="card-title h3">${test.test_name}</h5>
@@ -75,13 +75,13 @@ const getTests = async () => {
           testsElement.innerHTML += addTest(test);
         });
       } else {
-        testsElement.innerHTML = `<h1 class="col-12 my-4 text-center alert alert-danger">
+        testsElement.innerHTML = `<h1 class="col-6 my-4 text-center alert alert-danger">
         لا توجد نتائج
       </h1>`;
       }
     })
     .catch((error) => {
-      testsElement.innerHTML = `<h1 class="col-12 my-4 tet-center alert alert-danger">
+      testsElement.innerHTML = `<h1 class="col-6 my-4 tet-center alert alert-danger">
         لا توجد نتائج
       </h1>`;
     });
