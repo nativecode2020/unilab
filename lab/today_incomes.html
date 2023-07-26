@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/new_style.css">
     <style>
-        input{
+        input {
             min-height: 47.99px;
             border-color: #aaa;
         }
@@ -43,7 +43,7 @@
 
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -61,8 +61,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -93,13 +93,15 @@
                                     <div class="form-group col-3">
                                         <label for="startDate" class="">من تاريخ</label>
                                         <div class="col-sm-12">
-                                            <input type="date" class="form-control form-control-sm" name="startDate" id="startDate" placeholder="">
+                                            <input type="date" class="form-control form-control-sm" name="startDate"
+                                                id="startDate" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="endDate" class="">الي تاريخ</label>
                                         <div class="col-sm-12">
-                                            <input type="date" class="form-control form-control-sm" name="endDate" id="endDate" placeholder="">
+                                            <input type="date" class="form-control form-control-sm" name="endDate"
+                                                id="endDate" placeholder="">
                                         </div>
                                     </div>
                                     <!-- doctor -->
@@ -120,7 +122,8 @@
                                     </div>
                                     <div class="w-100"></div>
                                     <div class="form-group col-3">
-                                        <input class="btn btn-primary h-50 mt-3 col-11" onclick="search()" type="submit" id="searchQ" value="ابحث">
+                                        <input class="btn btn-primary h-50 mt-3 col-11" onclick="search()" type="submit"
+                                            id="searchQ" value="ابحث">
                                     </div>
                                 </div>
                                 <table id="incomes-table" class="style1">
@@ -139,7 +142,10 @@
                                     </tbody>
                                     <tfoot class="tfoot">
                                         <tr>
-                                            <th>الاجمالي</th>
+                                            <th>
+                                                الاجمالي
+                                                <p id="total">0</p>
+                                            </th>
                                             <th></th>
                                             <th></th>
                                             <th class="text-center" id="totalPrice"></th>
@@ -170,7 +176,7 @@
     <script src="plugins/table/datatable/datatables.js"></script>
     <script src="plugins/table/datatable/respon.js"></script>
     <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
@@ -179,7 +185,7 @@
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             App.init();
         });
     </script>

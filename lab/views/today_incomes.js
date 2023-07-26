@@ -32,7 +32,10 @@ class Patient extends Factory {
       ],
       {},
       (json) => {
-        console.log(json);
+        $("#totalPrice").text(json?.total_price ?? 0);
+        $("#totalDiscount").text(json?.dicount ?? 0);
+        $("#totalFinalPrice").text(json?.net_price ?? 0);
+        $("#total").text(json?.recordsTotal ?? 0);
       }
     );
   }
@@ -77,66 +80,8 @@ $(function () {
     dropdownParent: $("#user").parent(),
     width: "100%",
   });
-
-  // do function after 2 seconds
-  setTimeout(() => {
-    updateFooter();
-  }, 300);
 });
 
 const search = () => {
   incomes.dataTable.ajax.reload();
-  setTimeout(() => {
-    updateFooter();
-  }, 300);
 };
-
-const updateFooter = () => {
-  let totalPriceTh = $("#incomes-table")
-    .find("tbody")
-    .find("tr")
-    .find("td:nth-child(6)");
-  let totalPrice = 0;
-  totalPriceTh.each(function () {
-    totalPrice += parseInt($(this).text());
-  });
-  $("#totalPrice").text(totalPrice);
-  // discount
-  let discountTh = $("#incomes-table")
-    .find("tbody")
-    .find("tr")
-    .find("td:nth-child(5)");
-  let discount = 0;
-  discountTh.each(function () {
-    discount += parseInt($(this).text());
-  });
-  $("#totalDiscount").text(discount);
-  // net price
-  let netPriceTh = $("#incomes-table")
-    .find("tbody")
-    .find("tr")
-    .find("td:nth-child(4)");
-  let netPrice = 0;
-  netPriceTh.each(function () {
-    netPrice += parseInt($(this).text());
-  });
-  $("#totalFinalPrice").text(netPrice);
-};
-
-$("#incomes-table").on("page.dt", function () {
-  setTimeout(() => {
-    updateFooter();
-  }, 300);
-});
-
-$('input[type="search"]').on("keydown", function () {
-  setTimeout(() => {
-    updateFooter();
-  }, 300);
-});
-
-$("select[name='incomes-table_length']").on("change", function () {
-  setTimeout(() => {
-    updateFooter();
-  }, 300);
-});
