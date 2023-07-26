@@ -52,7 +52,13 @@ class Visit extends Factory {
           className: "text-success center",
           defaultContent: '<i class="fas fa-plus"></i>',
         },
-      ]
+      ],
+      {},
+      (json) => {
+        $("#cost").text(json?.cost ?? 0);
+        $("#price").text(json?.price ?? 0);
+        $("#total").text(json?.recordsTotal ?? 0);
+      }
     );
   }
 
