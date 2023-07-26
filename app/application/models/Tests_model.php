@@ -212,7 +212,11 @@ class Tests_model extends CI_Model
         limit $start,$length
         ");
         $count = $this->db->query("
-        SELECT count(*) as count FROM lab_visits_tests
+        SELECT 
+            count(*) as count,
+            sum(lab_package.price) as price,
+            sum(lab_package.cost) as cost
+        FROM lab_visits_tests
         inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
         left join lab_patient on lab_patient.hash = lab_visits.visits_patient_id
@@ -229,7 +233,9 @@ class Tests_model extends CI_Model
         if (count($count) > 0) {
             return array(
                 'count' => $count[0]['count'],
-                'data' => $query->result_array()
+                'data' => $query->result_array(),
+                'price' => $count[0]['price'],
+                'cost' => $count[0]['cost']
             );
         } else {
             return array(

@@ -118,6 +118,8 @@ class Tests extends CI_Controller
         // Tests_model->getVistsByTest return data and count
         $array = $this->Tests_model->getVistsByTest($lab, $test, $start, $length, $search, $doctor, $from, $to);
         $total_rows = $array["count"] ?? 0;
+        $price = $array["price"] ?? 0;
+        $cost = $array["cost"] ?? 0;
         $packages = $array["data"];
         $output = array(
             "draw" => $draw,
