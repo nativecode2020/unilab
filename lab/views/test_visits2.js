@@ -41,7 +41,7 @@ const getTests = async () => {
   formData.append("selectedTests", selectedTests);
   formData.append("doctor", doctor);
 
-  const response = await fetch(`${base_url}Tests/getVistsByTests`, {
+  await fetch(`${base_url}Tests/getVisitsByTests`, {
     method: "POST",
     body: formData,
     // token
@@ -51,6 +51,7 @@ const getTests = async () => {
   })
     .then((response) => response.json())
     .then((json) => {
+      testsElement.innerHTML = "";
       console.log(json);
     })
     .catch((error) => {

@@ -134,7 +134,7 @@ class Tests extends CI_Controller
         exit();
     }
 
-    public function getVistsByTests()
+    public function getVisitsByTests()
     {
         $tests = $this->input->post('tests');
         $lab = $this->input->post('lab_id');
@@ -142,7 +142,7 @@ class Tests extends CI_Controller
         $from = $this->input->post("startDate") == "" ? date("Y-m-d") : $this->input->post("startDate");
         $to = $this->input->post("endDate") == "" ? date("Y-m-d") : $this->input->post("endDate");
         // Tests_model->getVistsByTest return data and count
-        $data = $this->Tests_model->getVistsByTests($lab, $tests, $doctor, $from, $to);
+        $data = $this->Tests_model->getVisitsByTests($lab, $tests, $doctor, $from, $to);
         $output = array(
             "data" => $data,
         );
