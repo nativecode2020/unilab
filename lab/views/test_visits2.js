@@ -19,15 +19,24 @@ $(endDateElement).val(new Date().toISOString().slice(0, 10));
 
 const addTest = (test) => {
   // show cost and price
-  return `<div class="card col-4 my-3">
-    <div class="card-header">
-      <h5 class="card-title">${test.name}</h5>
+  return `<div class="card col-3 p-0 my-4 ">
+    <div class="card-header text-center text-capitalize">
+      <h5 class="card-title h3">${test.test_name}</h5>
     </div>
-    <div class="card-body">
+    <div class="card-body h5">
     <ul class="list-group list-group-flush">
-    <li class="list-group-item">الزيارات: ${test.count}</li>
-      <li class="list-group-item">التكلفة: ${test.cost}</li>
-      <li class="list-group-item">السعر: ${test.price}</li>
+    <li class="list-group-item">
+      <span class="w-50">الزيارات : </span>
+      <span class="badge badge-primary badge-pill">${test.count}</span>
+    </li>
+    <li class="list-group-item">
+      <span class="w-50">التكلفة : </span>
+      <span class="badge badge-primary badge-pill">${test.cost}</span>
+    </li>
+    <li class="list-group-item">
+      <span class="w-50">السعر : </span>
+      <span class="badge badge-primary badge-pill">${test.price}</span>
+    </li>
     </ul>
   </div>`;
 };
@@ -57,13 +66,21 @@ const getTests = async () => {
   })
     .then((response) => response.json())
     .then((json) => {
-      testsElement.innerHTML = "";
-      json?.data?.forEach((test) => {
-        testsElement.innerHTML += addTest(test);
-      });
+      if (json.data.length > 0) {
+        testsElement.innerHTML = "";
+        json.data.forEach((test) => {
+          testsElement.innerHTML += addTest(test);
+        });
+      } else {
+        testsElement.innerHTML = `<h1 class="col-12 my-4 tet-center alert alert-danger">
+        لا توجد نتائج
+      </h1>`;
+      }
     })
     .catch((error) => {
-      console.log(error);
+      testsElement.innerHTML = `<h1 class="col-12 my-4 tet-center alert alert-danger">
+        لا توجد نتائج
+      </h1>`;
     });
 };
 
