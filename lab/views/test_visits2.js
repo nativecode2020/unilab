@@ -62,6 +62,9 @@ const getTests = async () => {
     });
 };
 
+// search button click event
+searchButtonElement.addEventListener("click", getTests);
+
 $(function () {
   let data = run(`
         SELECT test_id,(select name from lab_package where package_id=lab_package.hash) as name FROM lab_pakage_tests
