@@ -30,7 +30,8 @@ const test = (test) => {
 const getTests = async () => {
   const startDate = startDateElement.value;
   const endDate = endDateElement.value;
-  const selectedTests = selectedTestsElement.value;
+  // selectedTestsElement is a multiple select2 element
+  const selectedTests = $(selectedTestsElement).val();
   console.log("selectedTests", selectedTests);
   const doctor = doctorElement.value;
 
@@ -47,8 +48,14 @@ const getTests = async () => {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-  });
-  console.log("response", response);
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 $(function () {
