@@ -126,7 +126,9 @@ class Tests extends CI_Controller
             "recordsTotal" => $total_rows,
             "recordsFiltered" => $total_rows,
             "data" => $packages,
-            "search" => $search
+            "search" => $search,
+            "price" => $price,
+            "cost" => $cost
         );
         echo json_encode($output);
         exit();
