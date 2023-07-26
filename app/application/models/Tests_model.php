@@ -246,4 +246,42 @@ class Tests_model extends CI_Model
             );
         }
     }
+
+    public function getVisitsByTests($lab, $tests, $doctor, $start_date, $end_date)
+    {
+        if ($doctor == '') {
+            $doctor = '';
+        } else {
+            $doctor = "and lab_doctor.hash = '$doctor'";
+        }
+        if ($start_date == '') {
+            $start_date = '';
+        } else {
+            $start_date = "and visit_date >= '$start_date'";
+        }
+        if ($end_date == '') {
+            $end_date = '';
+        } else {
+            $end_date = "and visit_date <= '$end_date'";
+        }
+        $query = $this->db->query("
+        SELECT 
+            count(*) as count,
+            sum(lab_package.price) as price,
+            sum(lab_package.cost) as cost
+        FROM lab_visits_tests
+        inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
+        left join lab_patient on lab_patient.hash = lab_visits.visits_patient_id
+        left join lab_package on lab_package.hash = lab_visits_tests.package_id
+
+        where tests_id in ($tests) and lab_visits_tests.lab_id='$lab'
+        $start_date $end_date $doctor
+        and lab_visits.isdeleted = 0
+        group by lab_visits.hash,tests_id
+        order by lab_visits.id desc");
+        // get all rows
+        $result = $query->result_array();
+        return $result;
+    }
 }
