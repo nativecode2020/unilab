@@ -42,7 +42,7 @@ const addTest = (test) => {
       <li class="list-group-item">
         <span class="w-50">الربح : </span>
         <span class="badge badge-primary badge-pill">${
-          test.cost - test.price
+          test.price - test.cost
         }</span>
       </li>
       </ul>
