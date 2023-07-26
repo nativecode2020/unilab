@@ -38,8 +38,9 @@ const getTests = async () => {
   const formData = new FormData();
   formData.append("startDate", startDate);
   formData.append("endDate", endDate);
-  formData.append("selectedTests", selectedTests);
+  formData.append("tests", selectedTests);
   formData.append("doctor", doctor);
+  formData.append("lab_id", localStorage.getItem("lab_hash"));
 
   await fetch(`${base_url}Tests/getVisitsByTests`, {
     method: "POST",
