@@ -39,6 +39,12 @@ const addTest = (test) => {
         <span class="w-50">السعر : </span>
         <span class="badge badge-primary badge-pill">${test.price}</span>
       </li>
+      <li class="list-group-item">
+        <span class="w-50">الربح : </span>
+        <span class="badge badge-primary badge-pill">${
+          test.cost - test.price
+        }</span>
+      </li>
       </ul>
     </div>
   </div>`;
@@ -71,7 +77,7 @@ const getTests = async () => {
     .then((json) => {
       if (json.data.length > 0) {
         testsElement.innerHTML = "";
-        json.data.forEach((test) => {
+        json.data.reverse().forEach((test) => {
           testsElement.innerHTML += addTest(test);
         });
       } else {
