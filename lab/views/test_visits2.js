@@ -17,10 +17,10 @@ const searchButtonElement = document.getElementById("searchQ");
 $(startDateElement).val(new Date().toISOString().slice(0, 10));
 $(endDateElement).val(new Date().toISOString().slice(0, 10));
 
-const test = (test) => {
+const addTest = (test) => {
   return `<div class="card">
     <div class="card-body">
-      <h5 class="card-title">${test.name}</h5>
+      <h5 class="card-title">${test.test_name}</h5>
       <h6 class="card-subtitle mb-2 text-muted">${test.price}</h6>
       <p class="card-text">${test.cost}</p>
     </div>
@@ -54,7 +54,7 @@ const getTests = async () => {
     .then((json) => {
       testsElement.innerHTML = "";
       json?.data?.forEach((test) => {
-        testsElement.innerHTML += test(test);
+        testsElement.innerHTML += addTest(test);
       });
     })
     .catch((error) => {
