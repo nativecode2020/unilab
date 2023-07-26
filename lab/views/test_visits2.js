@@ -10,7 +10,7 @@ const endDateElement = document.getElementById("endDate");
 // selected tests
 const selectedTestsElement = document.getElementById("test_searsh");
 // doctor
-const doctorElement = document.getElementById("docotor");
+const doctorElement = document.getElementById("doctor");
 // search button
 const searchButtonElement = document.getElementById("searchQ");
 
@@ -76,6 +76,7 @@ $(function () {
   $(selectedTestsElement).select2({
     dropdownParent: $(selectedTestsElement).parent(),
     width: "100%",
+    multiple: true,
   });
   $(doctorElement).select2({
     dropdownParent: $(doctorElement).parent(),
