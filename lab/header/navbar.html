@@ -10,10 +10,18 @@
 <!--  BEGIN NAVBAR  -->
 <header class="header navbar navbar-expand-sm">
 
-    <a type="button" class="sidebarCollapse" onclick="sidebarCollapse()" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+    <a type="button" class="sidebarCollapse" onclick="sidebarCollapse()" data-placement="bottom"><svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-menu">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg></a>
 
     <div class="nav-logo align-self-center">
-        <a class="navbar-brand" href="profile.html"><img alt="logo" src="assets/image/flask.png" class="navbar-logo"> <span class="navbar-brand-name">Nativecode</span></a>
+        <a class="navbar-brand" href="profile.html"><img alt="logo" src="assets/image/flask.png" class="navbar-logo">
+            <span class="navbar-brand-name">Nativecode</span></a>
     </div>
 
     <ul class="navbar-item topbar-navigation">
@@ -34,21 +42,23 @@
 
                 <ul class="list-unstyled menu-categories" id="topAccordion">
 
-                    
+
                 </ul>
             </nav>
         </div>
         <!--  END TOPBAR  -->
 
     </ul>
-    
+
     <ul class="navbar-item flex-row nav-dropdowns ml-auto">
 
         <li class="nav-item user-profile-dropdown order-lg-0 order-1">
-            <a href="" class="nav-link dropdown-toggle user logout" id="user-profile-dropdown" >
+            <a href="" class="nav-link dropdown-toggle user logout" id="user-profile-dropdown">
                 <div class="media">
                     <i class="fas fa-sign-out-alt text-primary"></i>
-					<p style="padding-right: 14px;font-family: 'Cairo';font-size: 14px;font-weight: 600;margin-bottom: 1px;">تسجيل خروج</p>
+                    <p
+                        style="padding-right: 14px;font-family: 'Cairo';font-size: 14px;font-weight: 600;margin-bottom: 1px;">
+                        تسجيل خروج</p>
                 </div>
             </a>
 
@@ -130,6 +140,15 @@
                 </a>
                     </li>
 
+                    <li>
+                        <a href="${front_url}test_visits2.html">
+                    <div class="">
+                        <i class="fas fa-chart-pie-alt fa-lg mr-2"></i>
+                        <span>تقرير التحاليل 2</span>
+                    </div>
+                </a>
+                    </li>
+
                 </ul>
             </li>
             <li class="menu single-menu">
@@ -174,8 +193,8 @@
             </li>
             `;
             break;
-        
-            default:
+
+        default:
             navBar.innerHTML = `
             <li class="menu single-menu">
                 <a href="${front_url}index.html">
