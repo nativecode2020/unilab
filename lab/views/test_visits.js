@@ -54,11 +54,7 @@ class Visit extends Factory {
         },
       ],
       {},
-      (json) => {
-        $("#cost").text(json?.cost ?? 0);
-        $("#price").text(json?.price ?? 0);
-        $("#total").text(json?.recordsTotal ?? 0);
-      }
+      
     );
   }
 
