@@ -271,15 +271,14 @@ class Tests_model extends CI_Model
             sum(lab_package.price) as price,
             sum(lab_package.cost) as cost
         FROM lab_visits_tests
-        inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
+        join lab_package on lab_package.hash = lab_visits_tests.package_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
-        left join lab_patient on lab_patient.hash = lab_visits.visits_patient_id
-        left join lab_package on lab_package.hash = lab_visits_tests.package_id
 
         where tests_id in ($tests) and lab_visits_tests.lab_id='$lab'
         $start_date $end_date $doctor
         and lab_visits.isdeleted = 0
-        group by lab_package.name
+        group by lab_package.id
         order by lab_visits.id desc");
         // get all rows
         $result = $query->result_array();
