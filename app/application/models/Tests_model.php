@@ -279,7 +279,7 @@ class Tests_model extends CI_Model
         where tests_id in ($tests) and lab_visits_tests.lab_id='$lab'
         $start_date $end_date $doctor
         and lab_visits.isdeleted = 0
-        group by tests_id
+        group by lab_package.name
         order by lab_visits.id desc");
         // get all rows
         $result = $query->result_array();
