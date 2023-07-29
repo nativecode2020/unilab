@@ -266,7 +266,7 @@ class Tests_model extends CI_Model
         }
         $query = $this->db->query("
         SELECT 
-            (select test_name from lab_test where id = tests_id) as test_name,
+            lab_package.name as test_name,
             count(*) as count,
             sum(lab_package.price) as price,
             sum(lab_package.cost) as cost

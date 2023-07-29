@@ -2484,7 +2484,7 @@ const getPatientHistory = (patient, date) => {
 function downloadPdf() {
   let svgs = $("svg.border-print-hover");
   if (svgs.length == 0)
-    return niceSwal("error", "top-end", "لا يوجد نتائج للطباعة");
+    return niceSwal("error", "top-end", "يجب عليك اختيار فاتورة اولا");
   let oldId = $(`.book-result:visible`).attr("id");
   $(`#${oldId}`).css("display", "none");
   // get data-id
