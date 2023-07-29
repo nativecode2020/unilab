@@ -266,19 +266,20 @@ class Tests_model extends CI_Model
         }
         $query = $this->db->query("
         SELECT 
-            lab_package.name as test_name,
+            (select test_name from lab_test where lab_test.hash = tests_id) as test_name,
             count(*) as count,
             sum(lab_package.price) as price,
             sum(lab_package.cost) as cost
         FROM lab_visits_tests
-        join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
-        join lab_package on lab_package.hash = lab_visits_tests.package_id
+        inner join lab_visits on lab_visits.hash = lab_visits_tests.visit_id
         left join lab_doctor on lab_doctor.hash = lab_visits.doctor_hash
+        left join lab_patient on lab_patient.hash = lab_visits.visits_patient_id
+        left join lab_package on lab_package.hash = lab_visits_tests.package_id
 
         where tests_id in ($tests) and lab_visits_tests.lab_id='$lab'
         $start_date $end_date $doctor
         and lab_visits.isdeleted = 0
-        group by lab_package.id
+        group by tests_id
         order by lab_visits.id desc");
         // get all rows
         $result = $query->result_array();
