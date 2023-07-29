@@ -2483,6 +2483,8 @@ const getPatientHistory = (patient, date) => {
 
 function downloadPdf() {
   let svgs = $("svg.border-print-hover");
+  if (svgs.length == 0)
+    return niceSwal("error", "top-end", "لا يوجد نتائج للطباعة");
   let oldId = $(`.book-result:visible`).attr("id");
   $(`#${oldId}`).css("display", "none");
   // get data-id
