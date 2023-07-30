@@ -22,6 +22,15 @@ async function offlineLogin() {
         localStorage.setItem("logo", result.logo);
         await updateExpireDate();
         let user_type = result.user_type;
+        if (
+          result.lab_id == 0 ||
+          result.lab_id == null ||
+          result.lab_id === undefined
+        ) {
+          document.getElementById("message").innerHTML =
+            "ليس لديك صلاحية دخول جرب مرة اخري الرجاء التواصل مع الدعم الفني";
+          return;
+        }
         if (user_type == "2" || user_type == "111") {
           location.href = `${__domain__}lab/index.html`;
         } else {

@@ -18,12 +18,15 @@ class Activate extends CI_Controller
         $token = str_replace("Bearer ", "", $token);
         $decoded_array = $this->jwt_dec($token);
         if ($decoded_array == 0) {
-            echo json_encode(array(
-                "status" => false,
-                "message" => "Invalid token",
-                "isAuth" => $token,
-                "data" => $decoded_array
-            ), JSON_UNESCAPED_UNICODE);
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => $token,
+                    "data" => $decoded_array
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
             exit();
         } else {
             $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
@@ -42,11 +45,12 @@ class Activate extends CI_Controller
         $code = $this->input->post('code');
         $lab = $this->input->post('lab');
         $hash = $this->input->post('hash');
+
         // check code, lab
-        if (strlen($code) == 0 || strlen($lab) == 0) {
+        if (strlen($code) == 0 || strlen($lab) == 0 || $code == 0 || $lab == 0) {
             $output = array(
                 "status" => 400,
-                "message" => "الرجاء ادخال جميع البيانات",
+                "message" => "الرجاء ادخال جميع البيانات بشكل صحيح",
             );
             echo json_encode($output);
             exit();
