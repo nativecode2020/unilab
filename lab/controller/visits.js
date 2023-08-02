@@ -2148,13 +2148,14 @@ function manageInvoiceHeight(invoiceId = null) {
   }
 
   let cloneInvoice = $(".book-result:visible .page").first().clone();
-  let invoiceId = $(".book-result:visible").attr("id");
+  let bookResultInvoiceId = $(".book-result:visible").attr("id");
   cloneInvoice.find(".center2 .tester").empty();
   let center2 = $(".book-result:visible .center2:last");
-  if (invoiceId == "invoice-normalTests") {
-    let center2Scroll = center2.height() - 400;
+  let center2Scroll;
+  if (bookResultInvoiceId == "invoice-normalTests") {
+    center2Scroll = center2.height() - 400;
   } else {
-    let center2Scroll = center2.height() - 200;
+    center2Scroll = center2.height() - 200;
   }
   let invoices = addTestToInvoice(
     center2Scroll,
