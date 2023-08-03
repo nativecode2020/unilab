@@ -143,7 +143,10 @@ class Tests_model extends CI_Model
         $this->db->select('kit_id');
         $this->db->from('device_kit');
         $this->db->where('is_deleted', 0);
-        $this->db->where_in('device_id', $devices);
+        // check if devices is not empty
+        if (count($devices) > 0) {
+            $this->db->where_in('device_id', $devices);
+        }
         $query = $this->db->get();
         // get array of devices
         $kits = $query->result_array();
