@@ -390,8 +390,8 @@ class Visit extends Factory {
         select 
             test_id as id,
             package_id,
-            (select test_name from lab_test where lab_test.hash = lab_pakage_tests.test_id) as name,
-            (select catigory_id from lab_package where lab_package.hash = lab_pakage_tests.package_id) as catigory_id
+            (select test_name from lab_test where lab_test.hash = lab_pakage_tests.test_id limit 1) as name,
+            (select catigory_id from lab_package where lab_package.hash = lab_pakage_tests.package_id limit 1) as catigory_id
         from 
             lab_pakage_tests where package_id in (${insertedPackages});`)
       .result[0].query0;
@@ -513,8 +513,8 @@ class Visit extends Factory {
         select 
             test_id as id,
             package_id,
-            (select test_name from lab_test where lab_test.hash = lab_pakage_tests.test_id) as name,
-            (select catigory_id from lab_package where lab_package.hash = lab_pakage_tests.package_id) as catigory_id
+            (select test_name from lab_test where lab_test.hash = lab_pakage_tests.test_id limit 1) as name,
+            (select catigory_id from lab_package where lab_package.hash = lab_pakage_tests.package_id limit 1) as catigory_id
         from 
             lab_pakage_tests where package_id in (${insertedPackages});`)
       .result[0].query0;
