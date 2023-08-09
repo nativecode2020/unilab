@@ -657,6 +657,7 @@ class Visit extends Factory {
   }
 
   createModal() {
+    $("#all-tests-and-packages").append(this.createTests());
     let modal = `<div class="modal fade" id = "${
       this.modalId
     }" tabindex="-1" role="dialog" aria-labelledby="${
