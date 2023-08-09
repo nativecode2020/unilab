@@ -1055,8 +1055,8 @@ function changeTotalPrice(hash) {
   }
   document.querySelector("#net_price").value = netPrice;
   // show_selected_test dwon scrool for dwon
-  let show_selected_test = document.querySelector("#show_selected_tests");
-  show_selected_test.scrollTop = show_selected_test.scrollHeight;
+  // let show_selected_test = document.querySelector("#show_selected_tests");
+  // show_selected_test.scrollTop = show_selected_test.scrollHeight;
 }
 
 function showSelectedTests(hash, name, show = true) {
