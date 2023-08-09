@@ -689,38 +689,38 @@ class Visit extends Factory {
                     </div>
                     <div class="col-md-12">
                         <div class="searchable-container packages-search">
-                            <div class="searchable-items my-3 border-0 row" id="offers">
-                                ${packages
-                                  .filter((item) => item.type == "9")
-                                  .map((item) => {
-                                    return `
-                                <div class="n-chk item text-left mb-3 col-auto">
-                                <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
-                                  item.hash
-                                })" onmouseleave="$(this).popover('hide')">
-                                    <!--
-                                (<span class="text-danger w-100">${
-                                  item.kit_name
-                                }</span>)
+                            <div class="my-3 border-0 row" id="offers">
+                            ${packages
+                              .filter((item) => item.type == "9")
+                              .map((item) => {
+                                return `
+                            <div class="n-chk item text-left mb-3 col-auto">
+                            <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
+                              item.hash
+                            })" onmouseleave="$(this).popover('hide')">
+                                <!--
+                            (<span class="text-danger w-100">${
+                              item.kit_name
+                            }</span>)
 
-                                    -->
-                                    <input type="checkbox" onclick="changeTotalPrice('${
-                                      item.hash
-                                    }')" class="new-control-input testSelect" data-name="${
-                                      item.name
-                                    }" data-price="${item.price}" value="${
-                                      item.hash
-                                    }" id="package_${item.hash}" >
-                                    <span class="new-control-indicator m-3 "></span><span class="ml-4">${
-                                      item.name
-                                    }</span><p class="">IQD ${parseInt(
-                                      item.price
-                                    )?.toLocaleString()} </p>
-                                </label>
-                            </div>
-                                `;
-                                  })
-                                  .join("")}
+                                -->
+                                <input type="checkbox" onclick="changeTotalPrice('${
+                                  item.hash
+                                }')" class="new-control-input testSelect" data-name="${
+                                  item.name
+                                }" data-price="${item.price}" value="${
+                                  item.hash
+                                }" id="package_${item.hash}" >
+                                <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                  item.name
+                                }</span><p class="">IQD ${parseInt(
+                                  item.price
+                                )?.toLocaleString()} </p>
+                            </label>
+                        </div>
+                            `;
+                              })
+                              .join("")}
                             </div>
                         </div>
                     </div>
