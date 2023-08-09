@@ -671,6 +671,109 @@ class Visit extends Factory {
     // $('body').append(modal);
   }
 
+  createTests() {
+    return `<div class="statbox widget box box-shadow bg-white main-visit-tests mt-4">
+    <div class="widget-content widget-content-area m-auto h-100" >
+        <div class="modal-header d-flex justify-content-center">
+            <h3 class="modal-title">التحاليل</h3>
+        </div>
+        <div class="row justify-content-center h-100 m-auto" style="width: 95%;">
+            <div class="col-12 mt-3">
+                <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
+            </div>
+            <div class="col-6" style="overflow-y: scroll; height:60%;">
+                <div class="row justify-content-between">
+                    <div class=" col-md-12  my-3 px-5">
+                        <h3>التحاليل</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="searchable-container packages-search">
+                            <div class="searchable-items my-3 border-0" id="offers">
+                                ${packages
+                                  .filter((item) => item.type == "9")
+                                  .map((item) => {
+                                    return `
+                                <div class="n-chk item text-left mb-3">
+                                <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
+                                  item.hash
+                                })" onmouseleave="$(this).popover('hide')">
+                                    <!--
+                                (<span class="text-danger w-100">${
+                                  item.kit_name
+                                }</span>)
+
+                                    -->
+                                    <input type="checkbox" onclick="changeTotalPrice('${
+                                      item.hash
+                                    }')" class="new-control-input testSelect" data-name="${
+                                      item.name
+                                    }" data-price="${item.price}" value="${
+                                      item.hash
+                                    }" id="package_${item.hash}" >
+                                    <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                      item.name
+                                    }</span><p class="">IQD ${parseInt(
+                                      item.price
+                                    )?.toLocaleString()} </p>
+                                </label>
+                            </div>
+                                `;
+                                  })
+                                  .join("")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6" style="overflow-y: scroll;height:60%;">
+                <div class="row justify-content-between">
+                    <div class=" col-md-12  my-3 px-5">
+                        <h3>العروض</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="searchable-container packages-search">
+                            <div class="searchable-items my-3 border-0" id="offers">
+                                ${packages
+                                  .filter((item) => item.type != "9")
+                                  .filter(
+                                    (value, index, self) =>
+                                      index ===
+                                      self.findIndex(
+                                        (t) => t.name === value.name
+                                      )
+                                  )
+                                  .map(
+                                    (item) => `
+                                    
+                                        <div class="n-chk item text-left mb-3">
+                                            <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
+                                                <input type="checkbox" onclick="changeTotalPrice('${
+                                                  item.hash
+                                                }')" class="new-control-input testSelect" data-name="${
+                                      item.name
+                                    }" data-price="${item.price}" value="${
+                                      item.hash
+                                    }" id="package_${item.hash}" >
+                                                <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                                  item.name
+                                                }</span><p class="">IQD ${parseInt(
+                                      item.price
+                                    )?.toLocaleString()} </p>
+                                            </label>
+                                        </div>
+                                `
+                                  )
+                                  .join("")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>`;
+  }
+
   createForm() {
     return `
         <div class="statbox widget box box-shadow bg-white main-visit-form">
@@ -786,106 +889,7 @@ class Visit extends Factory {
             </div>
         </div>
     </div>
-    <div class="statbox widget box box-shadow bg-white main-visit-tests mt-4">
-        <div class="widget-content widget-content-area m-auto h-100" >
-            <div class="modal-header d-flex justify-content-center">
-                <h3 class="modal-title">التحاليل</h3>
-            </div>
-            <div class="row justify-content-center h-100 m-auto" style="width: 95%;">
-                <div class="col-12 mt-3">
-                    <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
-                </div>
-                <div class="col-6" style="overflow-y: scroll; height:60%;">
-                    <div class="row justify-content-between">
-                        <div class=" col-md-12  my-3 px-5">
-                            <h3>التحاليل</h3>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="searchable-container packages-search">
-                                <div class="searchable-items my-3 border-0" id="offers">
-                                    ${packages
-                                      .filter((item) => item.type == "9")
-                                      .map((item) => {
-                                        return `
-                                    <div class="n-chk item text-left mb-3">
-                                    <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
-                                      item.hash
-                                    })" onmouseleave="$(this).popover('hide')">
-                                        <!--
-                                    (<span class="text-danger w-100">${
-                                      item.kit_name
-                                    }</span>)
-
-                                        -->
-                                        <input type="checkbox" onclick="changeTotalPrice('${
-                                          item.hash
-                                        }')" class="new-control-input testSelect" data-name="${
-                                          item.name
-                                        }" data-price="${item.price}" value="${
-                                          item.hash
-                                        }" id="package_${item.hash}" >
-                                        <span class="new-control-indicator m-3 "></span><span class="ml-4">${
-                                          item.name
-                                        }</span><p class="">IQD ${parseInt(
-                                          item.price
-                                        )?.toLocaleString()} </p>
-                                    </label>
-                                </div>
-                                    `;
-                                      })
-                                      .join("")}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6" style="overflow-y: scroll;height:60%;">
-                    <div class="row justify-content-between">
-                        <div class=" col-md-12  my-3 px-5">
-                            <h3>العروض</h3>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="searchable-container packages-search">
-                                <div class="searchable-items my-3 border-0" id="offers">
-                                    ${packages
-                                      .filter((item) => item.type != "9")
-                                      .filter(
-                                        (value, index, self) =>
-                                          index ===
-                                          self.findIndex(
-                                            (t) => t.name === value.name
-                                          )
-                                      )
-                                      .map(
-                                        (item) => `
-                                        
-                                            <div class="n-chk item text-left mb-3">
-                                                <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
-                                                    <input type="checkbox" onclick="changeTotalPrice('${
-                                                      item.hash
-                                                    }')" class="new-control-input testSelect" data-name="${
-                                          item.name
-                                        }" data-price="${item.price}" value="${
-                                          item.hash
-                                        }" id="package_${item.hash}" >
-                                                    <span class="new-control-indicator m-3 "></span><span class="ml-4">${
-                                                      item.name
-                                                    }</span><p class="">IQD ${parseInt(
-                                          item.price
-                                        )?.toLocaleString()} </p>
-                                                </label>
-                                            </div>
-                                    `
-                                      )
-                                      .join("")}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="modal-footer">
         <button type="button" class="btn btn-main-add" onclick="fireSwal.call(${
           this.table
