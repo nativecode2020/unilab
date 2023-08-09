@@ -688,7 +688,7 @@ class Visit extends Factory {
                         <h3>التحاليل</h3>
                     </div>
                     <div class="col-md-12">
-                        <div class="searchable-container m-0 packages-search">
+                        <div class="searchable-container m-0 packages-search" style="max-width: 100%;">
                             <div class="my-3 border-0 row" id="offers">
                             ${packages
                               .filter((item) => item.type == "9")
