@@ -732,7 +732,7 @@ class Visit extends Factory {
                                 .map(
                                   (item) => `
                                   
-                                      <div class="n-chk item text-left mb-3">
+                                      <div class="n-chk item text-left mb-3 col-auto">
                                           <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
                                               <input type="checkbox" onclick="changeTotalPrice('${
                                                 item.hash
