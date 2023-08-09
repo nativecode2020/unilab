@@ -684,11 +684,11 @@ class Visit extends Factory {
             </div>
             <div class="col-12" style="overflow-y: scroll; height:60%;">
                 <div class="row justify-content-between">
-                    <div class=" col-md-12  my-3 px-5">
+                    <div class=" col-md-12  my-3 px-5 text-center">
                         <h3>التحاليل</h3>
                     </div>
                     <div class="col-md-12">
-                        <div class="searchable-container packages-search">
+                        <div class="searchable-container m-0 packages-search">
                             <div class="my-3 border-0 row" id="offers">
                             ${packages
                               .filter((item) => item.type == "9")
@@ -755,7 +755,7 @@ class Visit extends Factory {
                     </div>
                 </div>
             </div>
-            <div class="col-12" style="overflow-y: scroll;height:60%;">
+            <!--<div class="col-12" style="overflow-y: scroll;height:60%;">
                 <div class="row justify-content-between">
                     <div class=" col-md-12  my-3 px-5">
                         <h3>العروض</h3>
@@ -768,7 +768,7 @@ class Visit extends Factory {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
             </div>`;
