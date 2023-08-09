@@ -688,13 +688,13 @@ class Visit extends Factory {
                         <h3>التحاليل</h3>
                     </div>
                     <div class="col-md-12">
-                        <div class="searchable-container packages-search row">
-                            <div class="searchable-items my-3 border-0 col-auto" id="offers">
+                        <div class="searchable-container packages-search">
+                            <div class="searchable-items my-3 border-0 row" id="offers">
                                 ${packages
                                   .filter((item) => item.type == "9")
                                   .map((item) => {
                                     return `
-                                <div class="n-chk item text-left mb-3">
+                                <div class="n-chk item text-left mb-3 col-auto">
                                 <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
                                   item.hash
                                 })" onmouseleave="$(this).popover('hide')">
