@@ -682,7 +682,7 @@ class Visit extends Factory {
             <div class="col-12 mt-3">
                 <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
             </div>
-            <div class="col-6" style="overflow-y: scroll; height:60%;">
+            <div class="col-12" style="overflow-y: scroll; height:60%;">
                 <div class="row justify-content-between">
                     <div class=" col-md-12  my-3 px-5">
                         <h3>التحاليل</h3>
@@ -721,12 +721,41 @@ class Visit extends Factory {
                             `;
                               })
                               .join("")}
+                              ${packages
+                                .filter((item) => item.type != "9")
+                                .filter(
+                                  (value, index, self) =>
+                                    index ===
+                                    self.findIndex((t) => t.name === value.name)
+                                )
+                                .map(
+                                  (item) => `
+                                  
+                                      <div class="n-chk item text-left mb-3">
+                                          <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
+                                              <input type="checkbox" onclick="changeTotalPrice('${
+                                                item.hash
+                                              }')" class="new-control-input testSelect" data-name="${
+                                    item.name
+                                  }" data-price="${item.price}" value="${
+                                    item.hash
+                                  }" id="package_${item.hash}" >
+                                              <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                                item.name
+                                              }</span><p class="">IQD ${parseInt(
+                                    item.price
+                                  )?.toLocaleString()} </p>
+                                          </label>
+                                      </div>
+                              `
+                                )
+                                .join("")}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6" style="overflow-y: scroll;height:60%;">
+            <div class="col-12" style="overflow-y: scroll;height:60%;">
                 <div class="row justify-content-between">
                     <div class=" col-md-12  my-3 px-5">
                         <h3>العروض</h3>
@@ -734,37 +763,7 @@ class Visit extends Factory {
                     <div class="col-md-12">
                         <div class="searchable-container packages-search">
                             <div class="searchable-items my-3 border-0" id="offers">
-                                ${packages
-                                  .filter((item) => item.type != "9")
-                                  .filter(
-                                    (value, index, self) =>
-                                      index ===
-                                      self.findIndex(
-                                        (t) => t.name === value.name
-                                      )
-                                  )
-                                  .map(
-                                    (item) => `
-                                    
-                                        <div class="n-chk item text-left mb-3">
-                                            <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
-                                                <input type="checkbox" onclick="changeTotalPrice('${
-                                                  item.hash
-                                                }')" class="new-control-input testSelect" data-name="${
-                                      item.name
-                                    }" data-price="${item.price}" value="${
-                                      item.hash
-                                    }" id="package_${item.hash}" >
-                                                <span class="new-control-indicator m-3 "></span><span class="ml-4">${
-                                                  item.name
-                                                }</span><p class="">IQD ${parseInt(
-                                      item.price
-                                    )?.toLocaleString()} </p>
-                                            </label>
-                                        </div>
-                                `
-                                  )
-                                  .join("")}
+                                
                             </div>
                         </div>
                     </div>
