@@ -92,7 +92,7 @@ class Visit extends Factory {
               row.hash
             }')"><i class="far fa-eye"></i></a>
                             ${
-                              userType == "2"
+                              userType == "2" && row.ispayed == "0"
                                 ? `<a class="btn-action add" title="تعديل الزيارة" onclick="fireSwalWithoutConfirm.call(lab_visits, lab_visits.updateItem,'${row.hash}')"><i class="far fa-edit"></i></a>
                             <a class="btn-action delete" title="حذف الزيارة" onclick="fireSwalForDelete.call(lab_visits,lab_visits.deleteItem, '${row.hash}')"><i class="far fa-trash-alt"></i></a>`
                                 : ""

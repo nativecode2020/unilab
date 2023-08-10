@@ -35,7 +35,7 @@ class Visit_model extends CI_Model
     function getVisits($lab_id, $start, $length, $search, $current = 0)
     {
         // like
-        $this->db->select('lab_visits.hash as hash,visits_patient_id as patient_hash,lab_visits.name as name,visit_date,lab_patient.name as patient_name,(select name from lab_visit_status where hash=visits_status_id) as visit_type');
+        $this->db->select('lab_visits.hash as hash ,ispayed ,visits_patient_id as patient_hash,lab_visits.name as name,visit_date,lab_patient.name as patient_name,(select name from lab_visit_status where hash=visits_status_id) as visit_type');
         // inner join 
         $this->db->from('lab_visits');
         $this->db->join('lab_patient', 'lab_patient.hash = lab_visits.visits_patient_id');
@@ -60,11 +60,14 @@ class Visit_model extends CI_Model
     public function patient_history($patient_id, $visit_date)
     {
         $visits = $this->get_patient_visits($patient_id, $visit_date);
-        if (!isset($visits[0])) return [];
+        if (!isset($visits[0]))
+            return [];
         $last_visit_tests = $this->last_patient_visit_tests($patient_id);
-        if (!isset($last_visit_tests[0])) return [];
+        if (!isset($last_visit_tests[0]))
+            return [];
         $tests = $this->get_tests($visits, $last_visit_tests);
-        if (!isset($tests[0])) return [];
+        if (!isset($tests[0]))
+            return [];
         // map tests
         $tests = array_map(function ($test) {
             // decode result
@@ -98,7 +101,7 @@ class Visit_model extends CI_Model
         // limit not first visit
         $this->db->limit(15, 0);
         $query = $this->db->get();
-        $visits =  $query->result_array();
+        $visits = $query->result_array();
         $visits = array_column($visits, 'hash');
         return $visits;
     }
