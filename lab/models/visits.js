@@ -658,7 +658,10 @@ class Visit extends Factory {
 
   createModal() {
     // append top of div
-    $("#all-tests-and-packages").prepend(this.createTests());
+    $("#all-tests-content").prepend(this.createTests());
+    $("#all-packages-content").prepend(this.createPackages());
+    $("#save-button").prepend(this.createSaveButton());
+
     let modal = `<div class="modal fade" id = "${
       this.modalId
     }" tabindex="-1" role="dialog" aria-labelledby="${
@@ -674,20 +677,13 @@ class Visit extends Factory {
   }
 
   createTests() {
-    return `<div class="statbox widget box box-shadow bg-white main-visit-tests mt-4">
-    <div class="widget-content widget-content-area m-auto h-100" >
-        <div class="modal-header d-flex justify-content-center">
-            <h3 class="modal-title">التحاليل</h3>
-        </div>
-        <div class="row justify-content-center h-100 m-auto" style="width: 95%;">
+    return `
+        <div class="row justify-content-center h-100 m-auto">
             <div class="col-12 mt-3">
                 <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
             </div>
-            <div class="col-12" style="overflow-y: scroll; height:60%;">
+            <div class="col-12" style="overflow-y: scroll; height: 500px">
                 <div class="row justify-content-between">
-                    <div class=" col-md-12  my-3 px-5 text-center">
-                        <h3>التحاليل</h3>
-                    </div>
                     <div class="col-md-12">
                         <div class="searchable-container m-0 packages-search" style="max-width: 100%;">
                             <div class="my-3 border-0 row" id="offers">
@@ -695,7 +691,7 @@ class Visit extends Factory {
                               .filter((item) => item.type == "9")
                               .map((item) => {
                                 return `
-                            <div class="n-chk item text-left mb-3 col-auto">
+                            <div class="n-chk item test text-left mb-3 col-auto">
                             <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
                               item.hash
                             })" onmouseleave="$(this).popover('hide')">
@@ -722,6 +718,25 @@ class Visit extends Factory {
                             `;
                               })
                               .join("")}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+  }
+
+  createPackages() {
+    return `
+        <div class="row justify-content-center h-100 m-auto">
+            <div class="col-12 mt-3">
+                <input type="text" class="w-100 form-control product-search br-30" id="input-search-3" placeholder="ابحث عن العرض">
+            </div>
+            <div class="col-12" style="overflow-y: scroll; height: 500px">
+                <div class="row justify-content-between">
+                    <div class="col-md-12">
+                        <div class="searchable-container m-0 packages-search" style="max-width: 100%;">
+                            <div class="my-3 border-0 row" id="offers">
                               ${packages
                                 .filter((item) => item.type != "9")
                                 .filter(
@@ -732,7 +747,7 @@ class Visit extends Factory {
                                 .map(
                                   (item) => `
                                   
-                                      <div class="n-chk item text-left mb-3 col-auto">
+                                      <div class="n-chk item package text-left mb-3 col-auto">
                                           <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
                                               <input type="checkbox" onclick="changeTotalPrice('${
                                                 item.hash
@@ -756,23 +771,7 @@ class Visit extends Factory {
                     </div>
                 </div>
             </div>
-            <!--<div class="col-12" style="overflow-y: scroll;height:60%;">
-                <div class="row justify-content-between">
-                    <div class=" col-md-12  my-3 px-5">
-                        <h3>العروض</h3>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="searchable-container packages-search">
-                            <div class="searchable-items my-3 border-0" id="offers">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-        </div>
-    </div>
-            </div>`;
+        </div>`;
   }
 
   createForm() {
@@ -891,12 +890,16 @@ class Visit extends Factory {
         </div>
     </div>
     
-    <div class="modal-footer">
+    <!--<div class="modal-footer">
         <button type="button" class="btn btn-main-add" onclick="fireSwal.call(${
           this.table
         },${this.table}.saveNewItem)" id="${this.table}-save">حفظ</button>
-    </div>
+    </div>-->
     `;
+  }
+
+  createSaveButton() {
+    return `<button type="button" class="btn btn-main-add w-100" onclick="fireSwal.call(${this.table},${this.table}.saveNewItem)" id="${this.table}-save">حفظ</button>`;
   }
 
   deleteItem(hash) {
