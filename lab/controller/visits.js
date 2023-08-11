@@ -2519,6 +2519,14 @@ function downloadPdf() {
       $(`#${oldId}`).css("display", "block");
     },
   });
+
+  // get onclick attr from saveResultButton
+  let onclick = $("#saveResultButton").attr("onclick");
+  //get hash from onclick attr
+  let hash = onclick.split("'")[1];
+  console.log(hash);
+  // update ispayed to 1
+  run(`update lab_visits set ispayed="1" where hash='${hash}'`);
 }
 
 function printAfterSelect() {

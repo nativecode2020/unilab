@@ -115,16 +115,49 @@
                             </div>
 
                         </div>
-                        <div class="statbox widget box box-shadow bg-white mt-4 main-visit-selected-tests">
+                    </div>
+                    <div class="col-lg-12 mb-4">
+                        <div class="statbox widget box box-shadow bg-white main-visit-tests mt-4 h-100">
                             <div class="widget-content widget-content-area m-auto h-100">
                                 <div class="modal-header d-flex justify-content-center">
-                                    <h3 class="modal-title">التحاليل المختارة</h3>
+                                    <h3 class="modal-title">التحاليل</h3>
                                 </div>
-                                <div id="show_selected_tests" class="row m-auto"
-                                    style="overflow-y: scroll;width: 95%; height:65%">
+                                <ul class="nav nav-tabs border-0 row my-3" id="myTab" role="tablist">
+                                    <li class="nav-item col-lg-4" role="presentation">
+                                        <button class="w-100 text-center btn btn-action active" id="all-tests-tab"
+                                            data-toggle="tab" data-target="#all-tests" type="button" role="tab"
+                                            aria-controls="all-tests" aria-selected="true">التحاليل</button>
+                                    </li>
+                                    <li class="nav-item col-lg-4" role="presentation">
+                                        <button class="w-100 text-center btn btn-action" id="all-packages-tab"
+                                            data-toggle="tab" data-target="#all-packages" type="button" role="tab"
+                                            aria-controls="all-packages" aria-selected="false">العروض</button>
+                                    </li>
+                                    <li class="nav-item col-lg-4" role="presentation">
+                                        <button class="w-100 text-center btn btn-action" id="selected-tests-tab"
+                                            data-toggle="tab" data-target="#selected-tests" type="button" role="tab"
+                                            aria-controls="selected-tests" aria-selected="false">التحاليل
+                                            المختارة</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="all-tests" role="tabpanel"
+                                        aria-labelledby="all-tests-tab">
+                                        <div id="all-tests-content"></div>
+                                    </div>
+                                    <div class="tab-pane fade" id="all-packages" role="tabpanel"
+                                        aria-labelledby="all-packages-tab">
+                                        <div id="all-packages-content"></div>
+                                    </div>
+                                    <div class="tab-pane fade" id="selected-tests" role="tabpanel"
+                                        aria-labelledby="selected-tests-tab">
+                                        <div id="show_selected_tests" class="row m-auto"
+                                            style="overflow-y: scroll; height: 545.39px">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="row h-25 m-auto" style="width: 95%;">
-                                    <div class="col-4">
+                                <div class="row align-items-center mx-auto my-2">
+                                    <div class="col-3">
                                         <!-- السعر -->
                                         <div class="form-group">
                                             <label for="total_price">السعر</label>
@@ -134,7 +167,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <!-- الخصم -->
                                         <div class="form-group">
                                             <label for="dicount">الخصم</label>
@@ -143,7 +176,7 @@
                                                 onkeyup="netPriceChange()">
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <!-- الاجمالي -->
                                         <div class="form-group">
                                             <label for="net_price">الاجمالي</label>
@@ -151,8 +184,13 @@
                                                 placeholder="الاجمالي" disabled>
                                         </div>
                                     </div>
-                                </div>
 
+                                    <div class="col-3">
+                                        <div id="save-button">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
