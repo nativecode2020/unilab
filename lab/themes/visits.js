@@ -399,7 +399,7 @@ class TestsThemeTwo extends TestsTheme {
                 </div>
                 <div class="row justify-content-center h-100 m-auto" style="width: 95%;">
                     <div class="col-12 mt-3">
-                        <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
+                        <input type="text" class="w-100 form-control product-search br-30" id="input-search-all" placeholder="ابحث عن التحليل">
                     </div>
                     ${this.createTests(tests)}
                     ${this.createPackages(packages)}

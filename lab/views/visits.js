@@ -86,6 +86,21 @@ $(function () {
     </label>
     <span class="h-22 mt-1">اليوم</span>
   `);
+
+  $("#input-search-all").on("keyup change", function () {
+    var rex = new RegExp($(this).val(), "i");
+    $(".searchable-container .item").hide();
+    $(".searchable-container .items.package")
+      .filter(function () {
+        return rex.test($(this).text());
+      })
+      .show();
+    $(".searchable-container .item")
+      .filter(function () {
+        return rex.test($(this).text());
+      })
+      .show();
+  });
   $("#input-search-2").on("keyup change", function () {
     var rex = new RegExp($(this).val(), "i");
     $(".searchable-container .test").hide();
