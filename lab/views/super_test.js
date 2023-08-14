@@ -13,7 +13,18 @@ const createTheme = (kits, units) => {
   if (THEME) {
     return THEME;
   } else {
-    THEME = new TableTheme(kits, units);
+    let theme = localStorage.getItem("SuperTestTheme")?? "Form";
+    switch (theme) {
+      case "Form":
+        THEME = new FormTheme(kits, units);
+        break;
+      case "Table":
+        THEME = new TableTheme(kits, units);
+        break;
+      default:
+        THEME = new FormTheme(kits, units);
+        break;
+    }
   }
 };
 
@@ -122,7 +133,6 @@ class Test extends Factory {
           data: null,
           className: "center",
           render: function (data, type, test) {
-            
             return `<span class="row" id="test-${test.hash}">${getRefrences(
               test.option_test,
               test.hash

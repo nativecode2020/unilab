@@ -81,49 +81,28 @@
                 <div class="page-header">
                 </div>
 
-                <div class="row invoice layout-spacing justify-content-center">
-                    <div class="col-12">
-                        <ul class="nav nav-tabs border-0 row my-3" id="myTab" role="tablist">
-                            <li class="nav-item col-lg-4" role="presentation">
-                                <button class="w-100 text-center btn btn-action active" id="themeOne-tab"
-                                    data-toggle="tab" data-target="#themeOne" type="button" role="tab"
-                                    aria-controls="themeOne" aria-selected="true">الشكل الاول</button>
-                            </li>
-                            <li class="nav-item col-lg-4" role="presentation">
-                                <button class="w-100 text-center btn btn-action" id="themeTwo-tab" data-toggle="tab"
-                                    data-target="#themeTwo" type="button" role="tab" aria-controls="themeTwo"
-                                    aria-selected="false">الشكل الثاني</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="themeOne" role="tabpanel"
-                                aria-labelledby="themeOne-tab">
-                                <div class="row justify-content-center">
-                                    <div class="col-3">
-                                        <button class="btn btn-success btn-block" id="print-btn"
-                                            onclick="applyTheme('one')">
-                                            تطبيق الشكل الاول
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="themeOne-content">
-
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="themeTwo" role="tabpanel" aria-labelledby="themeTwo-tab">
-                                <div class="row justify-content-center">
-                                    <div class="col-3">
-                                        <button class="btn btn-success btn-block" id="print-btn"
-                                            onclick="applyTheme('two')">
-                                            تطبيق الشكل الثاني
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="themeTwo-content">
-
-                                </div>
-                            </div>
-                        </div>
+                <div class="row invoice layout-spacing justify-content-around">
+                    <div class="col-12 mb-4">
+                        <h1 class="text-center">شكل تحاليل الزيارات</h1>
+                    </div>
+                    <div class="col-5 border border-width-6px rounded theme" data-theme="visitTestsTheme"
+                        data-selectedTheme="one">
+                        <img src="assets/image/TestTheme1.PNG" alt="TestTheme1" width="100%" height="500px">
+                    </div>
+                    <div class="col-5 border border-width-6px rounded theme" data-theme="visitTestsTheme"
+                        data-selectedTheme="two">
+                        <img src="assets/image/TestTheme2.PNG" alt="TestTheme2" width="100%" height="500px">
+                    </div>
+                    <div class="col-12 mb-4 mt-5">
+                        <h1 class="text-center">شكل القيم الطبيعية</h1>
+                    </div>
+                    <div class="col-5 border border-width-6px rounded theme" data-theme="SuperTestTheme"
+                        data-selectedTheme="form">
+                        <img src="assets/image/SuperTest1.PNG" alt="TestTheme1" width="100%" height="500px">
+                    </div>
+                    <div class="col-5 border border-width-6px rounded theme" data-theme="SuperTestTheme"
+                        data-selectedTheme="table">
+                        <img src="assets/image/SuperTest2.PNG" alt="TestTheme2" width="100%" height="500px">
                     </div>
                 </div>
             </div>
@@ -149,8 +128,54 @@
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
+
+        // on ready function
         $(document).ready(function () {
-            App.init();
+            let visitTestsTheme = localStorage.getItem("visitTestsTheme") ?? "two";
+            let SuperTestTheme = localStorage.getItem("SuperTestTheme") ?? "form";
+
+            if (visitTestsTheme == "one") {
+                $(".theme[data-selectedTheme='two']").removeClass("border-info");
+                $(".theme[data-selectedTheme='one']").addClass("border-info");
+            } else if (visitTestsTheme == "two") {
+                $(".theme[data-selectedTheme='one']").removeClass("border-info");
+                $(".theme[data-selectedTheme='two']").addClass("border-info");
+            }
+
+            if (SuperTestTheme == "form") {
+                $(".theme[data-selectedTheme='table']").removeClass("border-info");
+                $(".theme[data-selectedTheme='form']").addClass("border-info");
+            } else if (SuperTestTheme == "table") {
+                $(".theme[data-selectedTheme='form']").removeClass("border-info");
+                $(".theme[data-selectedTheme='table']").addClass("border-info");
+            }
+        });
+        // when click on theme
+        $(".theme").click(function () {
+            // get theme name
+            var theme = $(this).data("theme");
+            // get selected theme
+            var selectedTheme = $(this).data("selectedtheme");
+            // set theme name in local storage
+            localStorage.setItem(theme, selectedTheme);
+
+            if (theme == "visitTestsTheme") {
+                if (selectedTheme == "one") {
+                    $(".theme[data-selectedTheme='two']").removeClass("border-info");
+                    $(".theme[data-selectedTheme='one']").addClass("border-info");
+                } else if (selectedTheme == "two") {
+                    $(".theme[data-selectedTheme='one']").removeClass("border-info");
+                    $(".theme[data-selectedTheme='two']").addClass("border-info");
+                }
+            } else if (theme == "SuperTestTheme") {
+                if (selectedTheme == "form") {
+                    $(".theme[data-selectedTheme='table']").removeClass("border-info");
+                    $(".theme[data-selectedTheme='form']").addClass("border-info");
+                } else if (selectedTheme == "table") {
+                    $(".theme[data-selectedTheme='form']").removeClass("border-info");
+                    $(".theme[data-selectedTheme='table']").addClass("border-info");
+                }
+            }
         });
     </script>
     <script src="plugins/file-upload/file-upload-with-preview.min.js"></script>
@@ -161,28 +186,7 @@
     <script src="themes/visits.js"></script>
 
     <script>
-        //  تطبيق الشكل
-        function applyTheme(theme) {
-            localStorage.setItem('visitTestsTheme', theme);
-            niceSwal('success', 'top-end', 'تم تطبيق الشكل بنجاح');
-        }
 
-        const table = null;
-        const tests = [];
-        const themeOne = new TestsThemeOne(table, tests);
-        const themeTwo = new TestsThemeTwo(table, tests);
-
-        const themeOneContent = document.getElementById('themeOne-content');
-        const themeTwoContent = document.getElementById('themeTwo-content');
-        themeOneContent.innerHTML = themeOne.build();
-        themeTwoContent.innerHTML = themeTwo.build();
-        setTimeout(() => {
-            const mainHeight = 500;
-
-            $(".main-visit-list").height(mainHeight);
-            $(".main-visit-tests").height(mainHeight);
-            $(".main-visit-selected-tests").height(mainHeight);
-        }, 200);
     </script>
 
 </body>
