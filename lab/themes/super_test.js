@@ -332,13 +332,6 @@ class TableTheme extends Theme {
     this.name = "Table";
   }
 
-  getData(refID, resultStyle, options, rightOptions) {
-    let data = super.getData(refID, resultStyle, options, rightOptions);
-    data["age unit low"] = $(`#refrence_form_${refID} #age_unit`).val();
-    data["age unit high"] = $(`#refrence_form_${refID} #age_unit`).val();
-    return data;
-  }
-
   ageInput(low, lowUnit, high, highUnit) {
     const selectOptions = (unit) => {
       return `
@@ -349,14 +342,19 @@ class TableTheme extends Theme {
     };
     return `
     <div class="row justify-content-between">
-       <div class="col-md-4 mb-4">
+       <div class="col-md-3 mb-4">
           <input type="number" class="form-control" name="age_low" value="${low}" placeholder="الحد الادنى">
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3 mb-4">
+          <select class="form-control" name="age_unit_low" id="age_unit_low">
+            ${selectOptions(lowUnit)}
+          </select>
+        </div>
+        <div class="col-md-3 mb-4">
           <input type="number" value="${high}" name="age high" class="form-control" placeholder="العمر" id="age_high">
         </div>
-        <div class="col-md-4 mb-4">
-          <select class="form-control" name="age_unit" id="age_unit">
+        <div class="col-md-3 mb-4">
+          <select class="form-control" name="age_unit_high" id="age_unit_high">
             ${selectOptions(lowUnit)}
           </select>
         </div>
@@ -365,7 +363,6 @@ class TableTheme extends Theme {
   }
 
   mainForm(id, hash, refrence) {
-    console.log(id);
     const { kit, unit, range, result, right_options, options, gender } =
       refrence;
     const ageLow = refrence?.["age low"] ?? 0;
@@ -384,11 +381,11 @@ class TableTheme extends Theme {
               <label for="unit">وحدة القياس</label>
               ${this.unitSelectElement(this.units, unit)}
           </div>
-          <div class="col-3">
+          <div class="col-2">
             <label for="unit">الجنس</label>
             ${this.genderSelectElement(gender)}
           </div>
-          <div class="col-3">
+          <div class="col-4">
             <label for="unit">العمر</label>
             ${this.ageInput(ageLow, ageLowUnit, ageHigh, ageHighUnit)}
           </div>
@@ -478,9 +475,9 @@ class TableTheme extends Theme {
         <tbody>
           ${refrences
             .map((refrence, id) => {
-              const kit = refrence?.kit ?? 0;
+              const kit = refrence?.kit ?? "";
               // check if kit in this kits
-              if (this.kits.find((k) => k.id == kit) || kit == "") {
+              if (kit == selectedKit) {
                 return this.createRow(id, hash, refrence);
               }
             })
