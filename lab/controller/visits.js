@@ -1037,9 +1037,22 @@ function focusInput(type) {
 function changeTotalPrice(hash) {
   let input = document.querySelector(`input[type=checkbox][value="${hash}"]`);
   let totalPrice = parseInt(document.querySelector("#total_price").value);
-  let searchInput = document.querySelector("#input-search-2");
-  searchInput.value = "";
-  searchInput.dispatchEvent(new Event("keyup"));
+  try {
+    let searchInput = document.querySelector("#input-search-all");
+    searchInput.value = "";
+    searchInput.dispatchEvent(new Event("keyup"));
+  } catch (e) {}
+  try {
+    let searchInput = document.querySelector("#input-search-2");
+    searchInput.value = "";
+    searchInput.dispatchEvent(new Event("keyup"));
+  } catch (e) {}
+  try {
+    let searchInput = document.querySelector("#input-search-3");
+    searchInput.value = "";
+    searchInput.dispatchEvent(new Event("keyup"));
+  } catch (e) {}
+
   if (input.checked) {
     totalPrice += parseInt(input.dataset.price);
     showSelectedTests(input.value, input.dataset.name, true);
