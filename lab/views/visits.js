@@ -88,21 +88,36 @@ $(function () {
   `);
 
   $("#input-search-all").on("keyup change", function () {
+    let category = $("#categorySelect-all").val();
     var rex = new RegExp($(this).val(), "i");
     $(".searchable-container .item").hide();
-    $(".searchable-container .items.package")
-      .filter(function () {
-        return rex.test($(this).text());
-      })
-      .show();
-    $(".searchable-container .item")
-      .filter(function () {
-        return rex.test($(this).text());
-      })
-      .show();
+    if (category == 0) {
+      $(`.searchable-container .items.package`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+      $(`.searchable-container .item`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+    } else {
+      $(`.searchable-container .items.package[data-category='${category}']`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+      $(`.searchable-container .item[data-category='${category}']`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+    }
   });
 
   $("#categorySelect-all").on("change", function () {
+    $("#input-search-all").val("");
     var category = $(this).val();
     if (category == 0) {
       $(".searchable-container .item").show();
@@ -115,16 +130,26 @@ $(function () {
     $(`.searchable-container .item[data-category='${category}']`).show();
   });
   $("#input-search-2").on("keyup change", function () {
+    let category = $("#categorySelect-2").val();
     var rex = new RegExp($(this).val(), "i");
     $(".searchable-container .test").hide();
-    $(".searchable-container .test")
-      .filter(function () {
-        return rex.test($(this).text());
-      })
-      .show();
+    if (category == 0) {
+      $(`.searchable-container .test`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+    } else {
+      $(`.searchable-container .test[data-category='${category}']`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+    }
   });
 
   $("#categorySelect-2").on("change", function () {
+    $("#input-search-2").val("");
     var category = $(this).val();
     if (category == 0) {
       $(".searchable-container .test").show();
@@ -135,13 +160,22 @@ $(function () {
   });
 
   $("#input-search-3").on("keyup change", function () {
+    let category = $("#categorySelect-3").val();
     var rex = new RegExp($(this).val(), "i");
     $(".searchable-container .package").hide();
-    $(".searchable-container .package")
-      .filter(function () {
-        return rex.test($(this).text());
-      })
-      .show();
+    if (category == 0) {
+      $(`.searchable-container .package`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+    } else {
+      $(`.searchable-container .package[data-category='${category}']`)
+        .filter(function () {
+          return rex.test($(this).text());
+        })
+        .show();
+    }
   });
 
   $("#categorySelect-3").on("change", function () {
