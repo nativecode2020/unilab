@@ -38,7 +38,7 @@
 
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -56,8 +56,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -81,16 +81,16 @@
                 <div class="row layout-spacing">
                     <div class="row justify-content-center buttons m-auto">
                         <button class="btn btn-action action w-230 col-auto mr-30 mb-30 active" data-id="allTests">
-                           <i class="far fa-microscope"></i>  التحاليل 
+                            <i class="far fa-microscope"></i> التحاليل
                         </button>
                         <button class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="addTest">
-                            <i class="far fa-microscope"></i> اضافة تحليل جديد 
+                            <i class="far fa-microscope"></i> اضافة تحليل جديد
                         </button>
                         <button class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="allPackage">
-                           <i class="fas fa-folder"></i>  العروض 
+                            <i class="fas fa-folder"></i> العروض
                         </button>
                         <button class="btn btn-action action w-230 col-auto mr-30 mb-30" data-id="addPackage">
-                            <i class="fas fa-folder-plus"></i> اضافة عرض جديد 
+                            <i class="fas fa-folder-plus"></i> اضافة عرض جديد
                         </button>
                         <!-- <button class="btn btn-action w-230 col-auto mr-30 mb-30" onclick="refreshData()">
                             <i class="fas fa-sync-alt"></i> تنزيل التحاليل
@@ -114,7 +114,7 @@
                                     </thead>
                                     <tbody></tbody>
                                 </table>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -129,25 +129,29 @@
                                             <div class="col-lg-12 mb-30">
                                                 <div class="form-group">
                                                     <label for="name">اسم التحليل</label>
-                                                    <input type="text" class="form-control" id="name" placeholder="اسم التحليل" disabled>
+                                                    <input type="text" class="form-control" id="name"
+                                                        placeholder="اسم التحليل" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-30">
                                                 <div class="form-group">
                                                     <label for="cost">التكلفة </label>
-                                                    <input type="number" class="form-control" id="cost" placeholder="التكلفة" value="0">
+                                                    <input type="number" class="form-control" id="cost"
+                                                        placeholder="التكلفة" value="0">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-30">
                                                 <div class="form-group">
                                                     <label for="price">السعر </label>
-                                                    <input type="number" class="form-control" id="price" placeholder="السعر" value="0">
+                                                    <input type="number" class="form-control" id="price"
+                                                        placeholder="السعر" value="0">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-30">
                                                 <div class="form-group">
                                                     <label for="kit_id">الكت</label>
-                                                    <select class="form-control" id="kit_id" onchange="addUnitsByKit($(this));">
+                                                    <select class="form-control" id="kit_id"
+                                                        onchange="addUnitsByKit($(this));">
                                                     </select>
                                                 </div>
                                             </div>
@@ -167,7 +171,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-30">
-                                                <button type="button" id="save-button"  class="btn btn-main-add" >اضافة</button>
+                                                <button type="button" id="save-button"
+                                                    class="btn btn-main-add">اضافة</button>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +189,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-12 page" id="allPackage" style="display: none;">
                         <div class="statbox widget box box-shadow bg-white">
                             <div class="widget-content widget-content-area m-auto" style="width: 95%;">
@@ -214,19 +219,22 @@
                                             <div class="col-lg-12 mb-30">
                                                 <div class="form-group">
                                                     <label for="name">اسم العرض</label>
-                                                    <input type="text" class="form-control" id="name" placeholder="اسم التحليل">
+                                                    <input type="text" class="form-control" id="name"
+                                                        placeholder="اسم التحليل">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-30">
                                                 <div class="form-group">
                                                     <label for="cost">التكلفة </label>
-                                                    <input type="number" class="form-control" id="cost" placeholder="التكلفة" value="0">
+                                                    <input type="number" class="form-control" id="cost"
+                                                        placeholder="التكلفة" value="0">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-30">
                                                 <div class="form-group">
                                                     <label for="price">السعر </label>
-                                                    <input type="number" class="form-control" id="price" placeholder="السعر" value="0">
+                                                    <input type="number" class="form-control" id="price"
+                                                        placeholder="السعر" value="0">
                                                 </div>
                                             </div>
                                             <!-- notes -->
@@ -237,7 +245,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb-30">
-                                                <button type="button" id="save-package" onclick="fireSwal(saveNewPackage)" class="btn btn-main-add" >اضافة</button>
+                                                <button type="button" id="save-package"
+                                                    onclick="fireSwal(saveNewPackage)"
+                                                    class="btn btn-main-add">اضافة</button>
                                             </div>
                                         </div>
                                         <div id="selected-tests" class="row">
@@ -274,7 +284,7 @@
     <script src="plugins/table/datatable/datatables.js"></script>
     <script src="plugins/table/datatable/respon.js"></script>
     <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
@@ -283,20 +293,48 @@
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             App.init();
         });
     </script>
     <script src="js/const.js"></script>
+    <script>
+        // genrate random text like "1.2.3"
+        function randomText() {
+            let text = "";
+            for (let i = 0; i < 3; i++) {
+                text += Math.floor(Math.random() * 10) + ".";
+            }
+            return text.slice(0, -1);
+        }
+        var random_text = randomText();
+        // get script that src contain const.js
+        const CONSTELEMENT = document.querySelector('script[src*="const.js"]');
+        let src = CONSTELEMENT.src;
+        // add random text to the end of src
+        src = src + "?v=" + random_text;
+        // change src of const.js
+        CONSTELEMENT.src = src;
+    </script>
     <script src="js/login.js"></script>
     <script src="js/exe.js"></script>
     <script src="js/forms.js"></script>
     <script src="js/dashborad_function.js"></script>
     <script src="js/factory_offline_and_online.js"></script>
     <script src="models/package_test.js"></script>
-    <script src="controller/package_test.js" ></script>
+    <script src="controller/package_test.js"></script>
     <script src="views/package_test.js"></script>
 
+    <script>
+        var allScripts = document.querySelectorAll("script");
+
+        allScripts.forEach((item) => {
+            if (!item.src.includes("const.js") && item?.src) {
+                src = item.src + `?v=${VERSION}`;
+                item.src = src;
+            }
+        });
+    </script>
 </body>
 
 </html>

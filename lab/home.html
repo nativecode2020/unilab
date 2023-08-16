@@ -39,7 +39,7 @@
 
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -56,13 +56,13 @@
     <div id="load_screen">
         <div class="loader">
             <div class="loader-content">
-<div class="spinner-grow align-self-center" style="background-image: url(assets/image/flask.png);
+                <div class="spinner-grow align-self-center" style="background-image: url(assets/image/flask.png);
                 background-size: cover;"></div>
             </div>
         </div>
     </div>
-    
-    
+
+
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -89,9 +89,25 @@
                         <label class="switch s-icons s-outline  s-outline-secondary">
                             <input type="checkbox" checked="" class="theme-shifter">
                             <span class="slider round">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-sun">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-moon">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
                             </span>
                         </label>
                     </div>
@@ -107,7 +123,14 @@
                                         <span class="visit-name">اسم الزيارة هنا</span>
                                     </div>
                                     <div class="add">
-                                        <span onclick="$('#package-modal').modal('toggle');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+                                        <span onclick="$('#package-modal').modal('toggle');"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-plus">
+                                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            </svg></span>
                                     </div>
                                 </div>
                                 <div class="wallet-balance">
@@ -119,12 +142,22 @@
                             <div class="widget-amount">
 
                                 <div class="w-a-info funds-received">
-                                    <span>السعر الكلي <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg></span>
+                                    <span>السعر الكلي <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-chevron-up">
+                                            <polyline points="18 15 12 9 6 15"></polyline>
+                                        </svg></span>
                                     <p class="total_price">$00.00</p>
                                 </div>
 
                                 <div class="w-a-info funds-spent">
-                                    <span>الخصم <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                                    <span>الخصم <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-chevron-down">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg></span>
                                     <p>$00.00</p>
                                 </div>
                             </div>
@@ -144,8 +177,10 @@
                                     </div>
 
                                     <div class="inv-action">
-                                        <a onclick="$('#summary-modal').modal('toggle');detail();" type="button" class="btn btn-outline-primary view-details">تفاصيل التحاليل</a>
-                                        <a type="button" onclick="pay();" class="btn btn-outline-primary pay-now">دفع الان</a>
+                                        <a onclick="$('#summary-modal').modal('toggle');detail();" type="button"
+                                            class="btn btn-outline-primary view-details">تفاصيل التحاليل</a>
+                                        <a type="button" onclick="pay();" class="btn btn-outline-primary pay-now">دفع
+                                            الان</a>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +195,8 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-    <div class="modal fade" id="package-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="package-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -180,8 +216,16 @@
                                         <div class="col-lg-10 col-md-10 col-sm-11 filtered-list-search mx-auto my-3">
                                             <form class="form-inline my-2 my-lg-0 justify-content-center">
                                                 <div class="w-100">
-                                                    <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
-                                                    <button class="btn btn-primary" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                                                    <input type="text" class="w-100 form-control product-search br-30"
+                                                        id="input-search-2" placeholder="ابحث عن التحليل">
+                                                    <button class="btn btn-primary" type="button"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" class="feather feather-search">
+                                                            <circle cx="11" cy="11" r="8"></circle>
+                                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                                        </svg></button>
                                                 </div>
                                             </form>
                                         </div>
@@ -208,7 +252,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="summary-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="summary-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -253,12 +298,30 @@
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             App.init();
         });
     </script>
     <script src="assets/js/widgets/modules-widgets.js"></script>
     <script src="js/const.js"></script>
+    <script>
+        // genrate random text like "1.2.3"
+        function randomText() {
+            let text = "";
+            for (let i = 0; i < 3; i++) {
+                text += Math.floor(Math.random() * 10) + ".";
+            }
+            return text.slice(0, -1);
+        }
+        var random_text = randomText();
+        // get script that src contain const.js
+        const CONSTELEMENT = document.querySelector('script[src*="const.js"]');
+        let src = CONSTELEMENT.src;
+        // add random text to the end of src
+        src = src + "?v=" + random_text;
+        // change src of const.js
+        CONSTELEMENT.src = src;
+    </script>
     <script src="js/login.js"></script>
     <script src="js/exe.js"></script>
     <script src="js/forms.js"></script>
@@ -266,12 +329,12 @@
     <script src="js/factory.js"></script>
     <script src="js/query.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             fetch_data();
-            $('#input-search-2').on('keyup', function() {
+            $('#input-search-2').on('keyup', function () {
                 var rex = new RegExp($(this).val(), 'i');
                 $('.packages-search .items').hide();
-                $('.packages-search .items').filter(function() {
+                $('.packages-search .items').filter(function () {
                     return rex.test($(this).text());
                 }).show();
             });
@@ -302,7 +365,7 @@
         function add_package() {
             $(".inv-detail").empty();
             let total_price = 0.00
-            $(".package input:checked").each(function() {
+            $(".package input:checked").each(function () {
                 $(".inv-detail").append(`
                 <div class="info-detail-1" data-hash="${$(this).data("hash")}" data-price="${$(this).data("price")}">
                     <p class="w-50">${$(this).data("name")} 1</p>
@@ -373,7 +436,7 @@
 
         function get_package_tests() {
             var hashs = "";
-            $(".info-detail-1").each(function() {
+            $(".info-detail-1").each(function () {
                 if (hashs != "") {
                     hashs += `,'${$(this).data("hash")}'`
                 } else {
@@ -389,11 +452,21 @@
 
         function create_visit_package() {
             let query = ""
-            $(".info-detail-1").each(function() {
+            $(".info-detail-1").each(function () {
                 query += `insert into visits_package(visit_id,package_id,price) values(${hash_id},${$(this).data("hash")},${$(this).data("price")});`
             })
             exce(query)
         }
+    </script>
+    <script>
+        var allScripts = document.querySelectorAll("script");
+
+        allScripts.forEach((item) => {
+            if (!item.src.includes("const.js") && item?.src) {
+                src = item.src + `?v=${VERSION}`;
+                item.src = src;
+            }
+        });
     </script>
 </body>
 

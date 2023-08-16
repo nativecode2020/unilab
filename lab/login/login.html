@@ -23,9 +23,10 @@
     <link href="../plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Recursive:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Recursive:wght@700&display=swap"
+        rel="stylesheet">
     <style>
-        *:not(i){
+        *:not(i) {
             font-family: 'Dancing Script', cursive !important;
             font-family: 'Recursive', sans-serif !important;
         }
@@ -43,8 +44,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!--  END LOADER -->
 
     <div class="form-container outer">
@@ -107,12 +108,14 @@
                         </div>
                         <div class="d-sm-flex justify-content-around">
                             <div class="field-wrapper">
-                                <button type="submit" class="btn btn-primary" onclick="fireSwal(login)" value="">تسجيل الدخول <i class="fas fa-sign-in-alt"></i></button>
+                                <button type="submit" class="btn btn-primary" onclick="fireSwal(login)" value="">تسجيل
+                                    الدخول <i class="fas fa-sign-in-alt"></i></button>
                             </div>
                         </div>
                         <!-- forget -->
                         <div class="field-wrapper mt-4">
-                            <a onclick="fireSwalConfirm(updateSystem)" href="#" class="forgot-pass-link text-info">هل تريد تحديث النظام</a>
+                            <a onclick="fireSwalConfirm(updateSystem)" href="#" class="forgot-pass-link text-info">هل
+                                تريد تحديث النظام</a>
                         </div>
                     </div>
                 </div>
@@ -149,6 +152,16 @@
             var last_url_link = localStorage.getItem("last_url");
             localStorage.clear();
             localStorage.setItem("last_url", last_url_link);
+        });
+    </script>
+    <script>
+        var allScripts = document.querySelectorAll("script");
+
+        allScripts.forEach((item) => {
+            if (!item.src.includes("const.js") && item?.src) {
+                src = item.src + `?v=${VERSION}`;
+                item.src = src;
+            }
         });
     </script>
 </body>

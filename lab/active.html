@@ -34,8 +34,8 @@
     <!--  END CUSTOM STYLE FILE  -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function() {
-            const run = ()=>{};
+        $(document).ready(function () {
+            const run = () => { };
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -76,48 +76,52 @@
                                     <div class="col-sm-12 col-md-8 col-lg-6 mx-auto modal-body">
                                         <h2 class="text-center mb-4">تفعيل الكارت</h2>
                                         <h4 class="text-center mb-4">
-                                            الرجاء ادخال رقم الكارت  لتفعيل لتفعيل النظام او لتمديد الاشتراك
+                                            الرجاء ادخال رقم الكارت لتفعيل لتفعيل النظام او لتمديد الاشتراك
                                         </h4>
                                         <div class="container mt-5">
                                             <div class="row justify-content-center">
-                                              <div class="col-md-6">
-                                                <div class="card card-custom">
-                                                  <div class="card-body">
-                                                    <div class="form-row">
-                                                      <div class="col-md-12 mb-4 text-center">
-                                                        <h4 class="card-type">ادخال رقم الكارت</h4>
-                                                      </div>
-                                                    </div>
-                                                    <div class="form-row">
-                                                      <div class="col-md-12 mb-4">
-                                                        <div class="input-group mb-4">
-                                                          <input type="number" class="form-control" name="code" id="code" placeholder="رقم الكارت" />
-                                                          <div class="input-group-append">
-                                                            <button class="btn btn-primary btn-block" type="button" onclick="activeCart();">
-                                                                <i class="fas fa-plus-circle mr-2"></i>
-                                                                تفعيل
-                                                              </button>
-                                                          </div>
+                                                <div class="col-md-6">
+                                                    <div class="card card-custom">
+                                                        <div class="card-body">
+                                                            <div class="form-row">
+                                                                <div class="col-md-12 mb-4 text-center">
+                                                                    <h4 class="card-type">ادخال رقم الكارت</h4>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="col-md-12 mb-4">
+                                                                    <div class="input-group mb-4">
+                                                                        <input type="number" class="form-control"
+                                                                            name="code" id="code"
+                                                                            placeholder="رقم الكارت" />
+                                                                        <div class="input-group-append">
+                                                                            <button class="btn btn-primary btn-block"
+                                                                                type="button" onclick="activeCart();">
+                                                                                <i class="fas fa-plus-circle mr-2"></i>
+                                                                                تفعيل
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="col-md-12 mb-4">
+                                                                    تاريخ النفاذ
+                                                                    <i class="far fa-calendar-alt mr-2"></i>
+                                                                    <span
+                                                                        class="badge badge-secondary card-expiry"></span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                      </div>
                                                     </div>
-                                                    <div class="form-row">
-                                                        <div class="col-md-12 mb-4">
-                                                            تاريخ النفاذ
-                                                          <i class="far fa-calendar-alt mr-2"></i>
-                                                          <span class="badge badge-secondary card-expiry"></span>
-                                                        </div>
-                                                      </div>
-                                                  </div>
                                                 </div>
-                                              </div>
                                             </div>
-                                          </div>
+                                        </div>
                                         <h4 class="text-center mt-5">
-                                            لمعرفة التفاصيل اكثر يرجى  يرجى التواصل مع الدعم الفني
+                                            لمعرفة التفاصيل اكثر يرجى يرجى التواصل مع الدعم الفني
                                         </h4>
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,11 +145,29 @@
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             App.init();
         });
     </script>
     <script src="js/const.js"></script>
+    <script>
+        // genrate random text like "1.2.3"
+        function randomText() {
+            let text = "";
+            for (let i = 0; i < 3; i++) {
+                text += Math.floor(Math.random() * 10) + ".";
+            }
+            return text.slice(0, -1);
+        }
+        var random_text = randomText();
+        // get script that src contain const.js
+        const CONSTELEMENT = document.querySelector('script[src*="const.js"]');
+        let src = CONSTELEMENT.src;
+        // add random text to the end of src
+        src = src + "?v=" + random_text;
+        // change src of const.js
+        CONSTELEMENT.src = src;
+    </script>
     <script src="js/login.js"></script>
     <script src="js/exe.js"></script>
     <script src="js/factory3.js"></script>
@@ -153,22 +175,22 @@
         updateExpireDate();
         let formDate = new FormData();
         formDate.append('lab', localStorage.getItem('lab_hash'));
-        fetch(`${base_url}LastDate/get`,{
+        fetch(`${base_url}LastDate/get`, {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             },
             body: formDate
         }).then(res => res.json()).then(res => {
-            if(res.status == 200){
+            if (res.status == 200) {
                 $('.card-expiry').html(res.data);
-            }else{
+            } else {
                 $('.card-expiry').html('لا يوجد اشتراك');
             }
         });
-        function activeCart(){
+        function activeCart() {
             // check internet connection
-            if(!navigator.onLine){
+            if (!navigator.onLine) {
                 swal.fire({
                     toast: true,
                     position: "top-end",
@@ -180,7 +202,7 @@
                 return;
             }
             let code = $('#code').val();
-            if(code == ''){
+            if (code == '') {
                 swal.fire({
                     toast: true,
                     position: "top-end",
@@ -189,17 +211,17 @@
                     icon: "error",
                     title: "الرجاء ادخال رقم الكارت",
                 });
-            }else{
+            } else {
                 let formData = new FormData();
                 formData.append('code', code);
                 let lab = localStorage.getItem('lab_hash');
                 let hash = localStorage.getItem('hash');
-                if(!lab || !hash){
+                if (!lab || !hash) {
                     location.href = front_url + "login/login.html";
                     return;
                 }
-                formData.append('lab',lab);
-                formData.append('hash',hash);
+                formData.append('lab', lab);
+                formData.append('hash', hash);
                 fetch(`http://umc.native-code-iq.com/app/index.php/ActivateLab/active`, {
                     method: 'POST',
                     body: formData,
@@ -207,32 +229,42 @@
                         "Authorization": "Bearer " + localStorage.getItem("token")
                     }
                 })
-                .then(res=>res.json())
-                .then(res=>{
-                    if(res.status==200){
-                        updateExpireDate();
-                        $('#code').val('');
-                        $('.card-expiry').html(res.data);
-                    }
-                    Swal.fire({
-                        title: res.message,
-                        icon: res.status == 200?'success':'error',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'موافق',
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status == 200) {
+                            updateExpireDate();
+                            $('#code').val('');
+                            $('.card-expiry').html(res.data);
+                        }
+                        Swal.fire({
+                            title: res.message,
+                            icon: res.status == 200 ? 'success' : 'error',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'موافق',
+                        })
                     })
-                })
-                .catch(err=>{
-                    swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 5000,
-                        icon: "error",
-                        title:err,
+                    .catch(err => {
+                        swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 5000,
+                            icon: "error",
+                            title: err,
+                        })
                     })
-                })
             }
         }
+    </script>
+    <script>
+        var allScripts = document.querySelectorAll("script");
+
+        allScripts.forEach((item) => {
+            if (!item.src.includes("const.js") && item?.src) {
+                src = item.src + `?v=${VERSION}`;
+                item.src = src;
+            }
+        });
     </script>
 </body>
 

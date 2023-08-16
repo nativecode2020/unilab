@@ -14,7 +14,7 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
-    
+
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
@@ -36,20 +36,21 @@
         html {
             scroll-behavior: smooth;
         }
-        .w-20{
-            width: 20%!important;
+
+        .w-20 {
+            width: 20% !important;
         }
 
 
-        .w-40{
-            width: 40%!important;
+        .w-40 {
+            width: 40% !important;
         }
     </style>
     <!--  END CUSTOM STYLE FILE  -->
 
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -67,8 +68,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -86,7 +87,7 @@
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-                
+
                 <div class="page-header">
                     <nav class="breadcrumb-one" aria-label="breadcrumb">
                         <div class="title">
@@ -98,19 +99,36 @@
                         <label class="switch s-icons s-outline  s-outline-secondary">
                             <input type="checkbox" checked="" class="theme-shifter">
                             <span class="slider round">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-sun">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-moon">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
                             </span>
                         </label>
                     </div>
 
                 </div>
-                    
+
                 <div class="account-settings-container layout-top-spacing">
 
                     <div class="account-content">
-                        <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
+                        <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll"
+                            data-offset="-100">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                                     <form id="user-form" class="section user-form">
@@ -123,14 +141,19 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label for="username">اسم المستخدم</label>
-                                                                    <input type="text" class="form-control mb-4" id="username" placeholder="اسم المستخدم" name="username" required>
-                                                                    
+                                                                    <input type="text" class="form-control mb-4"
+                                                                        id="username" placeholder="اسم المستخدم"
+                                                                        name="username" required>
+
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label for="old_password">كلمة المرور القديمة</label>
-                                                                    <input type="password" class="form-control mb-4" id="old_password" name="old_password" placeholder="كلمة المرور القديمة" required>
+                                                                    <label for="old_password">كلمة المرور
+                                                                        القديمة</label>
+                                                                    <input type="password" class="form-control mb-4"
+                                                                        id="old_password" name="old_password"
+                                                                        placeholder="كلمة المرور القديمة" required>
                                                                     <div class="invalid-feedback invalid-old-password">
                                                                         كلمة المرور القديمة خطئ
                                                                     </div>
@@ -139,14 +162,19 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label for="new_password">كلمة المرور</label>
-                                                                    <input type="password" class="form-control mb-4" id="new_password" name="new_password" placeholder="كلمة المرور" required>
-                                                                    
+                                                                    <input type="password" class="form-control mb-4"
+                                                                        id="new_password" name="new_password"
+                                                                        placeholder="كلمة المرور" required>
+
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label for="confirm_password">اعادة كلمة المرور</label>
-                                                                    <input type="password" class="form-control mb-4" id="confirm_password" name="confirm_password" placeholder="اعادة كلمة المرور" required>
+                                                                    <label for="confirm_password">اعادة كلمة
+                                                                        المرور</label>
+                                                                    <input type="password" class="form-control mb-4"
+                                                                        id="confirm_password" name="confirm_password"
+                                                                        placeholder="اعادة كلمة المرور" required>
                                                                     <div class="invalid-feedback invalid-password2">
                                                                         كلمات المرور غير متطابقة
                                                                     </div>
@@ -161,11 +189,11 @@
                                 </div>
 
                             </div>
-                        </div> 
+                        </div>
                     </div>
 
                     <div class="account-settings-footer">
-                        
+
                         <div class="as-footer-container">
                             <button id="submit" class="btn btn-primary m-auto">حفظ البيانات</button>
                         </div>
@@ -173,12 +201,12 @@
                     </div>
                 </div>
 
-                </div>
+            </div>
         </div>
         <!--  END CONTENT AREA  -->
 
     </div>
-    
+
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="bootstrap/js/popper.min.js"></script>
@@ -195,15 +223,43 @@
     <script src="assets/js/app.js"></script>
     <script src="assets/js/users/account-settings.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             App.init();
         });
     </script>
     <script src="plugins/apex/apexcharts.min.js"></script>
     <script src="js/const.js"></script>
+    <script>
+        // genrate random text like "1.2.3"
+        function randomText() {
+            let text = "";
+            for (let i = 0; i < 3; i++) {
+                text += Math.floor(Math.random() * 10) + ".";
+            }
+            return text.slice(0, -1);
+        }
+        var random_text = randomText();
+        // get script that src contain const.js
+        const CONSTELEMENT = document.querySelector('script[src*="const.js"]');
+        let src = CONSTELEMENT.src;
+        // add random text to the end of src
+        src = src + "?v=" + random_text;
+        // change src of const.js
+        CONSTELEMENT.src = src;
+    </script>
     <script src="js/login.js"></script>
     <script src="js/exe.js"></script>
     <script src="views/profile.js"></script>
+    <script>
+        var allScripts = document.querySelectorAll("script");
+
+        allScripts.forEach((item) => {
+            if (!item.src.includes("const.js") && item?.src) {
+                src = item.src + `?v=${VERSION}`;
+                item.src = src;
+            }
+        });
+    </script>
 </body>
 
 </html>

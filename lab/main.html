@@ -14,7 +14,7 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
-    
+
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
@@ -36,24 +36,25 @@
         html {
             scroll-behavior: smooth;
         }
-        .w-20{
-            width: 20%!important;
+
+        .w-20 {
+            width: 20% !important;
         }
-        
-        .w-15{
-            width: 15%!important;
+
+        .w-15 {
+            width: 15% !important;
         }
 
 
-        .w-30{
-            width: 30%!important;
+        .w-30 {
+            width: 30% !important;
         }
     </style>
     <!--  END CUSTOM STYLE FILE  -->
 
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".header-container").load("header/navbar.html");
         })
     </script>
@@ -70,8 +71,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -98,14 +99,31 @@
                         <label class="switch s-icons s-outline  s-outline-secondary">
                             <input type="checkbox" checked="" class="theme-shifter">
                             <span class="slider round">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-sun">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-moon">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
                             </span>
                         </label>
                     </div>
                 </div>
-                <div id="lol" class="row d-none justify-content-center container mx-auto mb-5 w-100 border rounded border-danger">
+                <div id="lol"
+                    class="row d-none justify-content-center container mx-auto mb-5 w-100 border rounded border-danger">
                     <div class="col-12">
                         <svg class="w-100" id="barcode"></svg>
                     </div>
@@ -120,31 +138,38 @@
                                 <div class="col-md-12  my-4">
                                     <label class="h5 d-inline mr-4">مريض جديد</label>
                                     <label class="d-inline switch s-icons s-outline s-outline-success mr-2">
-                                        <input type="checkbox" name="new_patient" checked onchange="changePatient($(this))">
+                                        <input type="checkbox" name="new_patient" checked
+                                            onchange="changePatient($(this))">
                                         <span class="slider"></span>
                                     </label>
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <label for="name">اسم المريض</label>
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="ادخل الاسم" required>   
-                                    <select class="form-control d-none" onchange="patientDetail();" name="name" id="select_name"></select>                     
+                                    <input type="text" name="name" class="form-control" id="name"
+                                        placeholder="ادخل الاسم" required>
+                                    <select class="form-control d-none" onchange="patientDetail();" name="name"
+                                        id="select_name"></select>
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <label for="visit_date">تاريخ الزيارة</label>
-                                    <input type="date" name="visit_date" class="form-control" id="visit_date" placeholder="ادخل التاريخ" required>
+                                    <input type="date" name="visit_date" class="form-control" id="visit_date"
+                                        placeholder="ادخل التاريخ" required>
                                 </div>
-                                
+
                                 <div class="col-md-3 mb-4">
                                     <label for="age_year">السنين</label>
-                                    <input type="number" name="age_year" class="form-control" id="age_year" placeholder="العمر بالسنين">
+                                    <input type="number" name="age_year" class="form-control" id="age_year"
+                                        placeholder="العمر بالسنين">
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <label for="age_month">الاشهر</label>
-                                    <input type="number" name="age_month" class="form-control" id="age_month" placeholder="الاشهر">
+                                    <input type="number" name="age_month" class="form-control" id="age_month"
+                                        placeholder="الاشهر">
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <label for="address">العنوان</label>
-                                    <input type="text" name="address" class="form-control" id="address" placeholder="ادخل العنوان">
+                                    <input type="text" name="address" class="form-control" id="address"
+                                        placeholder="ادخل العنوان">
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <label for="phone">رقم الهاتف</label>
@@ -163,7 +188,7 @@
                                     </select>
                                 </div>
                                 <script>
-                                 $(document).ready(function() {
+                                    $(document).ready(function () {
                                         $('#gender').select2({
                                             dropdownParent: $("#form-patient"),
                                             width: "100%"
@@ -178,7 +203,7 @@
                                         });
                                     });
                                 </script>
-                                
+
                             </div>
                         </form>
                     </div>
@@ -187,8 +212,15 @@
                     <div class=" col-md-7 filtered-list-search my-3 px-5">
                         <form class="form-inline my-2 my-lg-0 justify-content-center">
                             <div class="w-100">
-                                <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
-                                <button class="btn btn-primary" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                                <input type="text" class="w-100 form-control product-search br-30" id="input-search-2"
+                                    placeholder="ابحث عن التحليل">
+                                <button class="btn btn-primary" type="button"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-search">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg></button>
                             </div>
                         </form>
                     </div>
@@ -196,7 +228,7 @@
                         السعر : <span class="total-price">0</span> $
                     </div>
                     <!-- <div class="col-md-2 my-3"> -->
-                        <!-- <button type="button" class="btn btn-primary w-75 submit-all">حفظ <i class="fal fa-save"></i></button> -->
+                    <!-- <button type="button" class="btn btn-primary w-75 submit-all">حفظ <i class="fal fa-save"></i></button> -->
                     <!-- </div> -->
                     <div class="w-100"></div>
                     <div class="col-6 h-100">
@@ -204,27 +236,28 @@
                             <div id="searchLive" class="col-lg-12 layout-spacing">
                                 <div class="statbox widget box box-shadow border-0">
                                     <div class="widget-content widget-content-area text-center tags-content">
-        
+
                                         <div class="row justify-content-between">
                                             <div class=" col-md-12  my-3 px-5">
                                                 <h1>التحاليل</h1>
                                             </div>
                                             <div class="col-lg-12">
-        
+
                                                 <div class="searchable-container packages-search">
                                                     <div class="row justify-content-center">
                                                         <div class="col-md-12">
-                                                            <div class="searchable-items my-3 border-0" id="packages"></div>
+                                                            <div class="searchable-items my-3 border-0" id="packages">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="col-6 h-100">
@@ -232,7 +265,7 @@
                             <div id="searchLive" class="col-lg-12 layout-spacing">
                                 <div class="statbox widget box box-shadow border-0">
                                     <div class="widget-content widget-content-area text-center tags-content">
-        
+
                                         <div class="row justify-content-between">
                                             <div class=" col-md-12  my-3 px-5">
                                                 <h1>العروض</h1>
@@ -241,21 +274,23 @@
                                                 <div class="searchable-container packages-search">
                                                     <div class="row justify-content-center">
                                                         <div class="col-md-12">
-                                                            <div class="searchable-items my-3 border-0" id="offers"></div>
+                                                            <div class="searchable-items my-3 border-0" id="offers">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-primary w-100 mb-3 submit-all">حفظ <i class="fal fa-save"></i></button>
+                        <button type="button" class="btn btn-primary w-100 mb-3 submit-all">حفظ <i
+                                class="fal fa-save"></i></button>
                     </div>
                 </div>
                 <div class="row bg-white border mt-5 container mx-auto pb-5 rounded row">
@@ -273,7 +308,8 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="6">
-                                                <button class="btn btn-light w-100" id="scroll"><i class="fal fa-chevron-double-down"></i></button>
+                                                <button class="btn btn-light w-100" id="scroll"><i
+                                                        class="fal fa-chevron-double-down"></i></button>
                                             </td>
                                             <td></td>
                                         </tr>
@@ -315,7 +351,8 @@
 
     </div>
     <!-- END MAIN CONTAINER -->
-    <div class="modal fade" id="visits-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="visits-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -329,11 +366,13 @@
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
                                 <label for="name">الاسم</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="ادخل الاسم" value="" required>
+                                <input type="text" name="name" class="form-control" id="name" placeholder="ادخل الاسم"
+                                    value="" required>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <label for="visit_date">تاريخ الزيارة</label>
-                                <input id="visit_date" name="visit_date" class="form-control" type="date" placeholder="تاريخ الزيارة ..." required>
+                                <input id="visit_date" name="visit_date" class="form-control" type="date"
+                                    placeholder="تاريخ الزيارة ..." required>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <label for="visits_status_id">نوع الزيارة</label>
@@ -342,7 +381,7 @@
 
                             </div>
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     $('#visits_status_id').select2({
                                         dropdownParent: $("#visits-modal"),
                                         width: "100%"
@@ -358,12 +397,14 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" onclick="fireSwal(save_visits,'form_visit','visits')">حفظ</button>
-                    <button class="btn btn-success" onclick="$('#visits_packages').append(drawPackageSelector(0))">اضافة حزمة</button>
+                    <button class="btn btn-success" onclick="$('#visits_packages').append(drawPackageSelector(0))">اضافة
+                        حزمة</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="tests-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tests-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -397,13 +438,15 @@
                                             <tbody class="visit-tests">
                                                 <tr>
                                                     <td>
-                                                        <div class="td-content product-brand text-primary">Headphone</div>
+                                                        <div class="td-content product-brand text-primary">Headphone
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <div class="td-content product-invoice">#46894</div>
                                                     </td>
                                                     <td>
-                                                        <div class="td-content"><span class="badge badge-success">Paid</span></div>
+                                                        <div class="td-content"><span
+                                                                class="badge badge-success">Paid</span></div>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -420,7 +463,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="bootstrap/js/popper.min.js"></script>
@@ -437,12 +480,30 @@
     <script src="assets/js/app.js"></script>
     <script src="assets/js/JsBarcode.all.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             App.init();
         });
     </script>
     <script src="plugins/apex/apexcharts.min.js"></script>
     <script src="js/const.js"></script>
+    <script>
+        // genrate random text like "1.2.3"
+        function randomText() {
+            let text = "";
+            for (let i = 0; i < 3; i++) {
+                text += Math.floor(Math.random() * 10) + ".";
+            }
+            return text.slice(0, -1);
+        }
+        var random_text = randomText();
+        // get script that src contain const.js
+        const CONSTELEMENT = document.querySelector('script[src*="const.js"]');
+        let src = CONSTELEMENT.src;
+        // add random text to the end of src
+        src = src + "?v=" + random_text;
+        // change src of const.js
+        CONSTELEMENT.src = src;
+    </script>
     <script src="js/login.js"></script>
     <script src="js/exe.js"></script>
     <script src="js/forms.js"></script>
@@ -451,6 +512,16 @@
     <script src="js/query.js"></script>
     <script src="views/filter_result.js"></script>
     <script src="views/main.js"></script>
+    <script>
+        var allScripts = document.querySelectorAll("script");
+
+        allScripts.forEach((item) => {
+            if (!item.src.includes("const.js") && item?.src) {
+                src = item.src + `?v=${VERSION}`;
+                item.src = src;
+            }
+        });
+    </script>
 </body>
 
 </html>
