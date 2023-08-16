@@ -6,7 +6,7 @@ let getData =
                      "lab_hash"
                    )}' and isdeleted='0';
                    SELECT name,hash FROM lab_visit_status;
-                   SELECT name,price,note,catigory_id as type, 
+                   SELECT name,price,note,catigory_id as type, category_hash,
                           (select DISTINCT name from devices where id=lab_pakage_tests.lab_device_id) as device_name,
                           (select DISTINCT name from kits where id=lab_pakage_tests.kit_id) as kit_name,
                           lab_package.hash as hash
@@ -21,7 +21,7 @@ let getData =
                    )}' and is_available=1 and isdeleted=0 limit 5;
                    select * from lab_invoice where lab_hash='${localStorage.getItem(
                      "lab_hash"
-                   )}';`);
+                   )}';SELECT * FROM unimedica_db.lab_test_catigory;`);
 
 let patients = getData.result[0].query0;
 let doctors = getData.result[1].query1;
@@ -29,6 +29,7 @@ let visitStatus = getData.result[2].query2;
 let packages = getData.result[3].query3;
 let workers = getData.result[4].query4;
 let invoices = getData.result[5].query5[0];
+let categories = getData.result[6].query6;
 
 // get birth by float age year
 function getBirthByAge(age_year = 0, age_month = 0, age_day = 0) {
@@ -662,13 +663,13 @@ class Visit extends Factory {
     let theme = null;
     switch (labTheme) {
       case "one":
-        theme = new TestsThemeOne(this.table, packages);
+        theme = new TestsThemeOne(this.table, packages, categories);
         break;
       case "two":
-        theme = new TestsThemeTwo(this.table, packages);
+        theme = new TestsThemeTwo(this.table, packages, categories);
         break;
       default:
-        theme = new TestsThemeTwo(this.table, packages);
+        theme = new TestsThemeTwo(this.table, packages, categories);
     }
     // append top of div
     $("#testsThemeElement").prepend(theme.build());

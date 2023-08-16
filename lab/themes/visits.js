@@ -1,9 +1,28 @@
 class TestsTheme {
-  constructor(table, testsAndPackages) {
+  constructor(table, testsAndPackages, categories) {
     this.name = "select Theme";
     this.table = table;
     this.testsAndPackages = testsAndPackages;
+    this.categories = categories;
   }
+
+  categorySelect(categories, id = "all") {
+    return `
+      <select class="form-control" id="categorySelect-${id}">
+        <option value="0">الكل</option>
+        ${categories.map((item) => {
+          return `<option value="${item.hash}">${item.name}</option>`;
+        })}
+      </select>
+      <script>
+        $('#categorySelect-${id}').select2({
+            width: '100%',
+            dropdownParent: $("#categorySelect-${id}").parent(),
+        });
+      </script>
+    `;
+  }
+
   createTests() {
     return "createTests";
   }
@@ -30,16 +49,19 @@ class TestsTheme {
 }
 
 class TestsThemeOne extends TestsTheme {
-  constructor(table, testsAndPackages) {
-    super(table, testsAndPackages);
+  constructor(table, testsAndPackages, categories) {
+    super(table, testsAndPackages, categories);
     this.name = "TestsThemeOne";
   }
 
   createTests(tests) {
     return `
         <div class="row justify-content-center h-100 m-auto">
-            <div class="col-12 mt-3">
+            <div class="col-6 mt-3">
                 <input type="text" class="w-100 form-control product-search br-30" id="input-search-2" placeholder="ابحث عن التحليل">
+            </div>
+            <div class="col-6 mt-3">
+                ${this.categorySelect(this.categories, "2")}
             </div>
             <div class="col-12" style="overflow-y: scroll; height: 500px">
                 <div class="row justify-content-between">
@@ -50,7 +72,9 @@ class TestsThemeOne extends TestsTheme {
                               .filter((item) => item.type == "9")
                               .map((item) => {
                                 return `
-                            <div class="n-chk item test text-left mb-3 col-auto">
+                            <div class="n-chk item test text-left mb-3 col-auto" data-category="${
+                              item.category_hash
+                            }">
                             <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
                               item.hash
                             })" onmouseleave="$(this).popover('hide')">
@@ -88,8 +112,11 @@ class TestsThemeOne extends TestsTheme {
   createPackages(packages) {
     return `
         <div class="row justify-content-center h-100 m-auto">
-            <div class="col-12 mt-3">
+            <div class="col-6 mt-3">
                 <input type="text" class="w-100 form-control product-search br-30" id="input-search-3" placeholder="ابحث عن العرض">
+            </div>
+            <div class="col-6 mt-3">
+                ${this.categorySelect(this.categories, "3")}
             </div>
             <div class="col-12" style="overflow-y: scroll; height: 500px">
                 <div class="row justify-content-between">
@@ -100,7 +127,9 @@ class TestsThemeOne extends TestsTheme {
                                 .map(
                                   (item) => `
                                   
-                                      <div class="n-chk item package text-left mb-3 col-auto">
+                                      <div class="n-chk item package text-left mb-3 col-auto" data-category="${
+                                        item.category_hash
+                                      }">
                                           <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
                                               <input type="checkbox" onclick="changeTotalPrice('${
                                                 item.hash
@@ -237,8 +266,8 @@ class TestsThemeOne extends TestsTheme {
 }
 
 class TestsThemeTwo extends TestsTheme {
-  constructor(table, testsAndPackages) {
-    super(table, testsAndPackages);
+  constructor(table, testsAndPackages, categories) {
+    super(table, testsAndPackages, categories);
     this.name = "TestsThemeTwo";
   }
 
@@ -255,7 +284,9 @@ class TestsThemeTwo extends TestsTheme {
                       ${tests
                         .map((item) => {
                           return `
-                      <div class="n-chk item text-left mb-3">
+                      <div class="n-chk item text-left mb-3" data-category="${
+                        item.category_hash
+                      }">
                       <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
                         item.hash
                       })" onmouseleave="$(this).popover('hide')">
@@ -301,7 +332,9 @@ class TestsThemeTwo extends TestsTheme {
                         .map(
                           (item) => `
                           
-                              <div class="n-chk item text-left mb-3">
+                              <div class="n-chk item text-left mb-3" data-category="${
+                                item.category_hash
+                              }">
                                   <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
                                       <input type="checkbox" onclick="changeTotalPrice('${
                                         item.hash
@@ -398,8 +431,11 @@ class TestsThemeTwo extends TestsTheme {
                     <h3 class="modal-title">التحاليل</h3>
                 </div>
                 <div class="row justify-content-center h-100 m-auto" style="width: 95%;">
-                    <div class="col-12 mt-3">
+                    <div class="col-6 mt-3">
                         <input type="text" class="w-100 form-control product-search br-30" id="input-search-all" placeholder="ابحث عن التحليل">
+                    </div>
+                    <div class="col-6 mt-3">
+                        ${this.categorySelect(this.categories)}
                     </div>
                     ${this.createTests(tests)}
                     ${this.createPackages(packages)}
