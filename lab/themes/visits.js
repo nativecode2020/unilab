@@ -8,7 +8,7 @@ class TestsTheme {
 
   categorySelect(categories, id = "all") {
     return `
-      <select class="form-control" id="categorySelect-${id}">
+      <select class="form-control rounded border border-info" id="categorySelect-${id}">
         <option value="0">الكل</option>
         ${categories.map((item) => {
           return `<option value="${item.hash}">${item.name}</option>`;
@@ -18,7 +18,12 @@ class TestsTheme {
         $('#categorySelect-${id}').select2({
             width: '100%',
             dropdownParent: $("#categorySelect-${id}").parent(),
+            placeholder: "اختر نوع التحليل",
         });
+        // get close select2
+        $('.main-visit-tests .select2-selection--single').addClass('br-30');
+        // put default value
+        $('#categorySelect-${id}').val('').trigger('change');
       </script>
     `;
   }

@@ -1,6 +1,10 @@
 async function offlineLogin() {
+  $("body").append(waitElement);
+
   var username = $("#username").val();
   var password = $("#password").val();
+  // add waitElement to body
+
   //console.log(username+" --  "+password);
   $.ajax({
     url: base_url + "login",
@@ -12,6 +16,7 @@ async function offlineLogin() {
       if (result.result == "0") {
         document.getElementById("message").innerHTML =
           "يرجى التاكد من اسم الحساب او الرمز السري";
+        document.getElementById("alert_screen").remove();
       } else {
         localStorage.setItem("token", result.token);
         localStorage.setItem("hash", result.hash);
@@ -29,6 +34,7 @@ async function offlineLogin() {
         ) {
           document.getElementById("message").innerHTML =
             "ليس لديك صلاحية دخول جرب مرة اخري الرجاء التواصل مع الدعم الفني";
+          document.getElementById("alert_screen").remove();
           return;
         }
         if (user_type == "2" || user_type == "111") {
@@ -36,13 +42,14 @@ async function offlineLogin() {
         } else {
           document.getElementById("message").innerHTML =
             "ليس لديك صلاحية دخول جرب مرة اخري";
+          document.getElementById("alert_screen").remove();
         }
       }
     },
     error: function () {
       document.getElementById("message").innerHTML =
         "يرجى التاكد من الاتصال بلانترنت";
-      console.log("error");
+      document.getElementById("alert_screen").remove();
     },
   });
 }
@@ -55,7 +62,7 @@ const waitLoginElement = `<div id="alert_screen" class="alert_screen">
               <h1 class="card-title">الرجاء الانتظار </h1>
               <h4>يتم الان تهيئة بيانات النظام</h4>
               <h4>الرجاء عدم اغلاق الصفحة لعدم حصول مشكلة</h4>
-              <img class="spinner-grow-alert" src="../assets/image/flask.png" width="100" height="100" alt="alert_screen">
+              <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="100" height="100" alt="alert_screen">
               <div class="w-100 mt-5"></div>
             </div>
           </div>
@@ -70,7 +77,6 @@ async function updateLoginSystem() {
 
 const login = async () => {
   const message = document.getElementById("message");
-
   let dataForm = new FormData();
   dataForm.append("username", $("#username").val());
   dataForm.append("password", $("#password").val());
@@ -171,11 +177,10 @@ const login = async () => {
     if (user_type == "2" || user_type == "111") {
       location.href = `${__domain__}lab/index.html`;
     }
+    document.getElementById("alert_screen").remove();
   } else {
     await offlineLogin();
   }
-
-  document.getElementById("alert_screen").remove();
 };
 
 function addAlert(message) {

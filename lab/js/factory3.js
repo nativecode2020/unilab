@@ -854,7 +854,7 @@ const waitElement = `<div id="alert_screen" class="alert_screen">
             <div class="card-body text-center">
               <h1 class="card-title">الرجاء الانتظار </h1>
               <h4>يتم الان اجراء العملية</h4>
-              <img class="spinner-grow-alert" src="assets/image/flask.png" width="100" height="100" alt="alert_screen">
+              <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="100" height="100" alt="alert_screen">
             </div>
           </div>
     </div>
@@ -1061,13 +1061,13 @@ function setServerTable(
       sInfo: "عرض _PAGE_ من اصل _PAGES_ صفحة",
       processing: `
                 <div class="text-center" >
-                    <img class="spinner-grow-alert" src="assets/image/flask.png" width="50" height="50" alt="alert_screen">
+                    <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="50" height="50" alt="alert_screen">
                     <h5 class="text-center">جاري التحميل</h5>
                 </div>
             `,
       emptyTable: `
             <div class="text-center">
-                <img class="" src="assets/image/flask.png" width="50" height="50" alt="alert_screen">
+                <img class="" src="${front_url}assets/image/flask.png" width="50" height="50" alt="alert_screen">
                 <h5 class="text-center">لا يوجد بيانات</h5>
             </div>`,
     },
@@ -1132,13 +1132,13 @@ function setTable(id = "table", table, options = {}) {
       sLengthMenu: "النتائج :  _MENU_",
       processing: `
                 <div class="text-center" >
-                    <img class="spinner-grow-alert" src="assets/image/flask.png" width="50" height="50" alt="alert_screen">
+                    <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="50" height="50" alt="alert_screen">
                     <h5 class="text-center">جاري التحميل</h5>
                 </div>
             `,
       emptyTable: `
             <div class="text-center">
-                <img class="" src="assets/image/flask.png" width="50" height="50" alt="alert_screen">
+                <img class="" src="${front_url}assets/image/flask.png" width="50" height="50" alt="alert_screen">
                 <h5 class="text-center">لا يوجد بيانات</h5>
             </div>`,
     },
@@ -1216,13 +1216,13 @@ function setTable_1(id = "table", options = {}) {
       sInfo: "عرض _PAGE_ من اصل _PAGES_ صفحة",
       processing: `
                 <div class="text-center" >
-                    <img class="spinner-grow-alert" src="assets/image/flask.png" width="50" height="50" alt="alert_screen">
+                    <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="50" height="50" alt="alert_screen">
                     <h5 class="text-center">جاري التحميل</h5>
                 </div>
             `,
       emptyTable: `
             <div class="text-center">
-                <img class="" src="assets/image/flask.png" width="50" height="50" alt="alert_screen">
+                <img class="" src="${front_url}assets/image/flask.png" width="50" height="50" alt="alert_screen">
                 <h5 class="text-center">لا يوجد بيانات</h5>
             </div>`,
     },

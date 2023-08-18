@@ -694,15 +694,9 @@ function refreshValidation() {
   let result = true;
   let ageLowElement = $("#age_low");
   let ageHighElement = $("#age_high");
-  let ageUnitLowElement = null;
-  let ageUnitHighElement = null;
-  if (THEME.name == "Form") {
-    ageUnitLowElement = $("#age_unit_low");
-    ageUnitHighElement = $("#age_unit_high");
-  } else if (THEME.name == "Table") {
-    ageUnitLowElement = $("#age_unit");
-    ageUnitHighElement = $("#age_unit");
-  }
+  let ageUnitLowElement = $("#age_unit_low");
+  let ageUnitHighElement = $("#age_unit_high");
+
   // check if age low is empty
   if (ageLowElement.val() == "") {
     niceSwal("error", "top-end", "الرجاء ادخال العمر الادنى");
