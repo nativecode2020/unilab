@@ -566,15 +566,14 @@ function deleteRefrence(hash, refID) {
   });
   $(`#refrence_form_${refID}`).remove();
   if ($("#refrence_editor form").length == 0) {
-    $(
-      `#test-${hash}_kit-${(
-        kits.find((x) => x.id == _kit)?.name.replace(/[^a-zA-Z0-9]/g, "_") ??
-        "No Kit"
-      )
-        .split(" ")
-        .join("_")}`
-    ).remove();
-
+    // $(
+    //   `#test-${hash}_kit-${(
+    //     kits.find((x) => x.id == _kit)?.name.replace(/[^a-zA-Z0-9]/g, "_") ??
+    //     "No Kit"
+    //   )
+    //     .split(" ")
+    //     .join("_")}`
+    // ).remove();
     $("#refrence_editor").modal("toggle");
   }
 }

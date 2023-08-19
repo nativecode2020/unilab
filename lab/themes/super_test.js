@@ -343,7 +343,7 @@ class TableTheme extends Theme {
     return `
     <div class="row justify-content-between">
        <div class="col-md-3 mb-4">
-          <input type="number" class="form-control" name="age_low" value="${low}" placeholder="الحد الادنى">
+          <input type="number" class="form-control" name="age_low" id="age_low" value="${low}" placeholder="الحد الادنى">
         </div>
         <div class="col-md-3 mb-4">
           <select class="form-control" name="age_unit_low" id="age_unit_low">
