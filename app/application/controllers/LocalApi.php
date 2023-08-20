@@ -61,11 +61,14 @@ class LocalApi extends CI_Controller
             'type2' => $this->input->post('type2'),
         );
         $insert = $this->User_model->add_user($data);
-        $this->db->insert('system_put_role_to_users', array(
-            'group_hash' => $this->input->post('user_type'),
-            'user_hash' => $this->input->post('hash'),
-            'hash' => $this->input->post('hash')
-        ));
+        $this->db->insert(
+            'system_put_role_to_users',
+            array(
+                'group_hash' => $this->input->post('user_type'),
+                'user_hash' => $this->input->post('hash'),
+                'hash' => $this->input->post('hash')
+            )
+        );
         echo json_encode(
             array(
                 'status' => true,
@@ -83,6 +86,7 @@ class LocalApi extends CI_Controller
         $queries = $this->input->post("queries");
         $queries = json_decode($queries);
         // run all queries
+        $this->db->query(`set_time_limit(500);`);
         foreach ($queries as $query) {
             if (isset($query)) {
                 $this->db->query($query);
@@ -121,7 +125,7 @@ class LocalApi extends CI_Controller
     {
         $lab_id = $this->input->post('lab_id');
         $url = $this->db->query("SELECT logo FROM lab_invoice WHERE lab_hash = $lab_id")->row()->logo;
-        $local_host =  $_SERVER['SERVER_NAME'];
+        $local_host = $_SERVER['SERVER_NAME'];
         $img = '/var/www/html/app/uploads/' . basename($url);
         shell_exec("chmod -R 777 /var/www/html/");
         // check permission
