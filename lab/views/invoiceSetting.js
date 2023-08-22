@@ -1,12 +1,47 @@
 const labHash = localStorage.getItem("lab_hash");
 
-const Invoice = () => {
+const initInvoiceItem = {
+  name: "",
+  unit: "",
+  result: "",
+  range: [],
+  flag: "",
+};
+
+const InvoiceItemReducer = (state, action) => {
+  switch (action.type) {
+    case "NAMEANDUNIT":
+      return { ...state, name: action.payload.name, unit: action.payload.unit };
+    case "RESULT":
+      if (action.payload)
+        return { ...state, result: action.payload[state.name] };
+      else return { ...state, result: "" };
+    case "RANGE":
+      return { ...state, range: action.payload };
+    case "FLAG":
+      return { ...state, flag: action.payload };
+    default:
+      return state;
+  }
+};
+
+const Invoice = ({ tests, setTests }) => {
   const [invoice, setInvoice] = React.useState({});
+  const [center, setCenter] = React.useState(0);
+  const testerRef = React.useRef(null);
 
   const fetchInvoice = () => {
-    return run(`select * from lab_invoice where lab_hash = '${labHash}';`)
+    let data = run(`select * from lab_invoice where lab_hash = '${labHash}';`)
       .result[0].query0[0];
+    if (data.center) {
+      setCenter(data.center);
+    }
+    return data;
   };
+
+  React.useEffect(() => {
+    console.log(testerRef);
+  }, [testerRef]);
 
   React.useEffect(() => {
     let data = fetchInvoice();
@@ -35,8 +70,13 @@ const Invoice = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(invoice);
-  }, [invoice]);
+    console.log(center);
+  }, [tests]);
+
+  const handelCenter = (i) => {
+    setCenter(i);
+  };
+
   return (
     <div className="book-result" dir="ltr" id="invoice-normalTests" style={{}}>
       <div className="page">
@@ -117,7 +157,7 @@ const Invoice = () => {
             </div>
           </div>
 
-          <div className="tester">
+          <div className="tester" ref={testerRef}>
             <div className="testhead row sections m-0 mt-2 category_category">
               <div className="col-3">
                 <p className="text-right">Test Name</p>
@@ -138,7 +178,10 @@ const Invoice = () => {
             <div className="test typetest pt-3 category_Tests">
               <p>Tests</p>
             </div>
-            <InvoiceItem test={{ id: 1 }} />
+            {tests.map((test, index) => {
+              return <InvoiceItem test={test} key={test.hash} />;
+              // return "";
+            })}
           </div>
         </div>
 
@@ -183,29 +226,119 @@ const Invoice = () => {
   );
 };
 
-const InvoiceItem = ({ test, type }) => {
+const InvoiceItem = ({ test }) => {
+  const [state, dispatch] = React.useReducer(
+    InvoiceItemReducer,
+    initInvoiceItem
+  );
+
+  React.useEffect(() => {
+    console.log(document.querySelector(".tester").offsetHeight);
+    const {
+      hash,
+      name,
+      unit_name,
+      options,
+      result_test,
+      unit,
+      kit_id,
+      category,
+    } = test;
+    dispatch({ type: "NAMEANDUNIT", payload: { name, unit: unit_name } });
+    let result = JSON.parse(result_test);
+    dispatch({ type: "RESULT", payload: result });
+    let component = JSON.parse(options);
+    if (component) {
+      let { reference } = component.component[0];
+      reference = reference.filter((ref, index) => {
+        return index == 0; // (ref.unit == unit && ref.kit == kit_id);
+      });
+      if (reference.length > 0) {
+        let { range } = reference[0];
+        dispatch({ type: "RANGE", payload: range });
+        let correctRange = range.filter((r) => {
+          return r.correct;
+        });
+        if (correctRange.length > 0) {
+          let { low, high } = correctRange[0];
+          // check if result is in range
+          if (state.result < low) {
+            dispatch({ type: "FLAG", payload: "L" });
+          }
+          if (state.result > high) {
+            dispatch({ type: "FLAG", payload: "H" });
+          }
+        }
+      }
+    }
+  }, []);
+
   return (
     <div
       data-flag="flag"
       className="test row m-0 category_Tests border-test"
-      id={`test_normal_${test.id}`}
+      id={`test_normal`}
       data-cat="Tests"
       style={{ display: "flex" }}
     >
       <div className="testname col-3">
-        <p className="text-right w-100">Test Example</p>
+        <p className="text-right w-100">{state.name}</p>
       </div>
       <div className="testresult col-2">
-        <p className="text-dark w-75 text-center"></p>
+        <p
+          className={`w-100 text-center ${
+            state.flag ? "p-1 border border-dark" : ""
+          } ${
+            state.flag == "L"
+              ? "text-info"
+              : state.flag == "H"
+              ? "text-danger"
+              : "text-dark"
+          }`}
+        >
+          {state.result}
+        </p>
       </div>
       <div className="testresult col-2">
-        <p className="text-dark w-75 text-center"></p>
+        <p
+          className={`w-75 text-center ${
+            state.flag == "L"
+              ? "text-info"
+              : state.flag == "H"
+              ? "text-danger"
+              : "text-dark"
+          }`}
+        >
+          {state.flag}
+        </p>
       </div>
       <div className="testresult col-2">
-        <p> Unit</p>
+        <p> {state.unit}</p>
       </div>
       <div className="testnormal col-3">
-        <p className="text-right">&gt;= 5</p>
+        {state.range.map((r, index) => {
+          const { name, low, high } = r;
+          if (low && high) {
+            return (
+              <p className="text-right w-100" key={index}>
+                {name && `${name}:`}
+                {low} - {high}
+              </p>
+            );
+          } else if (low) {
+            return (
+              <p className="text-right w-100" key={index}>
+                {name && `${name}:`} {low} &lt;=
+              </p>
+            );
+          } else if (high) {
+            return (
+              <p className="text-right w-100" key={index}>
+                {name && `${name}:`}&lt;= {high}
+              </p>
+            );
+          }
+        })}
       </div>
       <div className="testprice col-12 h5 text-right text-info"></div>
     </div>
@@ -217,17 +350,56 @@ const Setting = () => {
 };
 
 const InvoiceSetting = () => {
+  const invoiceRef = React.useRef(null);
+  const [tests, setTests] = React.useState([]);
+  const fetchTests = () => {
+    return run(`select 
+                  option_test as options,
+                  test_name as name,
+                  kit_id,
+                  (select name from devices where devices.id=lab_device_id) as device_name,
+                  (select name from kits where kits.id =kit_id) as kit_name,
+                  (select name from lab_test_units where hash=lab_pakage_tests.unit) as unit_name,
+                  (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
+                  unit,
+                  result_test,
+                  lab_visits_tests.hash as hash
+              from 
+                  lab_visits_tests 
+              left join
+                  lab_pakage_tests
+              on 
+                  lab_pakage_tests.test_id = lab_visits_tests.tests_id and lab_pakage_tests.package_id = lab_visits_tests.package_id
+              inner join
+                  lab_test
+              on
+                  lab_test.hash = lab_visits_tests.tests_id
+              where 
+                  visit_id = '16921880982072694'
+              order by sort;`).result[0].query0;
+  };
+
+  React.useEffect(() => {
+    setTests(fetchTests());
+  }, []);
+
+  React.useEffect(() => {
+    if (tests.length > 0) {
+      ReactDOM.render(
+        <Invoice tests={tests} setTests={setTests} />,
+        invoiceRef.current
+      );
+    }
+  }, [tests]);
   return (
     <div
       className="row invoice layout-spacing justify-content-center"
       dir="rtl"
     >
-      <div className="col-1">
+      <div className="col-6">
         <Setting />
       </div>
-      <div className="col-11">
-        <Invoice />
-      </div>
+      <div className="col-6" ref={invoiceRef}></div>
     </div>
   );
 };
