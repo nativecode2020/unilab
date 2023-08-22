@@ -86,7 +86,7 @@ class LocalApi extends CI_Controller
         $queries = $this->input->post("queries");
         $queries = json_decode($queries);
         // run all queries
-        $this->db->query(`set_time_limit(500);`);
+        set_time_limit(500);
         foreach ($queries as $query) {
             if (isset($query)) {
                 $this->db->query($query);
