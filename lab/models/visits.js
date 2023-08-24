@@ -16,7 +16,7 @@ let getData =
                    WHERE lab_package.lab_id='${localStorage.getItem(
                      "lab_hash"
                    )}' and test_type <>'3' group by hash;
-                   SELECT name,jop, jop_en from lab_invoice_worker where lab_hash='${localStorage.getItem(
+                   SELECT * from lab_invoice_worker where lab_hash='${localStorage.getItem(
                      "lab_hash"
                    )}' and is_available=1 and isdeleted=0 limit 5;
                    select * from lab_invoice where lab_hash='${localStorage.getItem(
@@ -657,8 +657,20 @@ class Visit extends Factory {
     $("#input-search-2").val("");
   }
 
-  createModal() {
-    const labTheme = sessionStorage.getItem("visitTestsTheme") ?? "default";
+  async createModal() {
+    const fetchInvoice = async () => {
+      const labHash = localStorage.getItem("lab_hash");
+      return await fetch(
+        `http://localhost:8807/unilab/app/index.php/Invoice/get_or_create?hash=${labHash}`
+      )
+        .then((e) => e.json())
+        .then((res) => {
+          let setting = JSON.parse(res.data.setting);
+          return setting;
+        });
+    };
+    const setting = await fetchInvoice();
+    const labTheme = setting?.visitTestsTheme ?? "default";
     console.log("labTheme", labTheme);
     let theme = null;
     switch (labTheme) {

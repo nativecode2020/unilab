@@ -10,15 +10,8 @@ class Invoice extends CI_Controller
         $this->load->helper('url');
         $this->load->library('session');
         $this->load->model('Menu_db');
+        $this->load->model('InvoiceModel');
         $this->load->library('pagination');
-
-
-        // $this->name = $this->session->userdata('name');
-        // $this->id = $this->session->userdata('id');
-        // $this->idhash = $this->session->userdata('idhash');
-        // if ($this->name == "") {
-        //     redirect('Login/logout');
-        // }
     }
 
 
@@ -73,24 +66,62 @@ class Invoice extends CI_Controller
             "select * from lab_invoice where lab_hash='$labId';"
         )->result_array();
         if ($hash) {
-            echo json_encode(array(
+            echo json_encode(
+                array(
+                    'status' => true,
+                    'message' => 'success',
+                    'data' => array(
+                        "visit" => $visit,
+                        "visitTests" => $visitTests,
+                        "workers" => $workers,
+                        "invoices" => $invoices
+                    ),
+                    'isAuth' => true
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+        } else {
+            echo json_encode(
+                array(
+                    'status' => false,
+                    'message' => 'يجب عليك ادخال رقم الفاتورة',
+                    'data' => null,
+                    'isAuth' => true
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+    }
+
+    public function get_or_create()
+    {
+        $lab_hash = $this->input->get('hash');
+        $result = $this->InvoiceModel->get_or_create($lab_hash);
+        echo json_encode(
+            array(
                 'status' => true,
                 'message' => 'success',
-                'data' => array(
-                    "visit" => $visit,
-                    "visitTests" => $visitTests,
-                    "workers" => $workers,
-                    "invoices" => $invoices
-                ),
+                'data' => $result,
                 'isAuth' => true
-            ), JSON_UNESCAPED_UNICODE);
-        } else {
-            echo json_encode(array(
-                'status' => false,
-                'message' => 'يجب عليك ادخال رقم الفاتورة',
-                'data' => null,
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
+    public function update()
+    {
+        $data = $this->input->post();
+        $lab_hash = $data['lab_hash'];
+        unset($data['lab_hash']);
+        $result = $this->InvoiceModel->update($lab_hash, $data);
+        echo json_encode(
+            array(
+                'status' => true,
+                'message' => 'success',
+                'data' => $result,
                 'isAuth' => true
-            ), JSON_UNESCAPED_UNICODE);
-        }
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
     }
 }

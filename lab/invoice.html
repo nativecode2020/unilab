@@ -80,28 +80,8 @@
                 <div class="page-header">
                 </div>
 
-                <div class="row invoice layout-spacing justify-content-center">
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                        <div class="statbox widget box box-shadow bg-white h-100">
-                            <div class="widget-content widget-content-area m-auto" style="width: 95%;">
-                                <form id="invoice_form" class="row justify-content-center my-4">
-                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                                        <button type="button" class="btn btn-primary w-100 mb-3"
-                                            onclick="fireSwal.call(invoice, invoice.updateInvoice)">حفظ</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                        <div class="statbox widget box box-shadow bg-white h-100">
-                            <div class="widget-content widget-content-area m-auto" style="width: 95%;">
-                                <div id="invoice_preview">
+                <div id="root">
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -132,38 +112,16 @@
     </script>
     <script src="plugins/file-upload/file-upload-with-preview.min.js"></script>
     <script src="js/const.js"></script>
-    <script>
-        // genrate random text like "1.2.3"
-        function randomText() {
-            let text = "";
-            for (let i = 0; i < 3; i++) {
-                text += Math.floor(Math.random() * 10) + ".";
-            }
-            return text.slice(0, -1);
-        }
-        var random_text = randomText();
-        // get script that src contain const.js
-        const CONSTELEMENT = document.querySelector('script[src*="const.js"]');
-        let src = CONSTELEMENT.src;
-        // add random text to the end of src
-        src = src + "?v=" + random_text;
-        // change src of const.js
-        CONSTELEMENT.src = src;
-    </script>
     <script src="js/exe.js"></script>
     <script src="js/login.js"></script>
     <script src="js/factory3.js"></script>
-    <script src="views/invoice.js"></script>
-    <script>
-        var allScripts = document.querySelectorAll("script");
+    <script src="assets/react/babel.min.js"></script>
 
-        allScripts.forEach((item) => {
-            if (!item.src.includes("const.js") && item?.src) {
-                src = item.src + `?v=${VERSION}`;
-                item.src = src;
-            }
-        });
-    </script>
+    <script src="assets/react/react.production.min.js" crossorigin></script>
+    <script src="assets/react/react-dom.production.min.js" crossorigin></script>
+    <script src="views/invoice.js" type="text/babel"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 </body>
 
 </html>
