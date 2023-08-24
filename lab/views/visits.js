@@ -31,7 +31,7 @@ $(function () {
   set_var("--typeTest-font", `${parseInt(invoices?.font_size) + 2 ?? 20}px`);
   set_var("--color-orange", invoices?.color ?? "#ff8800");
   set_var("--invoice-color", invoices?.font_color ?? "#000");
-  set_var("--logo-height", `${invoices?.header ?? 175}px`);
+  // set_var("--logo-height", `${invoices?.header ?? 175}px`);
   // document.documentElement.style.setProperty('--font_size', `${invoices?.font_size ?? 20}px`);
   // r.style.setProperty('--color-orange', invoices?.color??'red');
   // r.style.setProperty('--water-mark', `url(${invoices.logo})`??'url(../assets/image/logo2.png)');

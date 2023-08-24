@@ -1355,200 +1355,251 @@ function showInvoice(hash) {
 }
 
 function invoiceHeader(worker) {
-  const workersCount = worker.length;
-  switch (workersCount) {
-    case 0:
-      return `
-            <div class="header">
-                <div class="row justify-content-around">
-                    <div class="logo col-4 p-2">
-                        <!-- شعار التحليل -->
-                        <img src="${invoices?.logo ?? ""}" alt="${
-        invoices?.logo ?? "upload Logo"
-      }">
-                    </div>
-                    <div class="logo justify-content-end col-4 p-2">
-                        <!-- شعار التحليل -->
-                        <h2 class="navbar-brand-name text-center">${
-                          invoices?.name_in_invoice ??
-                          localStorage.lab_name ??
-                          ""
-                        }</h2>
-                    </div>
-                </div>
-            </div>
-            `;
-    case 1:
-      return `
-            <div class="header">
-                <div class="row justify-content-between">
-                    <div class="logo col-4 p-2">
-                        <!-- شعار التحليل -->
-                        <img src="${invoices?.logo ?? ""}" alt="${
-        invoices?.logo ?? "upload Logo"
-      }">
-                    </div>
-                    <div class="right col-4">
-                        <!-- عنوان جانب الايمن -->
-                        <div class="size1">
-                        <p class="title">${workers?.[0]?.jop ?? "Jop title"}</p>
-                        <p class="namet">${
-                          workers?.[0]?.name ?? "Worker name"
-                        }</p>
-                        <p class="certificate">${
-                          workers?.[0]?.jop_en ?? "Jop En title"
-                        }</p>
-                        </div>
-
-                        <div class="size2">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-    case 2:
-      return `
-            <div class="header">
-                <div class="row">
-                    <div class="left col-4">
-                        <!-- عنوان جانب الايسر -->
-                        <div class="size1">
-                            <p class="title">${
-                              workers?.[1]?.jop ?? "Jop title"
-                            }</p>
-                            <p class="namet">${
-                              workers?.[1]?.name ?? "Worker name"
-                            }</p>
-                            <p class="certificate">${
-                              workers?.[1]?.jop_en ?? "Jop En title"
-                            }</p>
-                        </div>
-
-                        <div class="size2">
-
-                        </div>
-                    </div>
-
-                    <div class="logo col-4 p-2">
-                        <!-- شعار التحليل -->
-                        <img src="${invoices?.logo ?? ""}" alt="${
-        invoices?.logo ?? "upload Logo"
-      }">
-                    </div>
-                    <div class="right col-4">
-                        <!-- عنوان جانب الايمن -->
-                        <div class="size1">
-                        <p class="title">${workers?.[0]?.jop ?? "Jop title"}</p>
-                        <p class="namet">${
-                          workers?.[0]?.name ?? "Worker name"
-                        }</p>
-                        <p class="certificate">${
-                          workers?.[0]?.jop_en ?? "Jop En title"
-                        }</p>
-                        </div>
-
-                        <div class="size2">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-    case 3:
-      return `
-            <div class="header">
-                <div class="row">
-                    <div class="logo col-3 p-2">
-                        <!-- شعار التحليل -->
-                        <img src="${invoices?.logo ?? ""}" alt="${
-        invoices?.logo ?? "upload Logo"
-      }">
-                    </div>
-                    ${workers
-                      ?.map((worker, index) => {
-                        return `
-                                <div class="col-cus-md-4 my-3">
-        
-                                    <p class="title">${
-                                      worker?.jop ?? "Jop title"
-                                    }</p>
-                                    <p class="namet">${
-                                      worker?.name ?? "Worker name"
-                                    }</p>
-                                    <p class="certificate">${
-                                      worker?.jop_en ?? "Jop En title"
-                                    }</p>
-                                </div>
-                                `;
-                      })
-                      .join("")}
-                    
-                </div>
-            </div>
-            `;
-    case 4:
-      return `
-            <div class="header d-flex justify-content-center">
-                <div class="row">
-                    <div class="logo col-cus-md-5 p-2">
-                        <!-- شعار التحليل -->
-                        <img src="${invoices?.logo ?? ""}" alt="${
-        invoices?.logo ?? "upload Logo"
-      }">
-                    </div>
-                    ${workers
-                      ?.map((worker, index) => {
-                        return `
-                        <div class="col-cus-md-5 my-3">
-
-                            <p class="title">${worker?.jop ?? "Jop title"}</p>
-                            <p class="namet">${
-                              worker?.name ?? "Worker name"
-                            }</p>
-                            <p class="certificate">${
-                              worker?.jop_en ?? "Jop En title"
-                            }</p>
-                        </div>
-                        `;
-                      })
-                      .join("")}
-                </div>
-            </div>
-            `;
-
-    case 5:
-      return `
-            <div class="header d-flex justify-content-center">
-                <div class="row">
-                    <div class="logo col-cus-md-6 p-2">
-                        <!-- شعار التحليل -->
-                        <img src="${invoices?.logo ?? ""}" alt="${
-        invoices?.logo ?? "upload Logo"
-      }">
-                    </div>
-                    ${workers
-                      ?.map((worker, index) => {
-                        return `
-                        <div class="col-cus-md-6 my-3">
-
-                            <p class="title">${worker?.jop ?? "Jop title"}</p>
-                            <p class="namet">${
-                              worker?.name ?? "Worker name"
-                            }</p>
-                            <p class="certificate">${
-                              worker?.jop_en ?? "Jop En title"
-                            }</p>
-                        </div>
-                        `;
-                      })
-                      .join("")}
-                </div>
-            </div>
-            `;
-    default:
-      break;
+  let orderOfHeader = sessionStorage.getItem("orderOfHeader");
+  if (!orderOfHeader) {
+    let setting = JSON.parse(invoices?.setting);
+    orderOfHeader = JSON.parse(setting?.orderOfHeader) ?? null;
   }
+  let newWorkers = [];
+
+  if (orderOfHeader) {
+    orderOfHeader.forEach((hash) => {
+      if (hash == "logo") {
+        newWorkers.push({ hash: "logo" });
+        return;
+      }
+      worker.find((employee) => {
+        if (employee.hash == hash) {
+          newWorkers.push(employee);
+        }
+      });
+    });
+  } else {
+    newWorkers = [{ hash: "logo" }, ...worker];
+  }
+  console.log(newWorkers);
+  let size = invoices?.phone_2 ?? "4";
+  let html = newWorkers
+    .map((worker) => {
+      if (worker.hash == "logo") {
+        return `
+        <div class="logo col-${size}  p-2">
+        <img src=${invoices?.logo} alt="" />
+      </div>
+      `;
+      }
+      return `
+      <div class="right col-md-${size}">
+        <div class="size1">
+          <p class="title">${worker?.jop ?? "Jop title"}</p>
+          <p class="namet">${worker?.name ?? "Worker name"}</p>
+          <p class="certificate">${worker?.jop_en ?? "Jop En title"}</p>
+        </div>
+      </div>
+      `;
+    })
+    .join("");
+  // const workersCount = worker.length;
+  // switch (workersCount) {
+  //   case 0:
+  //     return `
+  //           <div class="header">
+  //               <div class="row justify-content-around">
+  //                   <div class="logo col-4 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <img src="${invoices?.logo ?? ""}" alt="${
+  //       invoices?.logo ?? "upload Logo"
+  //     }">
+  //                   </div>
+  //                   <div class="logo justify-content-end col-4 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <h2 class="navbar-brand-name text-center">${
+  //                         invoices?.name_in_invoice ??
+  //                         localStorage.lab_name ??
+  //                         ""
+  //                       }</h2>
+  //                   </div>
+  //               </div>
+  //           </div>
+  //           `;
+  //   case 1:
+  //     return `
+  //           <div class="header">
+  //               <div class="row justify-content-between">
+  //                   <div class="logo col-4 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <img src="${invoices?.logo ?? ""}" alt="${
+  //       invoices?.logo ?? "upload Logo"
+  //     }">
+  //                   </div>
+  //                   <div class="right col-4">
+  //                       <!-- عنوان جانب الايمن -->
+  //                       <div class="size1">
+  //                       <p class="title">${workers?.[0]?.jop ?? "Jop title"}</p>
+  //                       <p class="namet">${
+  //                         workers?.[0]?.name ?? "Worker name"
+  //                       }</p>
+  //                       <p class="certificate">${
+  //                         workers?.[0]?.jop_en ?? "Jop En title"
+  //                       }</p>
+  //                       </div>
+
+  //                       <div class="size2">
+
+  //                       </div>
+  //                   </div>
+  //               </div>
+  //           </div>
+  //           `;
+  //   case 2:
+  //     return `
+  //           <div class="header">
+  //               <div class="row">
+  //                   <div class="left col-4">
+  //                       <!-- عنوان جانب الايسر -->
+  //                       <div class="size1">
+  //                           <p class="title">${
+  //                             workers?.[1]?.jop ?? "Jop title"
+  //                           }</p>
+  //                           <p class="namet">${
+  //                             workers?.[1]?.name ?? "Worker name"
+  //                           }</p>
+  //                           <p class="certificate">${
+  //                             workers?.[1]?.jop_en ?? "Jop En title"
+  //                           }</p>
+  //                       </div>
+
+  //                       <div class="size2">
+
+  //                       </div>
+  //                   </div>
+
+  //                   <div class="logo col-4 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <img src="${invoices?.logo ?? ""}" alt="${
+  //       invoices?.logo ?? "upload Logo"
+  //     }">
+  //                   </div>
+  //                   <div class="right col-4">
+  //                       <!-- عنوان جانب الايمن -->
+  //                       <div class="size1">
+  //                       <p class="title">${workers?.[0]?.jop ?? "Jop title"}</p>
+  //                       <p class="namet">${
+  //                         workers?.[0]?.name ?? "Worker name"
+  //                       }</p>
+  //                       <p class="certificate">${
+  //                         workers?.[0]?.jop_en ?? "Jop En title"
+  //                       }</p>
+  //                       </div>
+
+  //                       <div class="size2">
+
+  //                       </div>
+  //                   </div>
+  //               </div>
+  //           </div>
+  //           `;
+  //   case 3:
+  //     return `
+  //           <div class="header">
+  //               <div class="row">
+  //                   <div class="logo col-3 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <img src="${invoices?.logo ?? ""}" alt="${
+  //       invoices?.logo ?? "upload Logo"
+  //     }">
+  //                   </div>
+  //                   ${workers
+  //                     ?.map((worker, index) => {
+  //                       return `
+  //                               <div class="col-cus-md-4 my-3">
+
+  //                                   <p class="title">${
+  //                                     worker?.jop ?? "Jop title"
+  //                                   }</p>
+  //                                   <p class="namet">${
+  //                                     worker?.name ?? "Worker name"
+  //                                   }</p>
+  //                                   <p class="certificate">${
+  //                                     worker?.jop_en ?? "Jop En title"
+  //                                   }</p>
+  //                               </div>
+  //                               `;
+  //                     })
+  //                     .join("")}
+
+  //               </div>
+  //           </div>
+  //           `;
+  //   case 4:
+  //     return `
+  //           <div class="header d-flex justify-content-center">
+  //               <div class="row">
+  //                   <div class="logo col-cus-md-5 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <img src="${invoices?.logo ?? ""}" alt="${
+  //       invoices?.logo ?? "upload Logo"
+  //     }">
+  //                   </div>
+  //                   ${workers
+  //                     ?.map((worker, index) => {
+  //                       return `
+  //                       <div class="col-cus-md-5 my-3">
+
+  //                           <p class="title">${worker?.jop ?? "Jop title"}</p>
+  //                           <p class="namet">${
+  //                             worker?.name ?? "Worker name"
+  //                           }</p>
+  //                           <p class="certificate">${
+  //                             worker?.jop_en ?? "Jop En title"
+  //                           }</p>
+  //                       </div>
+  //                       `;
+  //                     })
+  //                     .join("")}
+  //               </div>
+  //           </div>
+  //           `;
+
+  //   case 5:
+  //     return `
+  //           <div class="header d-flex justify-content-center">
+  //               <div class="row">
+  //                   <div class="logo col-cus-md-6 p-2">
+  //                       <!-- شعار التحليل -->
+  //                       <img src="${invoices?.logo ?? ""}" alt="${
+  //       invoices?.logo ?? "upload Logo"
+  //     }">
+  //                   </div>
+  //                   ${workers
+  //                     ?.map((worker, index) => {
+  //                       return `
+  //                       <div class="col-cus-md-6 my-3">
+
+  //                           <p class="title">${worker?.jop ?? "Jop title"}</p>
+  //                           <p class="namet">${
+  //                             worker?.name ?? "Worker name"
+  //                           }</p>
+  //                           <p class="certificate">${
+  //                             worker?.jop_en ?? "Jop En title"
+  //                           }</p>
+  //                       </div>
+  //                       `;
+  //                     })
+  //                     .join("")}
+  //               </div>
+  //           </div>
+  //           `;
+  //   default:
+  //     break;
+  // }
+  return `
+    <div class="header">
+        <div class="row justify-content-between">
+            ${html}
+        </div>
+    </div>
+  `;
 }
 
 function createInvoice(visit, type, form) {

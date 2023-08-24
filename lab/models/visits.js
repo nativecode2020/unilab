@@ -16,7 +16,7 @@ let getData =
                    WHERE lab_package.lab_id='${localStorage.getItem(
                      "lab_hash"
                    )}' and test_type <>'3' group by hash;
-                   SELECT name,jop, jop_en from lab_invoice_worker where lab_hash='${localStorage.getItem(
+                   SELECT * from lab_invoice_worker where lab_hash='${localStorage.getItem(
                      "lab_hash"
                    )}' and is_available=1 and isdeleted=0 limit 5;
                    select * from lab_invoice where lab_hash='${localStorage.getItem(
