@@ -965,7 +965,12 @@ const InvoiceHeader = ({ invoice, employees }) => {
   }, []);
 
   React.useEffect(() => {
-    if (sessionStorage.getItem("orderOfHeader")) {
+    if (
+      sessionStorage.getItem("orderOfHeader") != undefined &&
+      sessionStorage.getItem("orderOfHeader") != "undefined" &&
+      employees.length + 1 ==
+        JSON.parse(sessionStorage.getItem("orderOfHeader")).length
+    ) {
       let newOrder = JSON.parse(sessionStorage.getItem("orderOfHeader"));
       setOrder(newOrder);
       // order employees in employeesOrder
@@ -998,6 +1003,7 @@ const InvoiceHeader = ({ invoice, employees }) => {
       <div className="row justify-content-between" id="sortable">
         {employeesOrder.length > 0 &&
           employeesOrder.map((employee, index) => {
+            if (!employee) return;
             if (employee.hash == "logo") {
               return (
                 <div
@@ -1011,7 +1017,7 @@ const InvoiceHeader = ({ invoice, employees }) => {
             }
             return (
               <div
-                className={` col-${invoice.phone_2}`}
+                className={`right col-${invoice.phone_2}`}
                 data-hash={employee.hash}
                 key={employee.hash}
               >

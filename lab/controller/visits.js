@@ -1392,7 +1392,7 @@ function invoiceHeader(worker) {
       `;
       }
       return `
-      <div class="col-md-${size}">
+      <div class="right col-md-${size}">
         <div class="size1">
           <p class="title">${worker?.jop ?? "Jop title"}</p>
           <p class="namet">${worker?.name ?? "Worker name"}</p>

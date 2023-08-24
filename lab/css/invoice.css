@@ -98,15 +98,17 @@
 
 .header:not(.money) .logo,
 .header:not(.money) .left,
-.header:not(.money) .right,
+/* .header:not(.money) .right, */
 .page .header:not(.money) {
     height: var(--logo-height);
 }
 
 .header.money,
 .header.money .logo,
-.header.money .left,
-.header.money .right {
+
+.header.money .right
+.header.money .left
+ {
     height: 175px;
 }
 
