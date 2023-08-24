@@ -1362,8 +1362,11 @@ function invoiceHeader(worker) {
   }
   let newWorkers = [];
 
-  if (orderOfHeader) {
-    orderOfHeader.forEach((hash) => {
+  if (orderOfHeader?.length > 0) {
+    if(typeof orderOfHeader == "string"){ 
+      orderOfHeader = JSON.parse(orderOfHeader);
+    }
+    orderOfHeader?.forEach((hash) => {
       if (hash == "logo") {
         newWorkers.push({ hash: "logo" });
         return;
@@ -1389,7 +1392,7 @@ function invoiceHeader(worker) {
       `;
       }
       return `
-      <div class="right col-md-${size}">
+      <div class="col-md-${size}">
         <div class="size1">
           <p class="title">${worker?.jop ?? "Jop title"}</p>
           <p class="namet">${worker?.name ?? "Worker name"}</p>
