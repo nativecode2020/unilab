@@ -744,7 +744,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   }}
                 />
                 <div className="justify-content-center row">
-                  <img src={oldFile} alt="" />
+                  <img src={oldFile} style={{maxHeight: "400px"}} />
                 </div>
               </div>
 
