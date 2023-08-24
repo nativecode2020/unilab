@@ -432,7 +432,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
     if (newFile) {
       formData.append("logo", newFile);
     }
-    await fetch(`http://localhost:8807/unilab/app/index.php/Invoice/update`, {
+    await fetch(`http://localhost:8807/app/index.php/Invoice/update`, {
       method: "POST",
       body: formData,
     })
@@ -446,13 +446,10 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
   const handelUpload = (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    return fetch(
-      `http://localhost:8807/unilab/app/index.php/Upload/uploadSingle`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    return fetch(`http://localhost:8807/app/index.php/Upload/uploadSingle`, {
+      method: "POST",
+      body: formData,
+    });
   };
 
   React.useEffect(() => {
@@ -906,7 +903,7 @@ const InvoiceSetting = () => {
 
   const fetchInvoice = async () => {
     let data = await fetch(
-      `http://localhost:8807/unilab/app/index.php/Invoice/get_or_create?hash=${labHash}`
+      `http://localhost:8807/app/index.php/Invoice/get_or_create?hash=${labHash}`
     )
       .then((e) => e.json())
       .then((res) => {

@@ -16,7 +16,7 @@ const createTheme = async (kits, units) => {
     const fetchInvoice = async () => {
       const labHash = localStorage.getItem("lab_hash");
       return await fetch(
-        `http://localhost:8807/unilab/app/index.php/Invoice/get_or_create?hash=${labHash}`
+        `http://localhost:8807/app/index.php/Invoice/get_or_create?hash=${labHash}`
       )
         .then((e) => e.json())
         .then((res) => {
