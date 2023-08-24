@@ -13,7 +13,7 @@ const createTheme = (kits, units) => {
   if (THEME) {
     return THEME;
   } else {
-    let theme = localStorage.getItem("SuperTestTheme") ?? "Form";
+    let theme = sessionStorage.getItem("SuperTestTheme") ?? "Form";
     // upper case first letter
     theme = theme.charAt(0).toUpperCase() + theme.slice(1);
     switch (theme) {

@@ -658,7 +658,7 @@ class Visit extends Factory {
   }
 
   createModal() {
-    const labTheme = localStorage.getItem("visitTestsTheme") ?? "default";
+    const labTheme = sessionStorage.getItem("visitTestsTheme") ?? "default";
     console.log("labTheme", labTheme);
     let theme = null;
     switch (labTheme) {

@@ -131,8 +131,8 @@
 
         // on ready function
         $(document).ready(function () {
-            let visitTestsTheme = localStorage.getItem("visitTestsTheme") ?? "two";
-            let SuperTestTheme = localStorage.getItem("SuperTestTheme") ?? "form";
+            let visitTestsTheme = sessionStorage.getItem("visitTestsTheme") ?? "two";
+            let SuperTestTheme = sessionStorage.getItem("SuperTestTheme") ?? "form";
 
             if (visitTestsTheme == "one") {
                 $(".theme[data-selectedTheme='two']").removeClass("border-info");
@@ -157,7 +157,7 @@
             // get selected theme
             var selectedTheme = $(this).data("selectedtheme");
             // set theme name in local storage
-            localStorage.setItem(theme, selectedTheme);
+            sessionStorage.setItem(theme, selectedTheme);
 
             if (theme == "visitTestsTheme") {
                 if (selectedTheme == "one") {
