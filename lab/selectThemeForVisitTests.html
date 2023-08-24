@@ -128,11 +128,50 @@
     <script src="assets/js/scrollspyNav.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
+        let INVOICE = {};
+        let SETTING = {};
+        const labHash = localStorage.getItem("lab_hash");
+        const fetchInvoice = async () => {
+            return await fetch(
+                `http://localhost:8807/unilab/app/index.php/Invoice/get_or_create?hash=${labHash}`
+            )
+                .then((e) => e.json())
+                .then((res) => {
+                    let setting = JSON.parse(res.data.setting);
+                    if (setting) {
+                        SETTING = setting;
+                    } else {
+                        SETTING = {};
+                    }
+                    INVOICE = res.data;
+                });
+        };
+        const updateInvoice = async (theme, value) => {
+            let formData = new FormData();
+            for (let key in INVOICE) {
+                if (key == "setting") {
+                    SETTING[theme] = value;
+                    formData.append(key, JSON.stringify(SETTING));
+                    break;
+                }
+                formData.append(key, INVOICE[key]);
+            }
+            await fetch(`http://localhost:8807/unilab/app/index.php/Invoice/update`, {
+                method: "POST",
+                body: formData,
+            })
+                .then((e) => e.json())
+                .then((res) => {
+                    niceSwal("success", "top-end", "تم تحديث الاعدادات بنجاح");
+                })
+                .catch((e) => console.log(e));
+        };
 
         // on ready function
-        $(document).ready(function () {
-            let visitTestsTheme = localStorage.getItem("visitTestsTheme") ?? "two";
-            let SuperTestTheme = localStorage.getItem("SuperTestTheme") ?? "form";
+        $(document).ready(async function () {
+            await fetchInvoice();
+            let visitTestsTheme = SETTING?.visitTestsTheme ?? "two";
+            let SuperTestTheme = SETTING?.SuperTestTheme ?? "form";
 
             if (visitTestsTheme == "one") {
                 $(".theme[data-selectedTheme='two']").removeClass("border-info");
@@ -157,7 +196,7 @@
             // get selected theme
             var selectedTheme = $(this).data("selectedtheme");
             // set theme name in local storage
-            localStorage.setItem(theme, selectedTheme);
+            updateInvoice(theme, selectedTheme);
 
             if (theme == "visitTestsTheme") {
                 if (selectedTheme == "one") {

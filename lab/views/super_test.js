@@ -9,11 +9,24 @@ let lab_test;
 
 let THEME = null;
 
-const createTheme = (kits, units) => {
+const createTheme = async (kits, units) => {
   if (THEME) {
     return THEME;
   } else {
-    let theme = localStorage.getItem("SuperTestTheme") ?? "Form";
+    const fetchInvoice = async () => {
+      const labHash = localStorage.getItem("lab_hash");
+      return await fetch(
+        `http://localhost:8807/unilab/app/index.php/Invoice/get_or_create?hash=${labHash}`
+      )
+        .then((e) => e.json())
+        .then((res) => {
+          let setting = JSON.parse(res.data.setting);
+          return setting;
+        });
+    };
+    const setting = await fetchInvoice();
+    let theme = setting?.SuperTestTheme ?? "Form";
+    console.log(theme);
     // upper case first letter
     theme = theme.charAt(0).toUpperCase() + theme.slice(1);
     switch (theme) {

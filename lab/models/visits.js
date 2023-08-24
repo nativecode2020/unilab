@@ -657,8 +657,20 @@ class Visit extends Factory {
     $("#input-search-2").val("");
   }
 
-  createModal() {
-    const labTheme = localStorage.getItem("visitTestsTheme") ?? "default";
+  async createModal() {
+    const fetchInvoice = async () => {
+      const labHash = localStorage.getItem("lab_hash");
+      return await fetch(
+        `http://localhost:8807/unilab/app/index.php/Invoice/get_or_create?hash=${labHash}`
+      )
+        .then((e) => e.json())
+        .then((res) => {
+          let setting = JSON.parse(res.data.setting);
+          return setting;
+        });
+    };
+    const setting = await fetchInvoice();
+    const labTheme = setting?.visitTestsTheme ?? "default";
     console.log("labTheme", labTheme);
     let theme = null;
     switch (labTheme) {
