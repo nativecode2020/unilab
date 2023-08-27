@@ -965,7 +965,12 @@ const InvoiceHeader = ({ invoice, employees }) => {
   }, []);
   let numburs = 0;
   if (sessionStorage.getItem("orderOfHeader")) {
-    numburs = JSON.parse(sessionStorage.getItem("orderOfHeader")).length;
+    numburs = JSON.parse(sessionStorage.getItem("orderOfHeader"));
+    if (numburs) {
+      numburs = numburs.length;
+    } else {
+      numburs = 0;
+    }
   }
   React.useEffect(() => {
     if (
