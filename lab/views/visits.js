@@ -23,6 +23,31 @@ function set_var(_var, value) {
 
 // dom ready
 $(function () {
+  setTimeout(() => {
+    const driverObj = driver.js.driver({
+      showProgress: true,
+      steps: [
+        {
+          element: ".modal-title",
+          popover: { title: "Title", description: "Description" },
+        },
+        {
+          element: ".modal-title",
+          popover: { title: "Title", description: "Description" },
+        },
+        {
+          element: ".modal-title",
+          popover: { title: "Title", description: "Description" },
+        },
+        {
+          element: ".modal-title",
+          popover: { title: "Title", description: "Description" },
+        },
+      ],
+    });
+
+    // driverObj.drive();
+  }, 300);
   // change format date of #visit_date to 01-apr-2023
 
   // let root = document.documentElement;

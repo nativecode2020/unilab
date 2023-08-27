@@ -98,7 +98,7 @@ class TestsThemeOne extends TestsTheme {
                                 }" id="package_${item.hash}" >
                                 <span class="new-control-indicator m-3 "></span><span class="ml-4">${
                                   item.name
-                                }</span><p class="">IQD ${parseInt(
+                                }</span><p class=""> ${parseInt(
                                   item.price
                                 )?.toLocaleString()} </p>
                             </label>
@@ -145,7 +145,7 @@ class TestsThemeOne extends TestsTheme {
                                   }" id="package_${item.hash}" >
                                               <span class="new-control-indicator m-3 "></span><span class="ml-4">${
                                                 item.name
-                                              }</span><p class="">IQD ${parseInt(
+                                              }</span><p class=""> ${parseInt(
                                     item.price
                                   )?.toLocaleString()} </p>
                                           </label>
@@ -307,7 +307,7 @@ class TestsThemeTwo extends TestsTheme {
                           }" id="package_${item.hash}" >
                           <span class="new-control-indicator m-3 "></span><span class="ml-4">${
                             item.name
-                          }</span><p class="">IQD ${parseInt(
+                          }</span><p class=""> ${parseInt(
                             item.price
                           )?.toLocaleString()} </p>
                       </label>
@@ -350,7 +350,7 @@ class TestsThemeTwo extends TestsTheme {
                           }" id="package_${item.hash}" >
                                       <span class="new-control-indicator m-3 "></span><span class="ml-4">${
                                         item.name
-                                      }</span><p class="">IQD ${parseInt(
+                                      }</span><p class=""> ${parseInt(
                             item.price
                           )?.toLocaleString()} </p>
                                   </label>

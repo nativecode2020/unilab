@@ -744,7 +744,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   }}
                 />
                 <div className="justify-content-center row">
-                  <img src={oldFile} style={{maxHeight: "400px"}} />
+                  <img src={oldFile} style={{ maxHeight: "400px" }} />
                 </div>
               </div>
 
@@ -963,13 +963,15 @@ const InvoiceHeader = ({ invoice, employees }) => {
       });
     });
   }, []);
-
+  let numburs = 0;
+  if (sessionStorage.getItem("orderOfHeader")) {
+    numburs = JSON.parse(sessionStorage.getItem("orderOfHeader")).length;
+  }
   React.useEffect(() => {
     if (
       sessionStorage.getItem("orderOfHeader") != undefined &&
       sessionStorage.getItem("orderOfHeader") != "undefined" &&
-      employees.length + 1 ==
-        JSON.parse(sessionStorage.getItem("orderOfHeader")).length
+      employees.length + 1 == numburs
     ) {
       let newOrder = JSON.parse(sessionStorage.getItem("orderOfHeader"));
       setOrder(newOrder);

@@ -170,6 +170,15 @@ const login = async () => {
       method: "POST",
       body: labIdForm,
     });
+    await new Promise((resolve) => {
+      run(`
+        update system_users_type set insert_record_date = '${new Date()
+          .toISOString()
+          .slice(0, 19)
+          .replace("T", " ")}' where id = 1;
+      `);
+      resolve();
+    });
     addAlert("تم اكمال 80 % من عملية تنزيل البيانات");
     await updateLoginSystem();
     addAlert("تم اكمال 100 % من عملية تنزيل البيانات");
