@@ -744,7 +744,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   }}
                 />
                 <div className="justify-content-center row">
-                  <img src={oldFile} style={{maxHeight: "400px"}} />
+                  <img src={oldFile} style={{ maxHeight: "400px" }} />
                 </div>
               </div>
 
@@ -763,83 +763,6 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
           </div>
         </div>
       </div>
-
-      {/* <div className="col-12 mt-4">
-        <div className="statbox widget box box-shadow bg-white h-100">
-          <div
-            className="widget-content widget-content-area m-auto"
-            style={{ width: "95%" }}
-          >
-            <form>
-              <h1 className="text-center">Test Style</h1>
-              <div className="form-group">
-                <label htmlFor="testStyle">Border Style</label>
-                <div className="row">
-                  <div className="col-4">
-                    <input
-                      type="color"
-                      className="form-control"
-                      id="testStyle"
-                      onChange={(e) =>
-                        dispatch({
-                          type: "TESTSTYLE",
-                          payload: {
-                            ...state.testStyle,
-                            borderStyle: {
-                              ...state.testStyle.borderStyle,
-                              color: e.target.value,
-                            },
-                            border: `${state.testStyle.borderStyle.width}px solid ${e.target.value}`,
-                          },
-                        })
-                      }
-                      value={state.testStyle.borderStyle.color}
-                    />
-                  </div>
-                  <div className="col-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="testStyle"
-                      onChange={(e) => {
-                        dispatch({
-                          type: "TESTSTYLE",
-                          payload: {
-                            ...state.testStyle,
-                            borderStyle: {
-                              ...state.testStyle.borderStyle,
-                              width: e.target.value,
-                            },
-                            border: `${e.target.value}px solid ${state.testStyle.borderStyle.color}`,
-                          },
-                        });
-                      }}
-                      value={state.testStyle.borderStyle.width}
-                    />
-                  </div>
-                  <div className="col-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="testStyle"
-                      onChange={(e) => {
-                        dispatch({
-                          type: "TESTSTYLE",
-                          payload: {
-                            ...state.testStyle,
-                            padding: `${e.target.value}px`,
-                          },
-                        });
-                      }}
-                      value={state.testStyle.padding.split("px")[0]}
-                    />
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
@@ -851,45 +774,35 @@ const InvoiceSetting = () => {
   const [tests, setTests] = React.useState([]);
   const [employees, setEmployees] = React.useState([]);
 
+  const filterTests = (tests) => {
+    
+  };
+
   const fetchTests = () => {
-    // let data = run(`select
-    //               option_test as options,
-    //               test_name as name,
-    //               kit_id,
-    //               (select name from devices where devices.id=lab_device_id) as device_name,
-    //               (select name from kits where kits.id =kit_id) as kit_name,
-    //               (select name from lab_test_units where hash=lab_pakage_tests.unit) as unit_name,
-    //               (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
-    //               unit,
-    //               result_test,
-    //               lab_visits_tests.hash as hash
-    //           from
-    //               lab_visits_tests
-    //           left join
-    //               lab_pakage_tests
-    //           on
-    //               lab_pakage_tests.test_id = lab_visits_tests.tests_id and lab_pakage_tests.package_id = lab_visits_tests.package_id
-    //           inner join
-    //               lab_test
-    //           on
-    //               lab_test.hash = lab_visits_tests.tests_id
-    //           where
-    //               visit_id = '16921880982072694'
-    //           order by sort;`).result[0].query0;
-    let data = [
-      {
-        category: null,
-        device_name: null,
-        hash: "16926989898618351",
-        kit_id: "0",
-        kit_name: null,
-        name: "Anti-GAD",
-        options: `{"component": [{"name": "Anti-GAD", "unit": "", "result": "number", "options": [], "shortcut": "", "reference": [{"kit": "374", "note": "", "unit": "16532504169056114", "range": [{"low": "", "high": "10", "name": "Nonreactive", "correct": true}, {"low": "10", "high": "", "name": "Reactive", "correct": false}], "gender": "كلاهما", "result": "number", "age low": "0", "options": [], "age high": "100", "age unit low": "عام", "age unit high": "عام", "right_options": []}, {"kit": "", "note": "", "unit": "16538664737994960", "range": [{"low": "", "high": "5", "name": "", "correct": false}], "gender": "كلاهما", "result": "number", "age low": "0", "options": [], "age high": "1000", "age unit low": "عام", "age unit high": "عام", "right_options": []}]}]}`,
-        result_test: `{"checked": true, "options": [{"kit": "", "note": "", "unit": "16538664737994960", "range": [{"low": "", "high": "5", "name": "", "correct": false}], "gender": "كلاهما", "result": "number", "age low": "0", "options": [], "age high": "1000", "age unit low": "عام", "age unit high": "عام", "right_options": []}], "Anti-GAD": "8"}`,
-        unit: "16538664737994960",
-        unit_name: "U/mL",
-      },
-    ];
+    let data = run(`select
+                  option_test as options,
+                  test_name as name,
+                  kit_id,
+                  (select name from devices where devices.id=lab_device_id) as device_name,
+                  (select name from kits where kits.id =kit_id) as kit_name,
+                  (select name from lab_test_units where hash=lab_pakage_tests.unit) as unit_name,
+                  (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
+                  unit,
+                  result_test,
+                  lab_visits_tests.hash as hash
+              from
+                  lab_visits_tests
+              left join
+                  lab_pakage_tests
+              on
+                  lab_pakage_tests.test_id = lab_visits_tests.tests_id and lab_pakage_tests.package_id = lab_visits_tests.package_id
+              inner join
+                  lab_test
+              on
+                  lab_test.hash = lab_visits_tests.tests_id
+              where
+                  visit_id = '16921880982072694'
+              order by sort;`).result[0].query0;
     setTests(data);
   };
 
@@ -897,7 +810,6 @@ const InvoiceSetting = () => {
     let data = run(
       `SELECT * from lab_invoice_worker where lab_hash='${labHash}' and is_available=1 and isdeleted=0 limit 5;`
     ).result[0].query0;
-    console.log(data);
     setEmployees(data);
   };
 
@@ -936,7 +848,7 @@ const InvoiceSetting = () => {
       </div>
       <div className="col-6">
         <Invoice
-          tests={tests.slice(0, 1)}
+          tests={tests}
           invoice={invoice}
           settingState={state}
           employees={employees}
