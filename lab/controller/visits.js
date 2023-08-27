@@ -1358,7 +1358,7 @@ function invoiceHeader(worker) {
   let orderOfHeader = sessionStorage.getItem("orderOfHeader");
   if (!orderOfHeader) {
     let setting = JSON.parse(invoices?.setting);
-    orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "{}") ?? null;
+    orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "[]") ?? null;
   }
   let newWorkers = [];
 
