@@ -1358,12 +1358,12 @@ function invoiceHeader(worker) {
   let orderOfHeader = sessionStorage.getItem("orderOfHeader");
   if (!orderOfHeader) {
     let setting = JSON.parse(invoices?.setting);
-    orderOfHeader = JSON.parse(setting?.orderOfHeader) ?? null;
+    orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "{}") ?? null;
   }
   let newWorkers = [];
 
   if (orderOfHeader?.length > 0) {
-    if(typeof orderOfHeader == "string"){ 
+    if (typeof orderOfHeader == "string") {
       orderOfHeader = JSON.parse(orderOfHeader);
     }
     orderOfHeader?.forEach((hash) => {

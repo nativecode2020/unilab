@@ -6,4 +6,4 @@ var base_url = `${__domain__}app/index.php/`;
 
 var front_url = `${__domain__}lab/`;
 
-const VERSION = "1.2.8";
+const VERSION = "1.2.9";
