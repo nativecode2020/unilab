@@ -87,106 +87,112 @@ $(function () {
     <span class="h-22 mt-1">اليوم</span>
   `);
 
-  $("#input-search-all").on("keyup change", function () {
-    let category = $("#categorySelect-all").val();
-    var rex = new RegExp($(this).val(), "i");
-    $(".searchable-container .item").hide();
-    if (category == 0 || category == "" || !category) {
-      $(`.searchable-container .items.package`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-      $(`.searchable-container .item`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-    } else {
-      $(`.searchable-container .items.package[data-category='${category}']`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-      $(`.searchable-container .item[data-category='${category}']`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-    }
-  });
+  // wait 500ms to load data
+  setTimeout(() => {
+    $("#input-search-all").on("keyup change", function () {
+      console.log("change");
 
-  $("#categorySelect-all").on("change", function () {
-    $("#input-search-all").val("");
-    var category = $(this).val();
-    if (category == 0 || category == "" || !category) {
-      $(".searchable-container .item").show();
-      return;
-    }
-    $(".searchable-container .item").hide();
-    $(
-      `.searchable-container .items.package[data-category='${category}']`
-    ).show();
-    $(`.searchable-container .item[data-category='${category}']`).show();
-  });
-  $("#input-search-2").on("keyup change", function () {
-    let category = $("#categorySelect-2").val();
-    var rex = new RegExp($(this).val(), "i");
-    $(".searchable-container .test").hide();
-    if (category == 0 || category == "" || !category) {
-      $(`.searchable-container .test`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-    } else {
-      $(`.searchable-container .test[data-category='${category}']`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-    }
-  });
+      let category = $("#categorySelect-all").val();
+      var rex = new RegExp($(this).val(), "i");
+      $(".searchable-container .item").hide();
+      if (category == 0 || category == "" || !category) {
+        $(`.searchable-container .items.package`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+        $(`.searchable-container .item`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+      } else {
+        $(`.searchable-container .items.package[data-category='${category}']`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+        $(`.searchable-container .item[data-category='${category}']`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+      }
+    });
 
-  $("#categorySelect-2").on("change", function () {
-    $("#input-search-2").val("");
-    var category = $(this).val();
-    if (category == 0 || category == "" || !category) {
-      $(".searchable-container .test").show();
-      return;
-    }
-    $(".searchable-container .test").hide();
-    $(`.searchable-container .test[data-category='${category}']`).show();
-  });
+    $("#categorySelect-all").on("change", function () {
+      console.log("change");
+      $("#input-search-all").val("");
+      var category = $(this).val();
+      if (category == 0 || category == "" || !category) {
+        $(".searchable-container .item").show();
+        return;
+      }
+      $(".searchable-container .item").hide();
+      $(
+        `.searchable-container .items.package[data-category='${category}']`
+      ).show();
+      $(`.searchable-container .item[data-category='${category}']`).show();
+    });
+    $("#input-search-2").on("keyup change", function () {
+      let category = $("#categorySelect-2").val();
+      var rex = new RegExp($(this).val(), "i");
+      $(".searchable-container .test").hide();
+      if (category == 0 || category == "" || !category) {
+        $(`.searchable-container .test`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+      } else {
+        $(`.searchable-container .test[data-category='${category}']`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+      }
+    });
 
-  $("#input-search-3").on("keyup change", function () {
-    let category = $("#categorySelect-3").val();
-    var rex = new RegExp($(this).val(), "i");
-    $(".searchable-container .package").hide();
-    if (category == 0 || category == "" || !category) {
-      $(`.searchable-container .package`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-    } else {
-      $(`.searchable-container .package[data-category='${category}']`)
-        .filter(function () {
-          return rex.test($(this).text());
-        })
-        .show();
-    }
-  });
+    $("#categorySelect-2").on("change", function () {
+      $("#input-search-2").val("");
+      var category = $(this).val();
+      if (category == 0 || category == "" || !category) {
+        $(".searchable-container .test").show();
+        return;
+      }
+      $(".searchable-container .test").hide();
+      $(`.searchable-container .test[data-category='${category}']`).show();
+    });
 
-  $("#categorySelect-3").on("change", function () {
-    var category = $(this).val();
-    if (category == 0 || category == "" || !category) {
-      $(".searchable-container .package").show();
-      return;
-    }
-    $(".searchable-container .package").hide();
-    $(`.searchable-container .package[data-category='${category}']`).show();
-  });
+    $("#input-search-3").on("keyup change", function () {
+      let category = $("#categorySelect-3").val();
+      var rex = new RegExp($(this).val(), "i");
+      $(".searchable-container .package").hide();
+      if (category == 0 || category == "" || !category) {
+        $(`.searchable-container .package`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+      } else {
+        $(`.searchable-container .package[data-category='${category}']`)
+          .filter(function () {
+            return rex.test($(this).text());
+          })
+          .show();
+      }
+    });
+
+    $("#categorySelect-3").on("change", function () {
+      var category = $(this).val();
+      if (category == 0 || category == "" || !category) {
+        $(".searchable-container .package").show();
+        return;
+      }
+      $(".searchable-container .package").hide();
+      $(`.searchable-container .package[data-category='${category}']`).show();
+    });
+  }, 500);
   //////////////////////////////////////////
   setTimeout(() => {
     const mainHeight = $(".main-visit-form").height();
