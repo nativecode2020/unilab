@@ -963,16 +963,17 @@ const InvoiceHeader = ({ invoice, employees }) => {
       });
     });
   }, []);
-  let numburs = 0;
-  if (sessionStorage.getItem("orderOfHeader")) {
-    numburs = JSON.parse(sessionStorage.getItem("orderOfHeader"));
-    if (numburs) {
-      numburs = numburs.length;
-    } else {
-      numburs = 0;
-    }
-  }
+
   React.useEffect(() => {
+    let numburs = 0;
+    if (sessionStorage.getItem("orderOfHeader")) {
+      numburs = JSON.parse(sessionStorage.getItem("orderOfHeader"));
+      if (numburs) {
+        numburs = numburs.length;
+      } else {
+        numburs = 0;
+      }
+    }
     if (
       sessionStorage.getItem("orderOfHeader") != undefined &&
       sessionStorage.getItem("orderOfHeader") != "undefined" &&
@@ -993,6 +994,9 @@ const InvoiceHeader = ({ invoice, employees }) => {
           }
         });
       });
+      if (employeesOrder.length == 1) {
+        newEmployeesOrder = [...newEmployeesOrder, ...employees];
+      }
       setEmployeesOrder(newEmployeesOrder);
     } else {
       let employeesOrder = [{ hash: "logo" }, ...employees];
@@ -1007,8 +1011,16 @@ const InvoiceHeader = ({ invoice, employees }) => {
         height: invoice.header + "px",
       }}
     >
-      <div className="row justify-content-between" id="sortable">
-        {employeesOrder.length > 0 &&
+      <div
+        className={`row ${
+          employees.length > 0
+            ? "justify-content-between"
+            : "justify-content-center"
+        }`}
+        id="sortable"
+        style={{ display: invoice.footer_header_show == "1" ? "" : "none" }}
+      >
+        {employeesOrder.length > 1 ? (
           employeesOrder.map((employee, index) => {
             if (!employee) return;
             if (employee.hash == "logo") {
@@ -1044,7 +1056,23 @@ const InvoiceHeader = ({ invoice, employees }) => {
                 <div className="size2"></div>
               </div>
             );
-          })}
+          })
+        ) : (
+          <React.Fragment>
+            <div
+              className={`logo col-${invoice.phone_2}  p-2`}
+              data-hash="logo"
+            >
+              <img src={invoice.logo} alt="" />
+            </div>
+            <div
+              className={`logo col-${invoice.phone_2}  p-2`}
+              data-hash="logo"
+            >
+              <h1>{invoice.name_in_invoice}</h1>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     </div>
   );

@@ -1377,6 +1377,9 @@ function invoiceHeader(worker) {
         }
       });
     });
+    if (newWorkers.length == 1) {
+      newWorkers = [...newWorkers, ...worker];
+    }
   } else {
     newWorkers = [{ hash: "logo" }, ...worker];
   }
