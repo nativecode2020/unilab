@@ -185,36 +185,35 @@ class Offline extends CI_Controller
             "SET SESSION group_concat_max_len = 100000;"
         );
         $date = $this->input->post('date');
-        $queries = $this->db->query("select query,operation from offline_sync where lab_id='0' and date_time>='$date' and table_name not in ('lab')")->result();
+        $queries = $this->db->query("select * from offline_sync where lab_id='0' and date_time>='$date' and operation != 'update' and table_name not in ('lab')")->result();
+        $updatQueries = $this->db->query("select * from offline_sync where lab_id='0' and table_name  in ('lab_test') and operation = 'update';")->result();
         $inserts = array();
-        $updates = array();
         $deletes = array();
-        array_map(function ($query) use (&$inserts, &$updates, &$deletes) {
+        $updates = array();
+        array_map(function ($query) use (&$inserts, &$deletes) {
             if ($query->operation == 'insert') {
                 array_push($inserts, $query);
             } else {
-
-                if ($query->operation == 'update') {
-                    $pattern = '/\bhash=([0-9]+)/';
-                    preg_match($pattern, $query->query, $matches);
-                    if (count($matches) > 0) {
-                        $hash = $matches[1];
-                    } else {
-                        $pattern = "/\bhash='([0-9]+)/";
-                        preg_match($pattern, $query->query, $matches);
-                        if (count($matches) > 0) {
-                            $hash = $matches[1];
-                        } else {
-                            $hash = 0;
-                        }
-                    }
-                    $query->hash = $hash;
-                    array_push($updates, $query);
-                } else if ($query->operation == 'delete') {
-                    array_push($deletes, $query);
-                }
+                array_push($deletes, $query);
             }
         }, $queries);
+        array_map(function ($query) use (&$updates) {
+            $pattern = '/\bhash=([0-9]+)/';
+            preg_match($pattern, $query->query, $matches);
+            if (count($matches) > 0) {
+                $hash = $matches[1];
+            } else {
+                $pattern = "/\bhash='([0-9]+)/";
+                preg_match($pattern, $query->query, $matches);
+                if (count($matches) > 0) {
+                    $hash = $matches[1];
+                } else {
+                    $hash = 0;
+                }
+            }
+            $query->hash = $hash;
+            array_push($updates, $query);
+        }, $updatQueries);
         echo json_encode(
             array(
                 'status' => true,

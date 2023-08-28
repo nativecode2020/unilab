@@ -275,60 +275,99 @@ async function getAsyncData() {
   }
   // ask user to confirm
   const body = document.getElementsByTagName("body")[0];
-  Swal.fire({
-    title: "هل انت متأكد من تحديث البيانات ؟",
-    text: "سيتم تحديث جميع القيم الطبيعية",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "نعم",
-    cancelButtonText: "لا",
-  })
-    .then(async (result) => {
-      // if confirmed then
-      if (result.value) {
-        body.insertAdjacentHTML("beforeend", waitElement);
-        let fromData = new FormData();
-        fromData.append(
-          "date",
-          run(
-            `select insert_record_date as date from system_users_type order by id desc limit 1;`
-          ).result[0]?.query0?.[0]?.date ?? "2023-01-01 00:00:00"
-        );
-        let queries = await fetch(
-          "http://umc.native-code-iq.com/app/index.php/Offline/getAsyncData",
-          {
-            method: "POST",
-            headers: {},
-            body: fromData,
-          }
-        )
-          .then((res) => res.json())
-          .then((res) => res.data);
-        queries = queries.map((query) => query.query);
-        let queriesForm = new FormData();
-        queriesForm.append("queries", JSON.stringify(queries));
-        let quer = await fetch(`${base_url}LocalApi/run_queries`, {
-          method: "POST",
-          body: queriesForm,
-        }).then((res) => res.json());
-        run(
-          `insert into system_users_type (title,insert_record_date) values ('update by ${
-            localStorage.getItem("name") ?? ""
-          }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
-        );
-      }
+  body.insertAdjacentHTML("beforeend", waitElement);
+  const formData = new FormData();
+  let lastSyncDateForForm =
+    run(
+      `select insert_record_date as date from system_users_type order by id desc limit 1;`
+    ).result[0]?.query0?.[0]?.date ?? "2023-01-01 00:00:00";
+  formData.append("date", lastSyncDateForForm);
+  let lastSyncDate = new Date(lastSyncDateForForm).toLocaleDateString("en-GB");
+  let queries = await fetch(
+    "http://umc.native-code-iq.com/app/index.php/Offline/getAsyncData",
+    {
+      method: "POST",
+      headers: {},
+      body: formData,
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      updates = res.updates;
+      inserts = res.inserts;
+      deletes = res.deletes;
+      return res.inserts;
     })
-    .then(async () => {
+    .then(() => {
       body.removeChild(document.getElementById("alert_screen"));
-      Swal.fire({
-        icon: "success",
-        title: "تم !",
-        text: "تم تحديث البيانات بنجاح",
-        confirmButtonText: "موافق",
-      });
-    });
+    })
+    .catch((e) => console.log(e));
+  const syncBodyModal = document.getElementById("sync_body");
+  if (updates.length > 0) {
+    let updatesTests =
+      run(
+        `select test_name,hash from lab_test where hash in(${updates
+          .map((item) => item.hash)
+          .join(",")}) group by test_name;`
+      ).result[0]?.query0 ?? [];
+    if (updatesTests.length > 0) {
+      syncBodyModal.innerHTML = "";
+      syncBodyModal.innerHTML += `
+      <div id="update_tests" class="row justify-content-around">
+          <div class="col-12">
+              <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
+              <h6 class="text-center"> علما بأن اخر تحديث لك كان في : <span class="text-info">${lastSyncDate}</span> </h6>
+              <h6 class="text-center"> المزامنة لا تضمن فقط تحديث التحاليل المختارة بل تحديث جميع البيانات </h6>
+          </div>
+          ${updatesTests
+            .map((item) => {
+              let date = updates.find((i) => i.hash == item.hash).date_time;
+              // iraq en 28-7-2023
+              date = new Date(date).toLocaleDateString("en-GB");
+              // compare date and lastSyncDate
+              let compareDate = new Date(date) > new Date(lastSyncDate);
+
+              return `<div class="col-5 border rounded p-2 my-2 d-flex justify-content-center align-items-center " style="cursor: pointer;"
+                  data-hash="${item.hash}"
+                  onclick="$(this).toggleClass('active');"
+                 >
+                      <p class="text-center">
+                          <span class="h4">${item.test_name}</span>
+                          <br>
+                          <span class="h6">اخر تحديث للتحليل : <span
+                                  class="text-${
+                                    compareDate ? "success" : "danger"
+                                  }"
+                          >${date}</span></span>
+                      </p>
+                  </div>
+                  `;
+            })
+            .join("")}
+      </div>
+      `;
+    } else {
+      syncBodyModal.innerHTML = "";
+      syncBodyModal.innerHTML += `
+        <div id="update_tests" class="row">
+            <div class="col-12">
+                <h5 class="text-center"> لا يوجد تحديثات </h5>
+            </div>
+        </div>
+        `;
+    }
+  } else {
+    syncBodyModal.innerHTML = "";
+    syncBodyModal.innerHTML += `
+      <div id="update_tests" class="row">
+          <div class="col-12">
+              <h5 class="text-center"> لا يوجد تحديثات </h5>
+          </div>
+      </div>
+      `;
+  }
+
+  $("#sync").modal("show");
 }
 
 async function runAsyncData() {
@@ -361,6 +400,7 @@ async function runAsyncData() {
       localStorage.getItem("name") ?? ""
     }','${new Date().toISOString().slice(0, 19).replace("T", " ")}');`
   );
+  niceSwal("success", "top-end", "تم تحديث البيانات بنجاح");
 }
 
 async function updateExpireDate() {
