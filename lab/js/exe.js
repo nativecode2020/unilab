@@ -271,6 +271,7 @@ async function updateSystem() {
         // Call the reloadScripts function to reload all scripts on the page
         // window.location.reload(true);
         hardRefresh();
+        // looooooooooooool
       });
     })
     .catch((error) => {
