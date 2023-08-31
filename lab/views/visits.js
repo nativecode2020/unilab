@@ -24,30 +24,27 @@ function set_var(_var, value) {
 // dom ready
 $(function () {
   setTimeout(() => {
-    const driverObj = driver.js.driver({
-      showProgress: true,
-      steps: [
-        {
-          element: ".modal-title",
-          popover: { title: "Title", description: "Description" },
-        },
-        {
-          element: ".modal-title",
-          popover: { title: "Title", description: "Description" },
-        },
-        {
-          element: ".modal-title",
-          popover: { title: "Title", description: "Description" },
-        },
-        {
-          element: ".modal-title",
-          popover: { title: "Title", description: "Description" },
-        },
-      ],
-    });
-
+    // const driverObj = driver.js.driver({
+    //   overlayOpacity: 0,
+    //   popoverClass: "text-white bg-dark text-center",
+    //   popoverOffset: 0,
+    //   nextBtnText: "التالي",
+    //   prevBtnText: "السابق",
+    //   doneBtnText: "تم",
+    //   steps: [
+    //     {
+    //       element: "#form-lab_visits",
+    //       popover: {
+    //         title: "اضافة مريض",
+    //         description: "هنا يمكن اضافة تفاصيل المريض",
+    //         side: "left",
+    //         align: "center",
+    //       },
+    //     },
+    //   ],
+    // });
     // driverObj.drive();
-  }, 300);
+  });
   // change format date of #visit_date to 01-apr-2023
 
   // let root = document.documentElement;

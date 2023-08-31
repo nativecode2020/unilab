@@ -457,10 +457,11 @@ body {
   font-size: 14px;
 }
 
+#sync .all,
 #sync .active{
   background-color: var(--mainColor);
 }
-
+#sync .all p,
 #sync .active p{
   color: #fff;
 }

@@ -263,6 +263,20 @@ async function updateSystem() {
     });
 }
 
+const selectAll = (e) => {
+  let updateTests = document.querySelectorAll(".syncItem");
+  updateTests.forEach((item) => {
+    // e has active class
+    if (e.target.classList.contains("all")) {
+      item.classList.remove("active");
+    }
+    // e has not active class
+    else {
+      item.classList.add("active");
+    }
+  });
+};
+
 async function getAsyncData() {
   if (!navigator.onLine) {
     Swal.fire({
@@ -303,6 +317,7 @@ async function getAsyncData() {
     })
     .catch((e) => console.log(e));
   const syncBodyModal = document.getElementById("sync_body");
+
   if (updates.length > 0) {
     let updatesTests =
       run(
@@ -318,7 +333,18 @@ async function getAsyncData() {
               <h5 class="text-center"> أختر التحاليل التي تريد تحديثها </h5>
               <h6 class="text-center"> علما بأن اخر تحديث لك كان في : <span class="text-info">${lastSyncDate}</span> </h6>
               <h6 class="text-center"> المزامنة لا تضمن فقط تحديث التحاليل المختارة بل تحديث جميع البيانات </h6>
+              
           </div>
+          <div 
+            class="col-5 border rounded p-2 my-2 d-flex justify-content-center align-items-center" 
+            style="cursor: pointer;"
+            onclick="selectAll(event);$(this).toggleClass('all');"
+          >
+            <p class="text-center">
+                <span class="h4">اختار الكل</span>
+            </p>
+          </div>
+          <div class="w-100"></div>
           ${updatesTests
             .map((item) => {
               let date = updates.find((i) => i.hash == item.hash).date_time;
@@ -327,7 +353,7 @@ async function getAsyncData() {
               // compare date and lastSyncDate
               let compareDate = new Date(date) > new Date(lastSyncDate);
 
-              return `<div class="col-5 border rounded p-2 my-2 d-flex justify-content-center align-items-center " style="cursor: pointer;"
+              return `<div class="col-5 border rounded p-2 my-2 d-flex justify-content-center align-items-center syncItem" style="cursor: pointer;"
                   data-hash="${item.hash}"
                   onclick="$(this).toggleClass('active');"
                  >

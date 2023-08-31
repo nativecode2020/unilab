@@ -96,9 +96,9 @@ class TestsThemeOne extends TestsTheme {
                                 }" data-price="${item.price}" value="${
                                   item.hash
                                 }" id="package_${item.hash}" >
-                                <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                <span class="new-control-indicator m-3  d-none"></span><span class="ml-2">${
                                   item.name
-                                }</span><p class=""> ${parseInt(
+                                }</span><p class="m-0"> ${parseInt(
                                   item.price
                                 )?.toLocaleString()} </p>
                             </label>
@@ -143,9 +143,9 @@ class TestsThemeOne extends TestsTheme {
                                   }" data-price="${item.price}" value="${
                                     item.hash
                                   }" id="package_${item.hash}" >
-                                              <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                              <span class="new-control-indicator m-3 d-none"></span><span class="ml-2">${
                                                 item.name
-                                              }</span><p class=""> ${parseInt(
+                                              }</span><p class="m-0"> ${parseInt(
                                     item.price
                                   )?.toLocaleString()} </p>
                                           </label>
@@ -305,7 +305,7 @@ class TestsThemeTwo extends TestsTheme {
                           }" data-price="${item.price}" value="${
                             item.hash
                           }" id="package_${item.hash}" >
-                          <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                          <span class="new-control-indicator m-3 d-none"></span><span class="ml-2">${
                             item.name
                           }</span><p class=""> ${parseInt(
                             item.price
@@ -348,7 +348,7 @@ class TestsThemeTwo extends TestsTheme {
                           }" data-price="${item.price}" value="${
                             item.hash
                           }" id="package_${item.hash}" >
-                                      <span class="new-control-indicator m-3 "></span><span class="ml-4">${
+                                      <span class="new-control-indicator m-3 d-none"></span><span class="ml-2">${
                                         item.name
                                       }</span><p class=""> ${parseInt(
                             item.price

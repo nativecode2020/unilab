@@ -897,7 +897,6 @@ const InvoiceSetting = () => {
     let data = run(
       `SELECT * from lab_invoice_worker where lab_hash='${labHash}' and is_available=1 and isdeleted=0 limit 5;`
     ).result[0].query0;
-    console.log(data);
     setEmployees(data);
   };
 
@@ -966,7 +965,10 @@ const InvoiceHeader = ({ invoice, employees }) => {
 
   React.useEffect(() => {
     let numburs = 0;
-    if (sessionStorage.getItem("orderOfHeader")) {
+    if (
+      sessionStorage.getItem("orderOfHeader") != undefined &&
+      sessionStorage.getItem("orderOfHeader") != "undefined"
+    ) {
       numburs = JSON.parse(sessionStorage.getItem("orderOfHeader"));
       if (numburs) {
         numburs = numburs.length;
@@ -974,11 +976,8 @@ const InvoiceHeader = ({ invoice, employees }) => {
         numburs = 0;
       }
     }
-    if (
-      sessionStorage.getItem("orderOfHeader") != undefined &&
-      sessionStorage.getItem("orderOfHeader") != "undefined" &&
-      employees.length + 1 == numburs
-    ) {
+
+    if (employees.length + 1 == numburs) {
       let newOrder = JSON.parse(sessionStorage.getItem("orderOfHeader"));
       setOrder(newOrder);
       // order employees in employeesOrder

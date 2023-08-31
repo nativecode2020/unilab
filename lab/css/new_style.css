@@ -696,9 +696,16 @@ table.information-2 tr:last-child td {
 #row-tests .form-check:has(input:checked),
 #row-packages .form-check:has(input:checked),
 #selected-tests .form-check:has(input:checked),
-.items:has(input:checked) {
+.items:has(input:checked),
+input:checked + .items
+{
     background-color: #ddf5f0 !important;
     border-color: #ddf5f0;
+}
+
+.itemsActive{
+    background-color: #ddf5f0 !important;
+    border-color: #ddf5f0; 
 }
 
 #row-tests .form-check:has(input:checked) label,
@@ -740,4 +747,17 @@ table.information-2 tr:last-child td {
 
 .widget {
     border-radius: 15px !important;
+}
+
+.driver-popover-prev-btn button{
+    background-color: var(--mainColor);
+    color: var(--whiteColor);
+    border-radius: 5px;
+    border: none;
+    font-family: var(--fontFamily);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 31px;
+    padding: 0 2.5rem !important;
 }

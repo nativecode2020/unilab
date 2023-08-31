@@ -1056,9 +1056,13 @@ function changeTotalPrice(hash) {
   if (input.checked) {
     totalPrice += parseInt(input.dataset.price);
     showSelectedTests(input.value, input.dataset.name, true);
+    // add class to input parent
+    $(input).parent(".items").addClass("itemsActive");
   } else {
     totalPrice -= parseInt(input.dataset.price);
     showSelectedTests(input.value, input.dataset.name, false);
+    // remove class
+    $(input).parent(".items").removeClass("itemsActive");
   }
   let discount = parseInt(document.querySelector("#dicount").value) || 0;
   document.querySelector("#total_price").value = totalPrice;
@@ -1356,7 +1360,11 @@ function showInvoice(hash) {
 
 function invoiceHeader(worker) {
   let orderOfHeader = sessionStorage.getItem("orderOfHeader");
-  if (!orderOfHeader) {
+  if (
+    !orderOfHeader ||
+    orderOfHeader == "undefined" ||
+    orderOfHeader == undefined
+  ) {
     let setting = JSON.parse(invoices?.setting);
     orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "[]") ?? null;
   }
@@ -1384,13 +1392,13 @@ function invoiceHeader(worker) {
     newWorkers = [{ hash: "logo" }, ...worker];
   }
   console.log(newWorkers);
-  let size = invoices?.phone_2 ?? "4";
+  let size = (invoices?.phone_2 == "undefined" ? 4 : invoices?.phone_2) ?? "4";
   let html = newWorkers
     .map((worker) => {
       if (worker.hash == "logo") {
         return `
         <div class="logo col-${size}  p-2">
-        <img src=${invoices?.logo} alt="" />
+        <img src="${invoices?.logo}" alt="" />
       </div>
       `;
       }
