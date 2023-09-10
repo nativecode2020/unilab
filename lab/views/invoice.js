@@ -407,6 +407,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
   const [oldFile, setOldFile] = React.useState(null);
 
   const updateInvoice = async () => {
+    let sessionOrderOfHeader = sessionStorage.getItem("orderOfHeader");
     let formData = new FormData();
     let newFile = null;
     if (file) {
@@ -418,7 +419,13 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
         });
     }
     for (let key in invoice) {
-      if (key == "setting") {
+      if (
+        key == "setting" &&
+        sessionOrderOfHeader !== "null" &&
+        sessionOrderOfHeader !== null &&
+        sessionOrderOfHeader !== undefined &&
+        sessionOrderOfHeader !== "undefined"
+      ) {
         let setting = JSON.parse(invoice[key]);
         setting = {
           ...setting,

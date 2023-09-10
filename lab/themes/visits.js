@@ -77,12 +77,12 @@ class TestsThemeOne extends TestsTheme {
                               .filter((item) => item.type == "9")
                               .map((item) => {
                                 return `
-                            <div class="n-chk item test text-left mb-3 col-auto" data-category="${
+                            <div class="n-chk item test text-left mb-3 col-3" data-category="${
                               item.category_hash
                             }">
                             <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
                               item.hash
-                            })" onmouseleave="$(this).popover('hide')">
+                            })" >
                                 <!--
                             (<span class="text-danger w-100">${
                               item.kit_name
@@ -96,7 +96,7 @@ class TestsThemeOne extends TestsTheme {
                                 }" data-price="${item.price}" value="${
                                   item.hash
                                 }" id="package_${item.hash}" >
-                                <span class="new-control-indicator m-3  d-none"></span><span class="ml-2">${
+                                <span class="new-control-indicator m-3  d-none"></span><span class="ml-2 overflow-text-hidden">${
                                   item.name
                                 }</span><p class="m-0"> ${parseInt(
                                   item.price
@@ -132,7 +132,7 @@ class TestsThemeOne extends TestsTheme {
                                 .map(
                                   (item) => `
                                   
-                                      <div class="n-chk item package text-left mb-3 col-auto" data-category="${
+                                      <div class="n-chk item package text-left mb-3 col-3" data-category="${
                                         item.category_hash
                                       }">
                                           <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
@@ -143,7 +143,7 @@ class TestsThemeOne extends TestsTheme {
                                   }" data-price="${item.price}" value="${
                                     item.hash
                                   }" id="package_${item.hash}" >
-                                              <span class="new-control-indicator m-3 d-none"></span><span class="ml-2">${
+                                              <span class="new-control-indicator m-3 d-none"></span><span class="ml-2 overflow-text-hidden">${
                                                 item.name
                                               }</span><p class="m-0"> ${parseInt(
                                     item.price
@@ -305,7 +305,7 @@ class TestsThemeTwo extends TestsTheme {
                           }" data-price="${item.price}" value="${
                             item.hash
                           }" id="package_${item.hash}" >
-                          <span class="new-control-indicator m-3 d-none"></span><span class="ml-2">${
+                          <span class="new-control-indicator m-3 d-none"></span><span class="ml-2 overflow-text-hidden">${
                             item.name
                           }</span><p class=""> ${parseInt(
                             item.price
@@ -348,7 +348,7 @@ class TestsThemeTwo extends TestsTheme {
                           }" data-price="${item.price}" value="${
                             item.hash
                           }" id="package_${item.hash}" >
-                                      <span class="new-control-indicator m-3 d-none"></span><span class="ml-2">${
+                                      <span class="new-control-indicator m-3 d-none"></span><span class="ml-2 overflow-text-hidden">${
                                         item.name
                                       }</span><p class=""> ${parseInt(
                             item.price

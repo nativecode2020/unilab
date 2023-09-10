@@ -109,11 +109,15 @@ function showPackagesList(hash) {
   let package = packages.find((package) => package.hash == hash);
   $(this)
     .popover({
-      template:
-        '<div class="popover popover-light" style="direction:ltr" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+      template: `<div class="popover popover-light" >
+                    <div class="arrow"></div>
+                    <h3 class="popover-header"></h3>
+                    <div class="popover-body"></div>
+                </div>`,
       title: `<p class="text-center">${package.name}</p>`,
       // show price and note
       html: true,
+      adaptivePosition: false,
       content: `
             <div class="row">
                 ${
@@ -136,6 +140,7 @@ function showPackagesList(hash) {
             </div>
         `,
       placement: package.type == "8" ? "right" : "top",
+      offset: 0,
     })
     .popover("show");
 }
@@ -1370,7 +1375,13 @@ function invoiceHeader(worker) {
   }
   let newWorkers = [];
 
-  if (orderOfHeader?.length > 0) {
+  if (
+    orderOfHeader?.length > 0 &&
+    orderOfHeader != "undefined" &&
+    orderOfHeader != undefined &&
+    orderOfHeader != null &&
+    orderOfHeader != "null"
+  ) {
     if (typeof orderOfHeader == "string") {
       orderOfHeader = JSON.parse(orderOfHeader);
     }
@@ -1389,6 +1400,7 @@ function invoiceHeader(worker) {
       newWorkers = [...newWorkers, ...worker];
     }
   } else {
+    console.log("else");
     newWorkers = [{ hash: "logo" }, ...worker];
   }
   console.log(newWorkers);
