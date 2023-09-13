@@ -82,7 +82,7 @@ class TestsThemeOne extends TestsTheme {
                             }">
                             <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
                               item.hash
-                            })" >
+                            })"  onmouseleave="$(this).popover('hide')">
                                 <!--
                             (<span class="text-danger w-100">${
                               item.kit_name
