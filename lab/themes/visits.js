@@ -77,7 +77,7 @@ class TestsThemeOne extends TestsTheme {
                               .filter((item) => item.type == "9")
                               .map((item) => {
                                 return `
-                            <div class="n-chk item test text-left mb-3 col-3" data-category="${
+                            <div class="n-chk item test text-left mb-3 col-2" data-category="${
                               item.category_hash
                             }">
                             <label class="new-control items offer new-checkbox new-checkbox-rounded checkbox-outline-success font-weight-bolder mb-0" onmouseover="showPackagesList.call(this, ${
@@ -132,7 +132,7 @@ class TestsThemeOne extends TestsTheme {
                                 .map(
                                   (item) => `
                                   
-                                      <div class="n-chk item package text-left mb-3 col-3" data-category="${
+                                      <div class="n-chk item package text-left mb-3 col-2" data-category="${
                                         item.category_hash
                                       }">
                                           <label class="new-control items offer new-checkbox new-checkbox-rounded font-weight-bolder checkbox-outline-success mb-0" >
