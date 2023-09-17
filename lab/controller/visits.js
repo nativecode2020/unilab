@@ -1430,20 +1430,15 @@ function invoiceHeader(worker) {
       .join("");
   } else {
     html = `
-                      <div class="logo col-4 p-2">
-                          <!-- شعار التحليل -->
-                          <img src="${invoices?.logo ?? ""}" alt="${
-      invoices?.logo ?? "upload Logo"
-    }">
-                      </div>
-                      <div class="logo justify-content-end col-4 p-2">
-                          <!-- شعار التحليل -->
-                          <h2 class="navbar-brand-name text-center">${
-                            invoices?.name_in_invoice ??
-                            localStorage.lab_name ??
-                            ""
-                          }</h2>
-                      </div>`;
+      <div class="logo col-4 p-2">
+          <img src="${invoices?.logo ?? ""}" 
+          alt="${invoices?.logo ?? "upload Logo"}">
+      </div>
+      <div class="logo justify-content-end col-4 p-2">
+          <h2 class="navbar-brand-name text-center">${
+            invoices?.name_in_invoice ?? localStorage.lab_name ?? ""
+          }</h2>
+      </div>`;
   }
   // const workersCount = worker.length;
   // switch (workersCount) {
