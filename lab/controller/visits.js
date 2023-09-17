@@ -1400,21 +1400,24 @@ function invoiceHeader(worker) {
       newWorkers = [...newWorkers, ...worker];
     }
   } else {
-    console.log("else");
     newWorkers = [{ hash: "logo" }, ...worker];
   }
-  console.log(newWorkers);
-  let size = (invoices?.phone_2 == "undefined" ? 4 : invoices?.phone_2) ?? "4";
-  let html = newWorkers
-    .map((worker) => {
-      if (worker.hash == "logo") {
-        return `
+  let size =
+    (invoices?.phone_2 == "undefined" || invoices?.phone_2 == ""
+      ? 4
+      : invoices?.phone_2) ?? "4";
+  let hteml = "";
+  if (newWorkers.length > 1) {
+    html = newWorkers
+      .map((worker) => {
+        if (worker.hash == "logo") {
+          return `
         <div class="logo col-${size}  p-2">
         <img src="${invoices?.logo}" alt="" />
       </div>
       `;
-      }
-      return `
+        }
+        return `
       <div class="right col-md-${size}">
         <div class="size1">
           <p class="title">${worker?.jop ?? "Jop title"}</p>
@@ -1423,8 +1426,25 @@ function invoiceHeader(worker) {
         </div>
       </div>
       `;
-    })
-    .join("");
+      })
+      .join("");
+  } else {
+    html = `
+                      <div class="logo col-4 p-2">
+                          <!-- شعار التحليل -->
+                          <img src="${invoices?.logo ?? ""}" alt="${
+      invoices?.logo ?? "upload Logo"
+    }">
+                      </div>
+                      <div class="logo justify-content-end col-4 p-2">
+                          <!-- شعار التحليل -->
+                          <h2 class="navbar-brand-name text-center">${
+                            invoices?.name_in_invoice ??
+                            localStorage.lab_name ??
+                            ""
+                          }</h2>
+                      </div>`;
+  }
   // const workersCount = worker.length;
   // switch (workersCount) {
   //   case 0:
