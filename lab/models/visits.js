@@ -298,8 +298,10 @@ class Visit extends Factory {
     $("#net_price").val(item.net_price);
     // fill packages
     visitPackages.forEach((x) => {
-      $(`#package_${x.package_id} `).prop("checked", true);
-      $(`#package_${x.package_id} `).trigger("change");
+      $(`#package_${x.package_id}`).prop("checked", true);
+      $(`#package_${x.package_id}`).trigger("change");
+      // $(`#package_${x.package_id}`) parent div has class items add class itemsActive
+      $(`#package_${x.package_id}`).parent(".items").addClass("itemsActive");
       showSelectedTests(x.package_id, x.name, true);
     });
     // change button onclick
@@ -383,6 +385,7 @@ class Visit extends Factory {
     if (!this.validate()) {
       return false;
     }
+    $(".itemsActive").removeClass("itemsActive");
     let insertedPackages = [];
     $(".testSelect:checked").each(function () {
       insertedPackages.push($(this).val());
@@ -506,6 +509,7 @@ class Visit extends Factory {
     if (!this.validate()) {
       return false;
     }
+    $(".itemsActive").removeClass("itemsActive");
     let insertedPackages = [];
     $(".testSelect:checked").each(function () {
       insertedPackages.push($(this).val());
