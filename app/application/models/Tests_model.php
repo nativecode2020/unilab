@@ -34,10 +34,7 @@ class Tests_model extends CI_Model
         LEFT JOIN lab_test ON lab_test.hash = lab_pakage_tests.test_id
         WHERE 
             test_name LIKE '%$search%' AND
-            lab_pakage_tests.isdeleted = 0 AND
-            (
-                lab_pakage_tests.lab_id = $lab_id 
-            ) 
+            lab_pakage_tests.isdeleted = 0
         GROUP BY
             lab_test.hash
         ");
@@ -97,10 +94,7 @@ class Tests_model extends CI_Model
             LEFT JOIN lab_test ON lab_test.hash = lab_pakage_tests.test_id
             WHERE 
                 test_name LIKE '%$search%' AND
-                lab_pakage_tests.isdeleted = 0 AND
-                (
-                    lab_pakage_tests.lab_id = $lab_id 
-                ) 
+                lab_pakage_tests.isdeleted = 0 
             GROUP BY
                 lab_test.hash
             ORDER BY
@@ -109,17 +103,10 @@ class Tests_model extends CI_Model
         "
         );
         return $query->result_array();
-        // OR EXISTS (
-        //     SELECT 1
-        //     FROM JSON_TABLE(
-        //         lab_test.option_test,
-        //         '$.component[0].reference[*].kit' COLUMNS(
-        //             kit varchar(255) PATH '$'
-        //         )
-        //     ) jt
-        //     WHERE jt.kit IN ($kits)
+        // AND
+        // (
+        //     lab_pakage_tests.lab_id = $lab_id 
         // ) 
-        // or lab_test.test_type = 3
     }
 
     public function getDevicesForLab($lab_id)

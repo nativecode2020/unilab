@@ -1000,13 +1000,13 @@ const InvoiceHeader = ({ invoice, employees }) => {
           }
         });
       });
-      if (employeesOrder.length == 1) {
+      if (newEmployeesOrder.length == 1) {
         newEmployeesOrder = [...newEmployeesOrder, ...employees];
       }
       setEmployeesOrder(newEmployeesOrder);
     } else {
-      let employeesOrder = [{ hash: "logo" }, ...employees];
-      setEmployeesOrder(employeesOrder);
+      let newEmployeesOrder = [{ hash: "logo" }, ...employees];
+      setEmployeesOrder(newEmployeesOrder);
     }
   }, [employees]);
 

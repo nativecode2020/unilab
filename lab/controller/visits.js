@@ -1880,7 +1880,7 @@ function showResult(visit, visitTests) {
       buttons[
         test.name.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "")
       ] = `<div class="col-auto">
-                    <button class="action btn btn-action mx-2 w-100" id="test-${test.name
+                    <button class="action btn btn-action mx-2 w-100" dir="ltr" id="test-${test.name
                       .replace(/\s/g, "")
                       .replace(
                         /[^a-zA-Z0-9]/g,
