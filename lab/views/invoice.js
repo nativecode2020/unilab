@@ -346,7 +346,7 @@ const Invoice = ({ tests, invoice, settingState, employees }) => {
               </div>
             </div>
             <div className="test typetest pt-3 category_Tests">
-              <p>Tests</p>
+              <p className="w-100 text-center font-weight-bolder h-22">Tests</p>
             </div>
             {tests.map((test, index) => {
               return (

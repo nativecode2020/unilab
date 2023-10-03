@@ -57,9 +57,6 @@ function toggleHeaderAndFooter() {
 }
 
 function toggleTest() {
-  if (1) {
-    return;
-  }
   let test = $(this);
   let hash = test.attr("id").split("_")[2];
   let testInvoice = $(`#test_normal_${hash}`);
@@ -1440,200 +1437,7 @@ function invoiceHeader(worker) {
           }</h2>
       </div>`;
   }
-  // const workersCount = worker.length;
-  // switch (workersCount) {
-  //   case 0:
-  //     return `
-  //           <div class="header">
-  //               <div class="row justify-content-around">
-  //                   <div class="logo col-4 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <img src="${invoices?.logo ?? ""}" alt="${
-  //       invoices?.logo ?? "upload Logo"
-  //     }">
-  //                   </div>
-  //                   <div class="logo justify-content-end col-4 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <h2 class="navbar-brand-name text-center">${
-  //                         invoices?.name_in_invoice ??
-  //                         localStorage.lab_name ??
-  //                         ""
-  //                       }</h2>
-  //                   </div>
-  //               </div>
-  //           </div>
-  //           `;
-  //   case 1:
-  //     return `
-  //           <div class="header">
-  //               <div class="row justify-content-between">
-  //                   <div class="logo col-4 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <img src="${invoices?.logo ?? ""}" alt="${
-  //       invoices?.logo ?? "upload Logo"
-  //     }">
-  //                   </div>
-  //                   <div class="right col-4">
-  //                       <!-- عنوان جانب الايمن -->
-  //                       <div class="size1">
-  //                       <p class="title">${workers?.[0]?.jop ?? "Jop title"}</p>
-  //                       <p class="namet">${
-  //                         workers?.[0]?.name ?? "Worker name"
-  //                       }</p>
-  //                       <p class="certificate">${
-  //                         workers?.[0]?.jop_en ?? "Jop En title"
-  //                       }</p>
-  //                       </div>
 
-  //                       <div class="size2">
-
-  //                       </div>
-  //                   </div>
-  //               </div>
-  //           </div>
-  //           `;
-  //   case 2:
-  //     return `
-  //           <div class="header">
-  //               <div class="row">
-  //                   <div class="left col-4">
-  //                       <!-- عنوان جانب الايسر -->
-  //                       <div class="size1">
-  //                           <p class="title">${
-  //                             workers?.[1]?.jop ?? "Jop title"
-  //                           }</p>
-  //                           <p class="namet">${
-  //                             workers?.[1]?.name ?? "Worker name"
-  //                           }</p>
-  //                           <p class="certificate">${
-  //                             workers?.[1]?.jop_en ?? "Jop En title"
-  //                           }</p>
-  //                       </div>
-
-  //                       <div class="size2">
-
-  //                       </div>
-  //                   </div>
-
-  //                   <div class="logo col-4 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <img src="${invoices?.logo ?? ""}" alt="${
-  //       invoices?.logo ?? "upload Logo"
-  //     }">
-  //                   </div>
-  //                   <div class="right col-4">
-  //                       <!-- عنوان جانب الايمن -->
-  //                       <div class="size1">
-  //                       <p class="title">${workers?.[0]?.jop ?? "Jop title"}</p>
-  //                       <p class="namet">${
-  //                         workers?.[0]?.name ?? "Worker name"
-  //                       }</p>
-  //                       <p class="certificate">${
-  //                         workers?.[0]?.jop_en ?? "Jop En title"
-  //                       }</p>
-  //                       </div>
-
-  //                       <div class="size2">
-
-  //                       </div>
-  //                   </div>
-  //               </div>
-  //           </div>
-  //           `;
-  //   case 3:
-  //     return `
-  //           <div class="header">
-  //               <div class="row">
-  //                   <div class="logo col-3 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <img src="${invoices?.logo ?? ""}" alt="${
-  //       invoices?.logo ?? "upload Logo"
-  //     }">
-  //                   </div>
-  //                   ${workers
-  //                     ?.map((worker, index) => {
-  //                       return `
-  //                               <div class="col-cus-md-4 my-3">
-
-  //                                   <p class="title">${
-  //                                     worker?.jop ?? "Jop title"
-  //                                   }</p>
-  //                                   <p class="namet">${
-  //                                     worker?.name ?? "Worker name"
-  //                                   }</p>
-  //                                   <p class="certificate">${
-  //                                     worker?.jop_en ?? "Jop En title"
-  //                                   }</p>
-  //                               </div>
-  //                               `;
-  //                     })
-  //                     .join("")}
-
-  //               </div>
-  //           </div>
-  //           `;
-  //   case 4:
-  //     return `
-  //           <div class="header d-flex justify-content-center">
-  //               <div class="row">
-  //                   <div class="logo col-cus-md-5 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <img src="${invoices?.logo ?? ""}" alt="${
-  //       invoices?.logo ?? "upload Logo"
-  //     }">
-  //                   </div>
-  //                   ${workers
-  //                     ?.map((worker, index) => {
-  //                       return `
-  //                       <div class="col-cus-md-5 my-3">
-
-  //                           <p class="title">${worker?.jop ?? "Jop title"}</p>
-  //                           <p class="namet">${
-  //                             worker?.name ?? "Worker name"
-  //                           }</p>
-  //                           <p class="certificate">${
-  //                             worker?.jop_en ?? "Jop En title"
-  //                           }</p>
-  //                       </div>
-  //                       `;
-  //                     })
-  //                     .join("")}
-  //               </div>
-  //           </div>
-  //           `;
-
-  //   case 5:
-  //     return `
-  //           <div class="header d-flex justify-content-center">
-  //               <div class="row">
-  //                   <div class="logo col-cus-md-6 p-2">
-  //                       <!-- شعار التحليل -->
-  //                       <img src="${invoices?.logo ?? ""}" alt="${
-  //       invoices?.logo ?? "upload Logo"
-  //     }">
-  //                   </div>
-  //                   ${workers
-  //                     ?.map((worker, index) => {
-  //                       return `
-  //                       <div class="col-cus-md-6 my-3">
-
-  //                           <p class="title">${worker?.jop ?? "Jop title"}</p>
-  //                           <p class="namet">${
-  //                             worker?.name ?? "Worker name"
-  //                           }</p>
-  //                           <p class="certificate">${
-  //                             worker?.jop_en ?? "Jop En title"
-  //                           }</p>
-  //                       </div>
-  //                       `;
-  //                     })
-  //                     .join("")}
-  //               </div>
-  //           </div>
-  //           `;
-  //   default:
-  //     break;
-  // }
   return `
     <div class="header">
         <div class="row justify-content-between">
@@ -2011,7 +1815,7 @@ function showResult(visit, visitTests) {
                         <div class="test typetest category_${category
                           ?.split(" ")
                           ?.join("_")}">
-                            <p>${category}</p>
+                            <p class="w-100 text-center font-weight-bolder h-22">${category}</p>
                         </div>
                         `;
         }

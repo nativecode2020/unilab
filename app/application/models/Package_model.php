@@ -221,4 +221,35 @@ class Package_model extends CI_Model
         }
         return "تم اضافة الباكج الافتراضي بنجاح";
     }
+
+    function createNewTest($data)
+    {
+        $test_id = $data['test_id'];
+        $lab_id = $data['lab_id'];
+        $kit_id = $data['kit_id'];
+        $unit = $data['unit'];
+        $lab_device_id = $data['lab_device_id'];
+        $name = $data['name'];
+        $cost = $data['cost'];
+        $price = $data['price'];
+
+        // check if test is already exists
+        $test = $this->db->query("SELECT * FROM lab_pakage_tests WHERE test_id='$test_id' AND lab_device_id='$lab_device_id' AND kit_id='$kit_id' AND unit='$unit'");
+        $test = $test->result_array();
+        if (count($test) > 0) {
+            return false;
+        } else {
+            // crerate new package 
+            $hash = round(microtime(true) * 10000) . rand(0, 1000);
+            $this->db->query("INSERT INTO lab_package(name, catigory_id, lab_id, hash, cost, price)VALUES ('$name', '9', '$lab_id', '$hash', '$cost', '$price');");
+            // create new test
+            $this->db->query("INSERT INTO lab_pakage_tests(package_id, test_id, unit, kit_id, lab_device_id,lab_id)VALUES ('$hash', '$test_id', '$unit', '$kit_id', '$lab_device_id','$lab_id');");
+
+            // return last inserted row
+            $package = $this->db->query("SELECT * FROM lab_package WHERE hash='$hash'");
+            $package = $package->result_array();
+            return $hash;
+        }
+
+    }
 }

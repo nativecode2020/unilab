@@ -17,12 +17,15 @@ class Packages extends CI_Controller
         $token = str_replace("Bearer ", "", $token);
         $decoded_array = $this->jwt_dec($token);
         if ($decoded_array == 0) {
-            echo json_encode(array(
-                "status" => false,
-                "message" => "Invalid token",
-                "isAuth" => false,
-                "data" => null
-            ), JSON_UNESCAPED_UNICODE);
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => false,
+                    "data" => null
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
             exit();
         } else {
             $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
@@ -83,13 +86,16 @@ class Packages extends CI_Controller
         $labId = $this->input->post('lab_id');
         $data = $this->Package_model->CreatePackageNoKits($labId);
         $this->Package_model->addDefaultPackage($labId);
-        echo json_encode(array(
-            "status" => true,
-            "message" => "Success",
-            "isAuth" => true,
-            "data" => $data,
-            "token" => null
-        ), JSON_UNESCAPED_UNICODE);
+        echo json_encode(
+            array(
+                "status" => true,
+                "message" => "Success",
+                "isAuth" => true,
+                "data" => $data,
+                "token" => null
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
     public function updateCostAndPrice()
@@ -98,13 +104,16 @@ class Packages extends CI_Controller
         $price = $this->input->post('price');
         $hash = $this->input->post('hash');
         $data = $this->Package_model->updateCostAndPrice($cost, $price, $hash);
-        echo json_encode(array(
-            "status" => true,
-            "message" => "Success",
-            "isAuth" => true,
-            "data" => $data,
-            "token" => null
-        ), JSON_UNESCAPED_UNICODE);
+        echo json_encode(
+            array(
+                "status" => true,
+                "message" => "Success",
+                "isAuth" => true,
+                "data" => $data,
+                "token" => null
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
     public function getKitsAndUnitsByTestName()
@@ -113,16 +122,49 @@ class Packages extends CI_Controller
         $hash = $this->input->post('hash');
         $kits = $this->Package_model->getKitsByTestName($name, $hash);
         $units = $this->Package_model->getUnitsByTestName($name, $hash);
-        echo json_encode(array(
-            "status" => true,
-            "message" => "Success",
-            "isAuth" => true,
-            "data" => array(
-                "kits" => $kits,
-                "units" => $units
+        echo json_encode(
+            array(
+                "status" => true,
+                "message" => "Success",
+                "isAuth" => true,
+                "data" => array(
+                    "kits" => $kits,
+                    "units" => $units
+                ),
+                "token" => null
             ),
-            "token" => null
-        ), JSON_UNESCAPED_UNICODE);
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
+    public function createNewTest()
+    {
+        $data = $this->input->post();
+        // return data
+        $result = $this->Package_model->createNewTest($data);
+        if ($result === false) {
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "هذا التحليل موجود بالفعل",
+                    "isAuth" => true,
+                    "data" => null,
+                    "token" => null
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+            exit();
+        }
+        echo json_encode(
+            array(
+                "status" => true,
+                "message" => "Success",
+                "isAuth" => true,
+                "data" => $result,
+                "token" => null
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
 
