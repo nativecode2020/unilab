@@ -159,40 +159,47 @@ class Package_model extends CI_Model
 
     function getKitsByTestName($testName, $testHash)
     {
+        // $kits = $this->db->query(
+        //     "SELECT  
+        //         CASE
+        //             WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.kit'))='' THEN 'No Kit'
+        //             ELSE name
+        //         END AS name,
+        //         CASE
+        //             WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.kit'))='' THEN ''
+        //             ELSE kits.id
+        //         END AS kit_id
+        //     FROM lab_test
+        //     JOIN JSON_TABLE(option_test,'$.component[*].reference[*]' COLUMNS (value JSON PATH '$')) x
+        //     left JOIN kits ON JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.kit')) = kits.id
+        //     WHERE test_name = '$testName' or lab_test.hash='$testHash';"
+        // );
         $kits = $this->db->query(
-            "SELECT  
-                CASE
-                    WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.kit'))='' THEN 'No Kit'
-                    ELSE name
-                END AS name,
-                CASE
-                    WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.kit'))='' THEN ''
-                    ELSE kits.id
-                END AS kit_id
-            FROM lab_test
-            JOIN JSON_TABLE(option_test,'$.component[*].reference[*]' COLUMNS (value JSON PATH '$')) x
-            left JOIN kits ON JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.kit')) = kits.id
-            WHERE test_name = '$testName' or lab_test.hash='$testHash';"
+            "select name,id as kit_id from kits"
         );
         return $kits->result_array();
     }
 
     function getUnitsByTestName($testName, $testHash)
     {
+        // $units = $this->db->query(
+        //     "SELECT  
+        //     CASE
+        //         WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit')) is null or JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit'))='' THEN 'No Unit'
+        //         ELSE name
+        //     END AS name,
+        //     CASE
+        //         WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit')) is null or JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit'))='' THEN '0'
+        //         ELSE lab_test_units.hash
+        //     END AS unit_id
+        // FROM lab_test
+        // JOIN JSON_TABLE(option_test,'$.component[*].reference[*]' COLUMNS (value JSON PATH '$')) x
+        // left JOIN lab_test_units ON JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit')) = lab_test_units.hash
+        //     WHERE test_name = '$testName' or lab_test.hash='$testHash';"
+        // );
+        // return $units->result_array();
         $units = $this->db->query(
-            "SELECT  
-            CASE
-                WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit')) is null or JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit'))='' THEN 'No Unit'
-                ELSE name
-            END AS name,
-            CASE
-                WHEN JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit')) is null or JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit'))='' THEN '0'
-                ELSE lab_test_units.hash
-            END AS unit_id
-        FROM lab_test
-        JOIN JSON_TABLE(option_test,'$.component[*].reference[*]' COLUMNS (value JSON PATH '$')) x
-        left JOIN lab_test_units ON JSON_UNQUOTE(JSON_EXTRACT(x.value, '$.unit')) = lab_test_units.hash
-            WHERE test_name = '$testName' or lab_test.hash='$testHash';"
+            "select name,hash as unit_id from lab_test_units"
         );
         return $units->result_array();
     }

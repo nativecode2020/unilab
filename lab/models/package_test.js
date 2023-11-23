@@ -64,9 +64,15 @@ class PackageTest extends Factory {
           className: "center not-print",
           render: function (data, type, row) {
             return `
-                        <a class="btn-action" onclick="updateTest('${row.hash}')"><i class="fas fa-edit"></i></a>
-                        <a class="btn-action delete" onclick="fireSwal(deleteTest, '${row.hash}')"><i class="far fa-trash-alt"></i></a>
-                        `;
+                        <a class="text-info" onclick="addRefrence('${row.test_id}','${row.unit}');">
+                          <i class="far fa-plus-circle fa-lg mx-2"></i>
+                        </a>
+                        <a class="text-success" onclick="updateNormal('${row.test_id}','${row.kit_id}','${row.unit}')">
+                          <i class="fas fa-syringe fa-lg mx-2"></i>
+                        </a>
+                        <a class="text-success" onclick="updateTest('${row.hash}')"><i class="fa-lg mx-2 fas fa-edit"></i></a>
+                        <a class="text-danger" onclick="fireSwal(deleteTest, '${row.hash}')"><i class="fa-lg mx-2 far fa-trash-alt"></i></a>
+            `;
           },
         },
         {

@@ -1,5 +1,8 @@
 "use strict";
 
+const THEME = new PackageTestTheme();
+let TEST = null;
+
 const _allData = run_both(`
     select name,id from kits;
     select device_id,kit_id,id from device_kit;
@@ -537,4 +540,93 @@ function deletePackage(hash) {
   $(".test-botton").click();
   lab_package.dataTable.draw();
   niceSwal("success", "top-end", "تم الحذف بنجاح");
+}
+
+const updateNormal = (test, kit, unit) => {
+  TEST = run(`select option_test from lab_test where hash='${test}';`).result[0]
+    .query0[0].option_test;
+  TEST = JSON.parse(TEST);
+  let { component } = TEST;
+  let { reference } = component[0];
+  let refrenceTable = THEME.build(test, reference, kit, unit);
+  $("#refrence_editor .modal-body").html(refrenceTable);
+  $("#refrence_editor").modal("show");
+};
+
+function updateRefrence(hash, refID) {
+  const formContainer = $(`#form_container`);
+  // empty from container
+  formContainer.empty();
+  let { component } = TEST;
+  let refrences = component[0].reference;
+  let refrence = refrences.find((item, index, self) => index == refID);
+  let form = THEME.mainForm(refID, hash, refrence);
+  formContainer.append(form);
+}
+
+function saveRefrence(hash, refID) {
+  if (refreshValidation() == false) {
+    return false;
+  }
+  let result = $(`#refrence_form_${refID} input[name="type"]:checked`).val();
+  let rightOptions = [];
+  let options = [];
+  if (
+    $(`#refrence_form_${refID} input[name="type"]:checked`).val() == "result"
+  ) {
+    $(`#refrence_form_${refID} input[name='select-result-value']`).each(
+      function () {
+        options.push($(this).val());
+        // get right options
+        if (
+          $(this)
+            .parent()
+            .parent()
+            .find('input[name="select-result"]')
+            .is(":checked")
+        ) {
+          rightOptions.push($(this).val());
+        }
+      }
+    );
+  }
+  if (!TEST) {
+    TEST = run(`select option_test from lab_test where hash='${hash}';`)
+      .result[0].query0[0].option_test;
+    TEST = JSON.parse(TEST);
+  }
+  let { component } = TEST;
+  let element = THEME.getData(refID, result, options, rightOptions);
+  if (refID === "null") {
+    if (component?.[0]) {
+      component[0].reference.push(element);
+    } else {
+      component = [
+        {
+          name: test.test_name,
+          reference: [element],
+        },
+      ];
+    }
+    let newRefrence = component[0].reference.filter((item, index, self) => {
+      return self.findIndex((t) => t?.kit === item?.kit) === index;
+    });
+  } else {
+    component[0].reference[refID] = element;
+  }
+  let test_options = { component: component };
+  let kitUnit = run(`update lab_test set option_test='${JSON.stringify(
+    test_options
+  )}' where hash=${hash};
+                    select kit from lab_kit_unit where kit='${
+                      element.kit
+                    }' and unit='${element.unit}';`).result[1].query1[0];
+  if (!kitUnit) {
+    run(
+      `insert into lab_kit_unit(kit,unit) values('${element.kit}','${element.unit}');`
+    );
+  }
+
+  $("#refrence_editor").modal("toggle");
+  TEST = null;
 }

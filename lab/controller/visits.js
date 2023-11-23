@@ -1,4 +1,5 @@
 const calcOperator = ["+", "-", "*", "/", "(", ")", "Math.log10("];
+let HASH = null;
 
 let units = run(`select name,hash from lab_test_units;`).result[0].query0;
 let __VISIT_TESTS__ = [];
@@ -143,6 +144,8 @@ function showPackagesList(hash) {
 }
 
 function visitDetail(hash) {
+  HASH = hash;
+  $(".itemsActive").removeClass("itemsActive");
   // check if lab_visits is defined
   if (typeof lab_visits != "undefined") {
     lab_visits.resetForm();
@@ -354,7 +357,8 @@ function showAddResult(hash, animate = true) {
                         (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
                         unit,
                         result_test,
-                        lab_visits_tests.hash as hash
+                        lab_visits_tests.hash as hash,
+                        test_id
                     from 
                         lab_visits_tests 
                     left join
@@ -630,6 +634,14 @@ function generateFieldForTest(test, resultList, reference, testType) {
       <div class="row align-items-center">
           <div class="col-md-3 h6 text-center">
               ${testType == "normal" ? `${test?.kit_name ?? "NO KIT"}` : ""}
+              <a 
+                class="text-info"
+              onclick="updateNormal('${test.test_id}', '${test.kit_id}', '${
+    test.unit
+  }')"
+              >
+                <i class="far fa-edit"></i>
+              </a>
               <br>
               ${
                 testType == "normal"
@@ -1773,7 +1785,7 @@ function showResult(visit, visitTests) {
                             <div class="col-12" >
                                 <p>${reference.type}</p>
                             </div>
-                            
+
                         </div>
                     `;
         }
@@ -2061,11 +2073,12 @@ function manageInvoiceHeight(invoiceId = null) {
   cloneInvoice.find(".center2 .tester").empty();
   let center2 = $(".book-result:visible .center2:last");
   let center2Scroll;
-  if (bookResultInvoiceId == "invoice-normalTests") {
-    center2Scroll = center2.height() - 400;
-  } else {
-    center2Scroll = center2.height() - 200;
-  }
+  // if (bookResultInvoiceId == "invoice-normalTests") {
+  //   center2Scroll = center2.height() - 400;
+  // } else {
+  //   center2Scroll = center2.height() - 200;
+  // }
+  center2Scroll = center2.height() - 260;
   let invoices = addTestToInvoice(
     center2Scroll,
     allTestsElements,
@@ -2093,11 +2106,11 @@ function addTestToInvoice(
   lastTestType = null
 ) {
   let invoiceCount = Math.ceil(allInvoiceTestsHeight / center2Scroll);
-  let { invoices, testTypeHeight, lastTestHead, testHeadHeight } = {
+  console.log("center = = = >", center2Scroll);
+  let { invoices, testTypeHeight, testHeadHeight } = {
     invoices: [],
     lastTestType: null,
     testTypeHeight: allTestsElements[0]?.eleHeight,
-    lastTestHead: null,
     testHeadHeight: allTestsElements[1]?.eleHeight,
   };
   for (let i = 1; i <= invoiceCount; i++) {
@@ -2105,7 +2118,6 @@ function addTestToInvoice(
       if (lastTestType) {
         allTestsElements.unshift(lastTestType);
       }
-      // allTestsElements.unshift(lastTestHead);
     }
     let height = 0;
     let invoice = cloneInvoice.clone();
