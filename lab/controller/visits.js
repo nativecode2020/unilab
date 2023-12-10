@@ -1374,23 +1374,23 @@ function showInvoice(hash) {
 
 function invoiceHeader(worker) {
   let orderOfHeader = sessionStorage.getItem("orderOfHeader");
-  if (
-    !orderOfHeader ||
-    orderOfHeader == "undefined" ||
-    orderOfHeader == undefined
-  ) {
-    let setting = JSON.parse(invoices?.setting);
+  try {
+    let setting = JSON.parse(invoices.setting);
     orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "[]") ?? null;
+  } catch (e) {
+    console.log("setting error =>", e);
   }
+  // if (
+  //   !orderOfHeader ||
+  //   orderOfHeader == "undefined" ||
+  //   orderOfHeader == undefined
+  // ) {
+  //   let setting = JSON.parse(invoices?.setting ?? "{}");
+  //   orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "[]") ?? null;
+  // }
   let newWorkers = [];
 
-  if (
-    orderOfHeader?.length > 0 &&
-    orderOfHeader != "undefined" &&
-    orderOfHeader != undefined &&
-    orderOfHeader != null &&
-    orderOfHeader != "null"
-  ) {
+  try {
     if (typeof orderOfHeader == "string") {
       orderOfHeader = JSON.parse(orderOfHeader);
     }
@@ -1408,9 +1408,37 @@ function invoiceHeader(worker) {
     if (newWorkers.length == 1) {
       newWorkers = [...newWorkers, ...worker];
     }
-  } else {
+  } catch (e) {
+    console.log("orderOfHeader error =>", e);
     newWorkers = [{ hash: "logo" }, ...worker];
   }
+  // if (
+  //   orderOfHeader?.length > 0 &&
+  //   orderOfHeader != "undefined" &&
+  //   orderOfHeader != undefined &&
+  //   orderOfHeader != null &&
+  //   orderOfHeader != "null"
+  // ) {
+  //   if (typeof orderOfHeader == "string") {
+  //     orderOfHeader = JSON.parse(orderOfHeader);
+  //   }
+  //   orderOfHeader?.forEach((hash) => {
+  //     if (hash == "logo") {
+  //       newWorkers.push({ hash: "logo" });
+  //       return;
+  //     }
+  //     worker.find((employee) => {
+  //       if (employee.hash == hash) {
+  //         newWorkers.push(employee);
+  //       }
+  //     });
+  //   });
+  //   if (newWorkers.length == 1) {
+  //     newWorkers = [...newWorkers, ...worker];
+  //   }
+  // } else {
+  //   newWorkers = [{ hash: "logo" }, ...worker];
+  // }
   let size =
     (invoices?.phone_2 == "undefined" || invoices?.phone_2 == ""
       ? 4

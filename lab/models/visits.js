@@ -969,21 +969,22 @@ let lab_doctor = new Doctor("lab_doctor", " طبيب", [
 const updateNormal = (test, kit, unit) => {
   TEST = run(`select option_test from lab_test where hash='${test}';`).result[0]
     .query0[0]?.option_test;
-  if (TEST) {
+  try {
     TEST = JSON.parse(TEST);
     let { component } = TEST;
     let { reference } = component[0];
-    let neededRefrence = reference.filter((item) => {
-      return (
-        (kit == item.kit || (isNull(kit) && isNull(item.kit))) &&
-        (unit == item.unit || (isNull(unit) && isNull(item.unit)))
-      );
-    });
+    // let neededRefrence = reference.filter((item) => {
+    //   return (
+    //     (kit == item.kit || (isNull(kit) && isNull(item.kit))) &&
+    //     (unit == item.unit || (isNull(unit) && isNull(item.unit)))
+    //   );
+    // });
 
     let refrenceTable = THEME.build(test, reference, kit, unit);
     $("#refrence_editor .modal-body").html(refrenceTable);
     $("#refrence_editor").modal("show");
-  } else {
+  } catch (error) {
+    console.log(error);
     Swal.fire({
       toast: true,
       position: "top-end",
