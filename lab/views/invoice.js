@@ -480,6 +480,23 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   id="name_in_invoice"
                   name="name_in_invoice"
                   onChange={(e) => {
+                    let value = e.target.value;
+                    // check if value have ' or ` or " or \ or /
+                    if (
+                      value.includes("'") ||
+                      value.includes("`") ||
+                      value.includes('"') ||
+                      value.includes("\\") ||
+                      value.includes("/")
+                    ) {
+                      niceSwal(
+                        "error",
+                        "top-end",
+                        "لا يمكن ادخال هذه العلامات"
+                      );
+                      e.target.value = invoice.name_in_invoice;
+                      return;
+                    }
                     setInvoice({ ...invoice, name_in_invoice: e.target.value });
                   }}
                   value={invoice.name_in_invoice}
