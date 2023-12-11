@@ -550,10 +550,10 @@ function filterWithKit(reference, kit) {
 function filterWithUnit(reference, unit) {
   return reference.filter((ref) => {
     if (
-      unit == ref.unit ||
-      ref.unit == "" ||
-      ref.unit == null ||
-      ref.unit == undefined
+      unit == ref?.unit ||
+      ref?.unit == "" ||
+      ref?.unit == null ||
+      ref?.unit == undefined
     ) {
       return true;
     }
@@ -569,8 +569,8 @@ function filterWithUnit(reference, unit) {
 function filterWithAge(reference, age, unit) {
   let days = convertAgeToDays(age, unit);
   return reference.filter((ref) => {
-    let ageLow = convertAgeToDays(ref["age low"], ref["age unit low"]);
-    let ageHigh = convertAgeToDays(ref["age high"], ref["age unit high"]);
+    let ageLow = convertAgeToDays(ref?.["age low"], ref?.["age unit low"]);
+    let ageHigh = convertAgeToDays(ref?.["age high"], ref?.["age unit high"]);
 
     if (days >= ageLow && days <= ageHigh) {
       return true;
@@ -583,10 +583,10 @@ function filterWithAge(reference, age, unit) {
 function filterWithGender(reference, gender) {
   return reference.filter((ref) => {
     if (
-      gender.trim().replace("ي", "ى") == ref.gender.trim().replace("ي", "ى")
+      gender.trim().replace("ي", "ى") == ref?.gender.trim().replace("ي", "ى")
     ) {
       return true;
-    } else if (ref.gender == "كلاهما") {
+    } else if (ref?.gender == "كلاهما") {
       return true;
     } else {
       return false;
