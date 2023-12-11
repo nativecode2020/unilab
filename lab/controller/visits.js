@@ -559,7 +559,7 @@ function filterWithUnit(reference, unit) {
     }
     // else if (ref.kit == '' || ref.kit == null || ref.kit == undefined) {
     //     return true;
-    // }
+    // } test
     else {
       return false;
     }
