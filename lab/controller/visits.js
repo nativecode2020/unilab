@@ -533,13 +533,13 @@ function filterWithKit(reference, kit) {
       kit == "" ||
       kit == null ||
       kit == undefined ||
-      ref.kit == "" ||
-      ref.kit == null ||
-      ref.kit == undefined
+      ref?.kit == "" ||
+      ref?.kit == null ||
+      ref?.kit == undefined
     ) {
       return true;
     }
-    if (kit == ref.kit) {
+    if (kit == ref?.kit) {
       return true;
     } else {
       return false;
