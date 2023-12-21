@@ -51,20 +51,22 @@ class Calc extends CI_Controller
         $tests = json_decode($tests);
         $visit_hash = $this->input->post('visit_hash');
         $action = $this->input->post('action');
-        // get option_test from lab_test table where test_type = 3
-        /*
-            option_test = {"type": "calc", "tests": ["47", "13"], "value": ["Vitamin D", "+", "Anti-GAD"], "component": ["47", "+", "13"]}
-        */
+
         $lab_id = $this->db->query("SELECT labId FROM lab_visits WHERE hash = '$visit_hash'")->row()->labId;
         if ($action == 'update') {
             $this->db->query("DELETE FROM lab_visits_tests WHERE visit_id = '$visit_hash' AND tests_id IN (SELECT hash FROM lab_test WHERE test_type = 3)");
         }
-        $calc_tests = $this->db->query("SELECT option_test,hash FROM lab_test WHERE test_type = 3")->result_array();
+        $calc_tests = $this->db->query("SELECT option_test,hash FROM lab_test WHERE test_type = 3 and isdeleted =0")->result_array();
         $calc_tests = array_map(function ($calc_test) use ($tests) {
             $calc_test = array(
                 'hash' => $calc_test['hash'],
                 'tests' => json_decode($calc_test['option_test'], true)['tests']
             );
+            // check if calc_test['tests'] is greater then 0
+            if (count($calc_test['tests']) == 0) {
+                $calc_test['isPart'] = false;
+                return $calc_test;
+            }
             // check if calc_test['tests'] is part of $tests
             $calc_test['isPart'] = array_intersect($calc_test['tests'], $tests) == $calc_test['tests'];
             if ($calc_test['isPart']) {

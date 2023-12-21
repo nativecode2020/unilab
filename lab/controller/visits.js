@@ -203,7 +203,7 @@ function showVisit(hash) {
                             <tr>
                                 <td>العمر</td>
                                 <td>${
-                                  parseFloat(visit?.age).toFixed(2) ?? ""
+                                  parseFloat(visit?.age).toFixed(0) ?? ""
                                 } سنة</td>
                             </tr>
                             <tr>
@@ -530,12 +530,8 @@ function convertAgeToDays(age, unit) {
 function filterWithKit(reference, kit) {
   return reference.filter((ref) => {
     if (
-      kit == "" ||
-      kit == null ||
-      kit == undefined ||
-      ref?.kit == "" ||
-      ref?.kit == null ||
-      ref?.kit == undefined
+      (kit == "" || kit == null || kit == undefined) &&
+      (ref?.kit == "" || ref?.kit == null || ref?.kit == undefined)
     ) {
       return true;
     }
@@ -551,9 +547,8 @@ function filterWithUnit(reference, unit) {
   return reference.filter((ref) => {
     if (
       unit == ref?.unit ||
-      ref?.unit == "" ||
-      ref?.unit == null ||
-      ref?.unit == undefined
+      ((unit == "" || unit == null || unit == undefined) &&
+        (ref?.unit == "" || ref?.unit == null || ref?.unit == undefined))
     ) {
       return true;
     }
@@ -710,14 +705,14 @@ function generateFieldForTest(test, resultList, reference, testType) {
                                 })
                                 .join("")}
                             </select>`
-                          : `<input type="number" class="form-control result text-center" id="result_${
+                          : `<input type="text" class="form-control result text-center" id="result_${
                               test.hash
                             }" name="${test.name}" placeholder="ادخل النتيجة" ${
                               testType == "calc" ? "readonly" : ""
                             } value="${
                               testType == "normal"
-                                ? resultList?.[test.name]
-                                : resultList
+                                ? resultList?.[test.name] ?? ""
+                                : resultList ?? ""
                             }">`
                       }
                       
@@ -745,7 +740,9 @@ function addNormalResult(
   } else {
     if (reference) {
       // filter with kit
+      console.log("before", reference);
       reference = filterWithKit(reference, test.kit_id);
+      console.log("after", reference);
       // filter with unit
       if (options.type != "calc") {
         reference = filterWithUnit(reference, test.unit);

@@ -615,14 +615,6 @@ class Visit extends Factory {
             _oldTest.tests_id === _test.id
         )
     );
-    console.log(
-      "newtests=>",
-      newTests,
-      "oldtests=>",
-      oldTests,
-      "addedTests=>",
-      addedTests
-    );
     mainQuery += deletedPackages
       .map(
         (_package) =>

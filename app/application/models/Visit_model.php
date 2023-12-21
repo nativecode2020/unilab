@@ -59,13 +59,13 @@ class Visit_model extends CI_Model
 
     public function patient_history($patient_id, $visit_date)
     {
-        $visits = $this->get_patient_visits($patient_id, $visit_date);
-        if (!isset($visits[0]))
-            return [];
-        $last_visit_tests = $this->last_patient_visit_tests($patient_id);
-        if (!isset($last_visit_tests[0]))
-            return [];
-        $tests = $this->get_tests($visits, $last_visit_tests);
+        // $visits = $this->get_patient_visits($patient_id, $visit_date);
+        // if (!isset($visits[0]))
+        //     return [];
+        // $last_visit_tests = $this->last_patient_visit_tests($patient_id);
+        // if (!isset($last_visit_tests[0]))
+        //     return [];
+        $tests = $this->get_tests($patient_id, $visit_date);
         if (!isset($tests[0]))
             return [];
         // map tests
@@ -106,18 +106,41 @@ class Visit_model extends CI_Model
         return $visits;
     }
 
-    public function get_tests($visits, $last_visit_tests)
+    public function get_tests($patient_id, $visit_date)
     {
-        $this->db->select('tests_id as id, result_test as result');
-        $this->db->select('(select test_name from lab_test where hash=tests_id) as name');
-        $this->db->select('(select visit_date from lab_visits where hash=visit_id) as date');
-        $this->db->from('lab_visits_tests');
-        $this->db->where_in('visit_id', $visits);
-        $this->db->where_in('tests_id', $last_visit_tests);
-        $this->db->where('tests_id !=', '0');
-        $this->db->group_by('tests_id');
-        $query = $this->db->get();
-        return $query->result_array();
+        $query = $this->db->query("
+        SELECT 
+            tests_id AS id,
+            result_test AS result,
+            (SELECT 
+                    test_name
+                FROM
+                    lab_test
+                WHERE
+                    hash = tests_id) AS name,
+            (SELECT 
+                    visit_date
+                FROM
+                    lab_visits
+                WHERE
+                    hash = visit_id) AS date
+        FROM
+            lab_visits_tests
+        WHERE
+            visit_id = (SELECT 
+                    hash
+                FROM
+                    lab_visits
+                WHERE
+                    visits_patient_id = '$patient_id'
+                        AND isdeleted = 0
+                        AND visit_date < '$visit_date'
+                ORDER BY id DESC
+                LIMIT 1)
+                AND tests_id != 0;
+        ");
+        $tests = $query->result_array();
+        return $tests;
     }
 
     public function last_patient_visit_tests($patient_id)
