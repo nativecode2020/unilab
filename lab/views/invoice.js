@@ -439,7 +439,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
     if (newFile) {
       formData.append("logo", newFile);
     }
-    await fetch(`http://localhost:8807/app/index.php/Invoice/update`, {
+    await fetch(`${base_url}Invoice/update`, {
       method: "POST",
       body: formData,
     })
@@ -453,7 +453,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
   const handelUpload = (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    return fetch(`http://localhost:8807/app/index.php/Upload/uploadSingle`, {
+    return fetch(`${base_url}Upload/uploadSingle`, {
       method: "POST",
       body: formData,
     });
@@ -925,9 +925,7 @@ const InvoiceSetting = () => {
   };
 
   const fetchInvoice = async () => {
-    let data = await fetch(
-      `http://localhost:8807/app/index.php/Invoice/get_or_create?hash=${labHash}`
-    )
+    let data = await fetch(`${base_url}Invoice/get_or_create?hash=${labHash}`)
       .then((e) => e.json())
       .then((res) => {
         if (!res.data.phone_2) {
