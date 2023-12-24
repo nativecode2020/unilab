@@ -1568,8 +1568,7 @@ code {
     right: 0;
     left: 0; }
     .overlay.show {
-      display: block;
-      opacity: .7; }
+      display: block; }
   .layout-px-spacing {
     padding: 0 16px !important; }
   .header-container {

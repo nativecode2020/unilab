@@ -435,7 +435,9 @@ class TableTheme extends Theme {
         <td>${kitName}</td>
         <td>${gender}</td>
         <td>${ageLow} ${ageLowUnit} - ${ageHigh} ${ageHighUnit}</td>
-        <td>${
+        <td
+          style="overflow: hidden;"
+        >${
           range?.map((r) => {
             return `${r?.name ? `${r?.name} : ` : ""}  <span>${
               r?.high ?? ""
@@ -465,7 +467,7 @@ class TableTheme extends Theme {
     let table = "";
     if (refrences && refrences.length > 0) {
       table = `
-      <table class="table table-striped table-bordered table-hover">
+      <table class="table table-striped table-bordered table-hover" style="table-layout: fixed;">
         <thead>
           <tr>
             <th>Kit</th>
@@ -575,7 +577,9 @@ class PackageTestTheme extends TableTheme {
       <tr>
         <td>${gender}</td>
         <td>${ageLow} ${ageLowUnit} - ${ageHigh} ${ageHighUnit}</td>
-        <td>${
+        <td
+          style="overflow: hidden;"
+        >${
           range?.map((r) => {
             return `${r?.name ? `${r?.name} : ` : ""}  <span>${
               r?.high ?? ""
@@ -595,7 +599,7 @@ class PackageTestTheme extends TableTheme {
     let table = "";
     if (refrences && refrences.length > 0) {
       table = `
-      <table class="table table-striped table-bordered table-hover">
+      <table class="table table-striped table-bordered table-hover" style="table-layout: fixed;">
         <thead>
           <tr>
             <th>الجنس </th>

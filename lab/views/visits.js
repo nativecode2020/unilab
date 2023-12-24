@@ -112,8 +112,6 @@ $(function () {
   // wait 500ms to load data
   setTimeout(() => {
     $("#input-search-all").on("keyup change", function () {
-      console.log("change");
-
       let category = $("#categorySelect-all").val();
       var rex = new RegExp($(this).val(), "i");
       $(".searchable-container .item").hide();

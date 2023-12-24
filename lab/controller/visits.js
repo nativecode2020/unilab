@@ -707,7 +707,9 @@ function generateFieldForTest(test, resultList, reference, testType) {
                             </select>`
                           : `<input type="text" class="form-control result text-center" id="result_${
                               test.hash
-                            }" name="${test.name}" placeholder="ادخل النتيجة" ${
+                            }" dir="ltr" name="${
+                              test.name
+                            }" placeholder="ادخل النتيجة" ${
                               testType == "calc" ? "readonly" : ""
                             } value="${
                               testType == "normal"
@@ -802,7 +804,7 @@ function addStrcResult(component, test, result_test, resultForm) {
           let htmlOptions = "";
           let multi = comp.multi === true ? "multiple" : "";
           // check if options is array or object
-          if (Array.isArray(options)) {
+          if (options instanceof Array) {
             htmlOptions = options
               .map((option, index) => {
                 let selected = "";
@@ -820,9 +822,24 @@ function addStrcResult(component, test, result_test, resultForm) {
                 return `<option value="${option}" ${selected}>${option}</option>`;
               })
               .join("");
-          } else if (typeof options == "object") {
-            console.log(options);
+          } else if (options instanceof Object) {
             htmlOptions = Object.keys(options)
+              .sort((a, b) => {
+                const firstCharA = a.charAt(0).toLowerCase();
+                const firstCharB = b.charAt(0).toLowerCase();
+
+                if (firstCharA < firstCharB) {
+                  return -1;
+                } else if (firstCharA > firstCharB) {
+                  return 1;
+                } else {
+                  // ترتيب إضافي حسب الأرقام إذا كانت الأحرف متساوية
+                  const numA = parseInt(a.replace(/\D/g, ""), 10);
+                  const numB = parseInt(b.replace(/\D/g, ""), 10);
+
+                  return numA - numB;
+                }
+              })
               .map((key) => {
                 let selected = "";
 
@@ -836,7 +853,7 @@ function addStrcResult(component, test, result_test, resultForm) {
                   }
                 }
 
-                return `<option value="${key}" ${selected}>${options[key]}</option>`;
+                return `<option value="${key}" ${selected}>${key}</option>`;
               })
               .join("");
           }
@@ -866,6 +883,7 @@ function addStrcResult(component, test, result_test, resultForm) {
           input = `<input 
                       type="text" 
                       class="form-control result text-center" 
+                      dir="ltr"
                       ${editable} 
                       value="${result}" 
                       id="result_${test.hash}" 
@@ -1328,19 +1346,19 @@ function showInvoice(hash) {
 
                                 <p>${
                                   invoices?.address
-                                    ? `<i class="fas fa-map-marker-alt"></i> ${invoices?.address}`
+                                    ? `${invoices?.address} <i class="fas fa-map-marker-alt"></i> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;`
                                     : ""
                                 }
                                 <span class="note">${
                                   invoices?.facebook == ""
                                     ? ""
-                                    : `&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-envelope"></i>  ${invoices?.facebook}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;`
+                                    : `&nbsp;&nbsp;&nbsp;&nbsp;  ${invoices?.facebook}  <i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;`
                                 }</span>
                                 
                                 <span class="note">${
                                   invoices?.phone_1 == ""
                                     ? ""
-                                    : `<i class="fas fa-phone"></i>  ${invoices?.phone_1}`
+                                    : `${invoices?.phone_1} <i class="fas fa-phone"></i>`
                                 }</span></p>
                             </div>
 
@@ -1592,12 +1610,12 @@ function createInvoice(visit, type, form) {
 					<p><span class="note">${
             invoices?.facebook == ""
               ? ""
-              : `&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-envelope"></i>  ${invoices?.facebook}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;`
+              : `<i class="fas fa-envelope"></i>  ${invoices?.facebook}`
           }</span>
                     <span class="note">${
                       invoices?.phone_1 == ""
                         ? ""
-                        : `<i class="fas fa-phone"></i>  ${invoices?.phone_1}`
+                        : `<i class="fas fa-phone"></i> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;  ${invoices?.phone_1}`
                     }</span></p>
 				</div>
 			</div>
@@ -2400,7 +2418,16 @@ function manageTestType(type, test = {}) {
   }
 }
 
-const addTestSearch = (e) => {};
+const addTestSearch = (e) => {
+  let value = $(e).val();
+  var rex = new RegExp(value, "i");
+  $(".results.test-normalTests:not(.search-class)").hide();
+  $(`.results.test-normalTests:not(.search-class)`)
+    .filter(function () {
+      return rex.test($(this).text());
+    })
+    .show();
+};
 
 const updatePhone = (hash) => {
   let phone = $("#patientPhone").val();

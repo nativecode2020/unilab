@@ -208,7 +208,13 @@ class Offline extends CI_Controller
                 if (count($matches) > 0) {
                     $hash = $matches[1];
                 } else {
-                    $hash = 0;
+                    $pattern = "/`id`\s*=\s*'(\d+)'/i";
+                    preg_match($pattern, $query->query, $matches);
+                    if (count($matches) > 0) {
+                        $hash = $matches[1];
+                    } else {
+                        $hash = 0;
+                    }
                 }
             }
             $query->hash = $hash;

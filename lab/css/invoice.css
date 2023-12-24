@@ -486,6 +486,7 @@
     border-top: 5px solid #2e3f4c;
     margin-left: 45px;
     margin-right: 45px;
+    direction: rtl;
 }
 
 .footer .f1,
