@@ -1664,6 +1664,10 @@ function getNormalRange(finalResult = "", range = []) {
   } else if (high == "") {
     normalRange = (name ? `${name} : ` : "") + low + " <= ";
   }
+  let numers = finalResult.match(/\d+/g);
+  if (numers) {
+    finalResult = numers.join(".");
+  }
   if (parseFloat(finalResult) < parseFloat(low)) {
     color = "text-info p-1 border border-dark";
     flag = "L";
