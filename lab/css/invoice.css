@@ -228,7 +228,8 @@
     border: 1px solid #ccc;
     resize: vertical;
     background-color: white;
-    width: 12%
+    width: 12%;
+    min-height: 26px;
 }
 
 .paidgot,

@@ -1139,6 +1139,27 @@ function netPriceChange() {
   $("#net_price").val(net_price);
 }
 
+const changeInvoiceTitle = (type) => {
+  const title = $("#type-title");
+  const prices = $(".money-show");
+  const doctor = $(".doctor-name");
+  switch (type) {
+    case "money":
+      title.text("وصــل اســتلام");
+      prices.show();
+      doctor.show();
+      break;
+    case "send":
+      title.text("قسـيـمة تـحويـل");
+      prices.hide();
+      doctor.hide();
+      break;
+    default:
+      title.text("وصــل اســتلام");
+      break;
+  }
+};
+
 function showInvoice(hash) {
   let workSpace = $("#work-sapce");
   // workSpace.html('');
@@ -1180,6 +1201,18 @@ function showInvoice(hash) {
     <div class="col-md-7 mt-4">
         <div class="statbox widget box box-shadow bg-white py-3">
             <div class="widget-content widget-content-area m-auto" style="width: 95%;">
+                <div class="row justify-content-center">
+                  <div class="col-5">
+                    <button type="button" class="btn btn-outline-print w-100" onclick="changeInvoiceTitle('money')">
+                      وصل استلام
+                    </button>
+                  </div>
+                  <div class="col-5">
+                    <button type="button" class="btn btn-outline-print w-100" onclick="changeInvoiceTitle('send')">
+                      قسيمة تحويل
+                    </button>
+                  </div>
+                </div>
                 <div class="book-result" dir="ltr" id="pdf">
                     <div class="page">
                         <!-- صفحة يمكنك تكرارها ----------------------------------------------------------------------------------------------------------------------->
@@ -1190,7 +1223,7 @@ function showInvoice(hash) {
                                 <div class="left">
                                     <!-- عنوان جانب الايسر ------------------------------------------------------------------------------------------------------------->
                                     <div class="size1">
-                                        <p class="title" style="font-size: 18px; margin-block-end: -5px;">وصــل اســتلام</p>
+                                        <p class="title" id="type-title" style="font-size: 18px; margin-block-end: -5px;">وصــل اســتلام</p>
                                         <p class="namet" style="font-size: 18px; margin-block-end: -5px;">Return Receipt</p>
                                     </div>
                                 </div>
@@ -1250,10 +1283,10 @@ function showInvoice(hash) {
                                               visit.time
                                             }</span></p>
                                 </div>
-                                <div class="prd">
+                                <div class="prd doctor-name">
                                     <p class="">Doctor</p>
                                 </div>
-                                <div class="prdgo">
+                                <div class="prdgo doctor-name">
                                     <p>${visit.doctor ?? ""}</p>
                                 </div>
                             </div>
@@ -1271,7 +1304,7 @@ function showInvoice(hash) {
                                             <p> ${item.name}</p>
                                         </div>
                                         <div class="testnormal col-2">
-                                            <p>${parseInt(
+                                            <p class="money-show">${parseInt(
                                               item.price
                                             )?.toLocaleString()}<span class="note">&nbsp; IQD</span></p>
                                         </div>
@@ -1308,7 +1341,7 @@ function showInvoice(hash) {
                                     <p class="">Total</p>
                                 </div>
                                 <div class="namegot">
-                                    <p>${parseInt(
+                                    <p class="money-show">${parseInt(
                                       visit.total_price
                                     )?.toLocaleString()}<span class="note">&nbsp; IQD</span></p>
                                 </div>
@@ -1316,7 +1349,7 @@ function showInvoice(hash) {
                                     <p class="">Discount</p>
                                 </div>
                                 <div class="paidgot">
-                                    <p>${parseInt(
+                                    <p class="money-show">${parseInt(
                                       visit.dicount
                                     )?.toLocaleString()}<span class="note">&nbsp; IQD</span></p>
                                 </div>
@@ -1324,7 +1357,7 @@ function showInvoice(hash) {
                                     <p class="">Total Amount</p>
                                 </div>
                                 <div class="vidgot">
-                                    <p>${parseInt(
+                                    <p class="money-show">${parseInt(
                                       visit.net_price
                                     )?.toLocaleString()}<span class="note">&nbsp; IQD</span></p>
                                 </div>
@@ -1395,14 +1428,6 @@ function invoiceHeader(worker) {
   } catch (e) {
     console.log("setting error =>", e);
   }
-  // if (
-  //   !orderOfHeader ||
-  //   orderOfHeader == "undefined" ||
-  //   orderOfHeader == undefined
-  // ) {
-  //   let setting = JSON.parse(invoices?.setting ?? "{}");
-  //   orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "[]") ?? null;
-  // }
   let newWorkers = [];
 
   try {
