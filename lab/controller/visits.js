@@ -530,8 +530,11 @@ function convertAgeToDays(age, unit) {
 function filterWithKit(reference, kit) {
   return reference.filter((ref) => {
     if (
-      (kit == "" || kit == null || kit == undefined) &&
-      (ref?.kit == "" || ref?.kit == null || ref?.kit == undefined)
+      (kit == "" || kit == null || kit == undefined || kit == 0) &&
+      (ref?.kit == "" ||
+        ref?.kit == null ||
+        ref?.kit == undefined ||
+        ref?.kit == 0)
     ) {
       return true;
     }
@@ -547,8 +550,11 @@ function filterWithUnit(reference, unit) {
   return reference.filter((ref) => {
     if (
       unit == ref?.unit ||
-      ((unit == "" || unit == null || unit == undefined) &&
-        (ref?.unit == "" || ref?.unit == null || ref?.unit == undefined))
+      ((unit == "" || unit == null || unit == undefined || unit == 0) &&
+        (ref?.unit == "" ||
+          ref?.unit == null ||
+          ref?.unit == undefined ||
+          ref?.unit == 0))
     ) {
       return true;
     }
@@ -741,11 +747,7 @@ function addNormalResult(
     reference = result_test.options;
   } else {
     if (reference) {
-      // filter with kit
-      console.log("before", reference);
       reference = filterWithKit(reference, test.kit_id);
-      console.log("after", reference);
-      // filter with unit
       if (options.type != "calc") {
         reference = filterWithUnit(reference, test.unit);
       }
@@ -2178,7 +2180,6 @@ function addTestToInvoice(
   lastTestType = null
 ) {
   let invoiceCount = Math.ceil(allInvoiceTestsHeight / center2Scroll);
-  console.log("center = = = >", center2Scroll);
   let { invoices, testTypeHeight, testHeadHeight } = {
     invoices: [],
     lastTestType: null,

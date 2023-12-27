@@ -530,7 +530,6 @@ class Visit extends Factory {
       .result[0].query0;
     // delete duplicate tests
     let error = false;
-    console.log("start", insertedTests);
     insertedTests = insertedTests.filter((test, index, array) => {
       return (
         array.findIndex((foundedTest) => {
@@ -550,7 +549,6 @@ class Visit extends Factory {
         }) === index
       );
     });
-    console.log("end", insertedTests);
     if (error) {
       return false;
     }
@@ -670,7 +668,6 @@ class Visit extends Factory {
     };
     const setting = await fetchInvoice();
     const labTheme = setting?.visitTestsTheme ?? "default";
-    console.log("labTheme", labTheme);
     let theme = null;
     switch (labTheme) {
       case "one":

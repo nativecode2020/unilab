@@ -141,7 +141,6 @@ $(function () {
     });
 
     $("#categorySelect-all").on("change", function () {
-      console.log("change");
       $("#input-search-all").val("");
       var category = $(this).val();
       if (category == 0 || category == "" || !category) {
