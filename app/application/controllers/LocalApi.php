@@ -69,6 +69,14 @@ class LocalApi extends CI_Controller
                 'hash' => $this->input->post('hash')
             )
         );
+        $this->db->update(
+            'system_users_type',
+            array(
+                // now
+                'insert_record_date' => date('Y-m-d H:i:s'),
+            ),
+            array('id' => 1)
+        );
         echo json_encode(
             array(
                 'status' => true,

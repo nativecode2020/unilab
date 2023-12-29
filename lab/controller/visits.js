@@ -1423,6 +1423,7 @@ function showInvoice(hash) {
 }
 
 function invoiceHeader(worker) {
+  console.log("worker =>", worker);
   let orderOfHeader = sessionStorage.getItem("orderOfHeader");
   try {
     let setting = JSON.parse(invoices.setting);
@@ -1452,6 +1453,9 @@ function invoiceHeader(worker) {
     }
   } catch (e) {
     console.log("orderOfHeader error =>", e);
+    newWorkers = [{ hash: "logo" }, ...worker];
+  }
+  if (newWorkers.length == 0) {
     newWorkers = [{ hash: "logo" }, ...worker];
   }
   // if (
@@ -1666,10 +1670,13 @@ function getNormalRange(finalResult = "", range = []) {
   } else if (high == "") {
     normalRange = (name ? `${name} : ` : "") + low + " <= ";
   }
-  let numers = finalResult.match(/\d+/g);
-  if (numers) {
+  try {
+    let numers = finalResult.match(/\d+/g);
     finalResult = numers.join(".");
+  } catch (err) {
+    console.log(err);
   }
+
   if (parseFloat(finalResult) < parseFloat(low)) {
     color = "text-info p-1 border border-dark";
     flag = "L";
