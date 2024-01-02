@@ -193,7 +193,7 @@ const login = async () => {
       });
 
     let labIdForm = new FormData();
-    labIdForm.append("lab_id", data.lab_id);
+    labIdForm.append("lab_id", form.lab_id);
 
     await fetch(`${base_url}LocalApi/downloadImage`, {
       method: "POST",
