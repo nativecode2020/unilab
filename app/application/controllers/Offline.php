@@ -165,6 +165,19 @@ class Offline extends CI_Controller
                         $invoice_query = '';
                     }
                     break;
+                case 'lab':
+                    $lab = $this->db->query("select id, region_id, class_id, type, certification_id, hash, name, phone, owner, email, user_id, attachment, checked, is_blackList, is_active, is_deleted, date, updated_at from lab where id='$lab_id'")->result();
+                    if (count($lab) > 0) {
+                        $lab_query = "insert into lab(" . implode(",", array_keys((array) $lab[0])) . ") values ";
+                        $lab_values = array_map(function ($lab) {
+                            return "('" . implode("','", array_values((array) $lab)) . "')";
+                        }, $lab);
+                        $lab_query .= implode(",", $lab_values);
+                        $queries .= $lab_query;
+                    } else {
+                        $lab_query = '';
+                    }
+                    break;
 
 
                 default:
