@@ -25,10 +25,13 @@ class Package_model extends CI_Model
 
     public function updateNameWithTestHsh($name, $hash)
     {
-        $this->db->query("`SET sql_safe_updates=0;
+        $query = $this->db->query("
+        SET sql_safe_updates=0;
         UPDATE lab_package SET name = '$name'WHERE hash = (SELECT package_id FROM lab_pakage_tests  WHERE test_id = '$hash');
-        SET sql_safe_updates=1;`");
-        
+        SET sql_safe_updates=1;
+        ");
+        $result = $query->result_array();
+        return $result;
     }
 
     public function record_count_offers($search)
