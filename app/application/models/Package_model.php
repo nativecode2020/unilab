@@ -27,14 +27,10 @@ class Package_model extends CI_Model
     {
         $query = $this->db->query("SELECT package_id FROM lab_pakage_tests  WHERE test_id = '$hash'");
         $hash = $query->result_array();
-        // check if rows creater then 1
-        if (count($hash) > 1) {
-            // update all rows
-            $this->db->set('name', $name);
-            $this->db->where('package_id', $hash[0]['package_id']);
-            $this->db->update('lab_package');
-        }
-        return true;
+        $hash = $hash[0]['package_id'];
+        $this->db->set('name', $name);
+        $this->db->where('hash', $hash);
+        $this->db->update('lab_package');
     }
 
     public function record_count_offers($search)
