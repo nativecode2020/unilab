@@ -23,6 +23,14 @@ class Package_model extends CI_Model
         return $result[0]['count'];
     }
 
+    public function updateNameWithTestHsh($name, $hash)
+    {
+        $this->db->query("`SET sql_safe_updates=0;
+        UPDATE lab_package SET name = '$name'WHERE hash = (SELECT package_id FROM lab_pakage_tests  WHERE test_id = '$hash');
+        SET sql_safe_updates=1;`");
+        
+    }
+
     public function record_count_offers($search)
     {
         $this->db->select('count(*) as count');
