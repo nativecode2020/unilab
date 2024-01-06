@@ -27,7 +27,7 @@ class Package_model extends CI_Model
     {
         $query = $this->db->query("
         SET sql_safe_updates=0;
-        UPDATE lab_package SET name = '$name'WHERE hash = (SELECT package_id FROM lab_pakage_tests  WHERE test_id = '$hash');
+        UPDATE lab_package SET name = '$name' WHERE hash = (SELECT package_id FROM lab_pakage_tests  WHERE test_id = '$hash');
         SET sql_safe_updates=1;
         ");
         $result = $query->result_array();

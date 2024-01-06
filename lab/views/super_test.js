@@ -224,6 +224,9 @@ class Test extends Factory {
     fetch(`${base_url}Packages/updateNameWithTestHsh`, {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     }).then((res) => res.json());
   }
 }
