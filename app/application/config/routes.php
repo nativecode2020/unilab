@@ -54,16 +54,17 @@ $route['default_controller'] = 'Login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['login']         = 'Login/check_user';
-$route['run']         = 'Login/run_query';
-$route['notiifcation']         = 'Login/notiifcation';
-$route['logout']         = 'Login/logout';
-$route['invoice']         = 'Invoice/detail';
+$route['login'] = 'Login/check_user';
+$route['run'] = 'Login/run_query';
+$route['notiifcation'] = 'Login/notiifcation';
+$route['logout'] = 'Login/logout';
+$route['invoice'] = 'Invoice/detail';
 
-$route['reports']         = 'Reports';
+$route['reports'] = 'Reports';
 
-$route['offline/login']         = 'Offline/login';
+$route['offline/login'] = 'Offline/login';
 
-$route['offline/patient/new']         = 'Visit/newVisit';
+$route['offline/patient/new'] = 'Visit/newVisit';
 
-$route['package/createPackageNoKit']         = 'Packages/createPackageNoKits';
+$route['package/createPackageNoKit'] = 'Packages/createPackageNoKits';
+$route['api/insertResult'] = 'VisitTest/createFromOtherDevice';
