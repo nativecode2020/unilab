@@ -17,12 +17,15 @@ class Code extends CI_Controller
         $token = str_replace("Bearer ", "", $token);
         $decoded_array = $this->jwt_dec($token);
         if ($decoded_array == 0) {
-            echo json_encode(array(
-                "status" => false,
-                "message" => "Invalid token",
-                "isAuth" => $token,
-                "data" => null
-            ), JSON_UNESCAPED_UNICODE);
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => $token,
+                    "data" => null
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
             exit();
         } else {
             $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
@@ -53,6 +56,30 @@ class Code extends CI_Controller
             "recordsTotal" => $result['length'],
             "recordsFiltered" => $result['length'],
             "data" => $result['codes'],
+        );
+        echo json_encode($output);
+        exit();
+    }
+
+    public function activatedCode()
+    {
+        $search = $this->input->post('search');
+        $start = intval($this->input->post("start"));
+        $length = intval($this->input->post("length"));
+        $search = $search['value'];
+        $type = $this->input->post('type');
+        $lab = $this->input->post('lab');
+        $start_date = $this->input->post('startDate');
+        $end_date = $this->input->post('endDate');
+
+        $result = $this->Codes->ActivatedCode($start, $length, $search, $type, $lab, $start_date, $end_date);
+        $output = array(
+            'status' => 200,
+            "recordsTotal" => $result['length'],
+            "recordsFiltered" => $result['length'],
+            "data" => $result['codes'],
+            "start_date" => $start_date,
+            "end_date" => $end_date,
         );
         echo json_encode($output);
         exit();
