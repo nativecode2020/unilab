@@ -11,6 +11,45 @@ class Visit_model extends CI_Model
         $this->load->library('migration');
     }
 
+    public function bothIsset($var1, $var2)
+    {
+        if ((isset($var1) && isset($var2)) && (!empty($var1) && !empty($var2))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkGender($gender1, $gender2)
+    {
+        // replace ى with ي
+        $gender1 = str_replace('ى', 'ي', $gender1);
+        $gender2 = str_replace('ى', 'ي', $gender2);
+        if (($gender1 == $gender2) || ($gender1 == 'كلاهما') || ($gender2 == 'كلاهما')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkAge($age, $low, $high)
+    {
+        if ($age >= $low && $age <= $high) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function issetOrValue($var, $value = '')
+    {
+        if (isset($var)) {
+            return $var;
+        } else {
+            return $value;
+        }
+    }
+
     public function record_count($search, $current = 0)
     {
         if ($this->migration->latest() === FALSE) {
@@ -163,5 +202,178 @@ class Visit_model extends CI_Model
         $tests = $query->result_array();
         $tests = array_column($tests, 'tests_id');
         return $tests;
+    }
+
+    public function getVisitTests($hash)
+    {
+        try {
+            $query = $this->db->query("
+                SELECT
+                    kit_id as kit, unit,
+                   option_test as options,
+                    lab_test_catigory.name as category,
+                    result_test as result
+                FROM
+                    lab_visits_tests
+                    inner join lab_pakage_tests on lab_pakage_tests.package_id=lab_visits_tests.package_id
+                    inner join lab_test on lab_pakage_tests.test_id = lab_test.hash
+                    left join lab_test_catigory on lab_test_catigory.hash = lab_test.category_hash
+                WHERE
+                    visit_id='$hash'
+                order by sort
+            ");
+            $tests = $query->result_array();
+            $tests = array_map(function ($test) {
+                $option = str_replace('\\', '', $test['options']);
+                $option = json_decode($option, true);
+                $test['options'] = $option;
+                return $test;
+            }, $tests);
+            $tests = $this->split_tests($tests);
+            $tests['normal'] = $this->manageNormalTests($tests['normal'], $hash);
+            return $tests;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    public function split_tests($tests)
+    {
+        $normal = [];
+        $special = [];
+        foreach ($tests as $test) {
+            $options = $test['options'];
+            if (isset($options['type'])) {
+                if ($options['type'] == 'type') {
+                    $special[] = $test;
+                } else {
+                    $normal[] = $test;
+                }
+            } else {
+                $normal[] = $test;
+            }
+        }
+        return [
+            'normal' => $normal,
+            'special' => $special
+        ];
+    }
+
+    public function manageNormalTests($tests, $visit_id)
+    {
+        $patient = $this->getPatientDetail($visit_id);
+        $tests = array_map(function ($test) use ($patient) {
+            try {
+                $options = $test['options'];
+                $component = $options["component"][0];
+                $options = $options["component"][0]["reference"];
+                $options = array_filter($options, function ($item) use ($patient, $test) {
+                    $lowAge = $this->issetOrValue(isset($item['age low']), 0);
+                    $highAge = $this->issetOrValue($item['age high'], 1000);
+                    $gender = $this->issetOrValue($item['gender'], "كلاهما");
+                    if (
+                        ($item['kit'] == $test['kit'] || !$this->bothIsset($item['kit'], $test['kit'])) &&
+                        ($item['unit'] == $test['unit'] || !$this->bothIsset($item['unit'], $test['unit'])) &&
+                        $this->checkGender($patient["gender"], $gender) &&
+                        $this->checkAge($patient["age"], $lowAge, $highAge)
+                    ) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                });
+                $options = array_map(function ($item) use ($component, $test) {
+                    if (isset($component['name'])) {
+                        $item['name'] = $component['name'];
+                    }
+                    if (isset($component['unit'])) {
+                        $item['unit'] = $component['unit'];
+                    }
+                    if (isset($component['result'])) {
+                        $item['result'] = $component['result'];
+                    }
+                    if (isset($test['result'])) {
+                        $item['result'] = $this->getResult($test['result']);
+                    } else if ($component['name']) {
+                        $item['result'] = array(
+                            "checked" => true,
+                            $component['name'] => ""
+                        );
+                    }
+                    if (isset($test['category'])) {
+                        $item['category'] = $test['category'];
+                    } else {
+                        $item['category'] = "Tests";
+                    }
+                    return $item;
+                }, $options);
+                $test = $options;
+
+            } catch (Exception $e) {
+                $test = [];
+            }
+            return $test;
+        }, $tests);
+        $tests = array_merge(...$tests);
+        // sort array by category
+        usort($tests, function ($a, $b) {
+            return $a['category'] <=> $b['category'];
+        });
+
+        return $tests;
+    }
+
+    public function getPatientDetail($visit_id)
+    {
+        $query = $this->db->query("
+            select gender,age,lab_patient.name,lab_visits.hash as visit_hash,visit_date as date from lab_visits
+            inner join lab_patient on lab_patient.hash=lab_visits.visits_patient_id
+            where lab_visits.hash='$visit_id'
+        ");
+        $result = $query->result_array();
+        $result = $result[0];
+        return $result;
+    }
+
+    public function getResult($result)
+    {
+        $result = json_decode($result, true);
+        // delete options from result
+        unset($result['options']);
+        return $result;
+    }
+
+    public function getInvoice()
+    {
+        $this->db->select('color, phone_1, phone_2 as width, address, facebook, header, center, footer, logo, water_mark, footer_header_show, invoice_about_ar, invoice_about_en, font_size, zoom, doing_by, name_in_invoice, font_color, setting');
+        $this->db->from('lab_invoice');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        $result = $result[0];
+        if (isset($result['setting'])) {
+            $result['setting'] = json_decode($result['setting'], true);
+        } else {
+            $result['setting'] = array(
+                "orderOfHeader" => array()
+            );
+        }
+        if (isset($result['width'])) {
+            $result['width'] = (int) $result['width'];
+        } else {
+            $result['width'] = 4;
+        }
+        return $result;
+    }
+
+    public function getWorkers()
+    {
+        $this->db->select('name, jop, jop_en');
+        $this->db->from('lab_invoice_worker');
+        // where isdeleted = 0
+        $this->db->where('isdeleted', '0');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
     }
 }

@@ -1,57 +1,40 @@
 <?php
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
 class Pdf extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('Menu_db');
+        $this->load->model('Visit_model');
+        $this->load->helper('download');
     }
 
     public function index()
     {
-        echo "hello world";
-    }
-
-    public function sendPdf()
-    {
-        $html = $this->input->post('html');
-        if (!empty($html)) {
-            try {
-                header('Content-Type: application/pdf');
-                header('Content-Disposition: attachment; filename="output.pdf"');
-
-                // Disable caching
-                header('Cache-Control: no-cache, no-store, must-revalidate');
-                header('Pragma: no-cache');
-                header('Expires: 0');
-                echo $this->generatePdf($html);
-                exit();
-            } catch (Exception $e) {
-                echo json_encode(array(
-                    "status" => false,
-                    "message" => $e->getMessage(),
-                    "isAuth" => false,
-                    "data" => null
-                ), JSON_UNESCAPED_UNICODE);
-                exit();
-            }
-        } else {
-            exit();
+        $pk = $this->input->get('pk');
+        $lab = $this->input->get('lab');
+        $parm = "$pk-$lab";
+        $patient = $this->Visit_model->getPatientDetail($pk);
+        $name = $patient['name'];
+        $date = $patient['date'];
+        $date = str_replace("-", "_", $date);
+        $path = getcwd();
+        // check if folter exist
+        if (!file_exists("$path\pdfs")) {
+            mkdir("$path\pdfs", 0777, true);
         }
-    }
-
-    private function generatePdf($html)
-    {
-        // Generate the PDF output using the HTML
-        // Replace this with your own PDF generation code
-        $pdf = "<html>
-
-    <head>
-        <title>Invoice</title>
-    </head>
-
-    <body> $html </body>
-
-    </html>";
-        return $pdf;
+        //  create folder with pk
+        if (!file_exists("$path\pdfs\\$name")) {
+            mkdir("$path\pdfs\\$name", 0777, true);
+        }
+        // file name
+        $file = "$path\pdfs\\$name\\$date.pdf";
+        $command = 'C:\xampp\ch\chrome --headless --disable-gpu --print-to-pdf="' . $file . '"  --virtual-time-budget=10000 http://localhost:8807/unilab/lab/show_invoice.html?pk=' . $parm . '';
+        $output = exec($command);
+        // return pdf file
+        force_download($file, NULL);
     }
 }
