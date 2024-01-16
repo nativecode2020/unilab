@@ -565,6 +565,8 @@ function updateRefrence(hash, refID) {
 }
 
 function saveRefrence(hash, refID) {
+  let test = run(`select test_name from lab_test where hash='${hash}';`)
+    .result[0];
   if (refreshValidation() == false) {
     return false;
   }

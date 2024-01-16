@@ -2159,7 +2159,7 @@ function manageInvoiceHeight(invoiceId = null) {
   // } else {
   //   center2Scroll = center2.height() - 200;
   // }
-  center2Scroll = center2.height() - 260;
+  center2Scroll = center2.height() - 280;
   let invoices = addTestToInvoice(
     center2Scroll,
     allTestsElements,
