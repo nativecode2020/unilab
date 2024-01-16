@@ -32,7 +32,7 @@ class Pdf extends CI_Controller
         }
         // file name
         $file = "$path\pdfs\\$name\\$date.pdf";
-        $command = 'C:\xampp\ch\chrome --headless --disable-gpu --print-to-pdf="' . $file . '"  --virtual-time-budget=10000 http://localhost:8807/unilab/lab/show_invoice.html?pk=' . $parm . '';
+        $command = 'C:\xampp\ch\chrome --headless --disable-gpu --print-to-pdf="' . $file . '"  --virtual-time-budget=10000 http://localhost:8807/lab/show_invoice.html?pk=' . $parm . '';
         $output = exec($command);
         // return pdf file
         force_download($file, NULL);
