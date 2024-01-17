@@ -149,10 +149,7 @@ class LocalApi extends CI_Controller
         shell_exec("chmod -R 777 /var/www/html/");
         // dwonload image from url to path
         $result = file_put_contents($path, file_get_contents($url), FILE_APPEND);
-
-        // update path in database
-        $local_host = $_SERVER['SERVER_NAME'];
-        $path = "http://$local_host/app/uploads/" . basename($url);
+        $path = "http://localhost:8807/app/uploads/" . basename($url);
         $this->db->query("UPDATE lab_invoice SET logo = '$path' WHERE lab_hash = $lab_id");
 
         echo json_encode(
