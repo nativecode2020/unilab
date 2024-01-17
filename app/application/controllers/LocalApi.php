@@ -145,9 +145,13 @@ class LocalApi extends CI_Controller
         $url = $this->db->query("SELECT logo FROM lab_invoice WHERE lab_hash = $lab_id")->row()->logo;
         // get path
         $path = getcwd();
+        if (!file_exists("$path\uploads")) {
+            mkdir("$path\uploads", 0777, true);
+        }
         $path = $path . '/uploads/' . basename($url);
         shell_exec("chmod -R 777 /var/www/html/");
         // dwonload image from url to path
+
         $result = file_put_contents($path, file_get_contents($url), FILE_APPEND);
         $path = "http://localhost:8807/app/uploads/" . basename($url);
         $this->db->query("UPDATE lab_invoice SET logo = '$path' WHERE lab_hash = $lab_id");

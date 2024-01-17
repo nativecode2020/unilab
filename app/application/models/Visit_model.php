@@ -98,12 +98,6 @@ class Visit_model extends CI_Model
 
     public function patient_history($patient_id, $visit_date)
     {
-        // $visits = $this->get_patient_visits($patient_id, $visit_date);
-        // if (!isset($visits[0]))
-        //     return [];
-        // $last_visit_tests = $this->last_patient_visit_tests($patient_id);
-        // if (!isset($last_visit_tests[0]))
-        //     return [];
         $tests = $this->get_tests($patient_id, $visit_date);
         if (!isset($tests[0]))
             return [];
@@ -166,7 +160,7 @@ class Visit_model extends CI_Model
         FROM
             lab_visits_tests
         WHERE
-            visit_id = (SELECT 
+            visit_id in (SELECT 
                     hash
                 FROM
                     lab_visits
@@ -174,9 +168,8 @@ class Visit_model extends CI_Model
                     visits_patient_id = '$patient_id'
                         AND isdeleted = 0
                         AND visit_date < '$visit_date'
-                ORDER BY id DESC
-                LIMIT 1)
-                AND tests_id != 0;
+                ORDER BY visit_date DESC)
+                AND tests_id != 0 ORDER BY date DESC;
         ");
         $tests = $query->result_array();
         return $tests;
