@@ -2251,13 +2251,38 @@ function manageInvoiceHeightForScroll() {
   $(".form-height").height(1500);
 }
 
+const waitDwonloadElement = `<div id="alert_screen" class="alert_screen"> 
+<div class="loader">
+    <div class="loader-content">
+        <div class="card" style="width: 40rem;">
+            <div class="card-body text-center">
+              <h1 class="card-title">الرجاء الانتظار </h1>
+              <h4>جاري تحميل الفاتورة</h4>
+              <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="100" height="100" alt="alert_screen">
+              <div class="w-100 mt-5"></div>
+            </div>
+          </div>
+    </div>
+</div>
+</div>`;
+
 function dwonloadInvoice(hash) {
+  const body = document.getElementsByTagName("body")[0];
+  body.insertAdjacentHTML("beforeend", waitSendElement);
   let lab_hash = localStorage.getItem("lab_hash");
+
   fetch(`${base_url}Pdf/dwonload?pk=${hash}&lab=${lab_hash}`).then((res) => {
+    $("#alert_screen").remove();
     Swal.fire({
       icon: "success",
       title: "تم تحميل الفاتورة",
-      text: "تم تحميل الفاتورة بنجاح",
+      text: "عرض الفاتورة",
+      showCancelButton: true,
+      cancelButtonText: "تم",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.open(`${base_url}Pdf/openFolder?pk=${hash}&lab=${lab_hash}`);
+      }
     });
   });
 }

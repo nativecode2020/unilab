@@ -51,4 +51,15 @@ class Pdf extends CI_Controller
         $folder = $folder['folder'];
         shell_exec("explorer $folder");
     }
+
+    public function openFolder()
+    {
+        $pk = $this->input->get('pk');
+        $lab = $this->input->get('lab');
+        $parm = "$pk-$lab";
+        $patient = $this->Visit_model->getPatientDetail($pk);
+        $name = $patient['name'];
+        $folder = "c:\patient\\$name";
+        shell_exec("explorer $folder");
+    }
 }
