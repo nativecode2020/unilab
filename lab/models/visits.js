@@ -174,7 +174,7 @@ class Visit extends Factory {
     // change button onclick
     $(`#${this.table}-save`).attr(
       "onclick",
-      `fireSwal.call(${this.table},${this.table}.saveNewItem)`
+      `fireSwal.call(${this.table},${this.table}.savenewItemaAfterCheckName)`
     );
     $("#show_selected_tests").html("");
   }
@@ -377,21 +377,41 @@ class Visit extends Factory {
     return data;
   }
 
-  saveNewItem() {
-    let phone = run(
-      `select phone from lab_patient where name = '${$(
+  savenewItemaAfterCheckName() {
+    let hash = run(
+      `select hash from lab_patient where name = '${$(
         "#visits_patient_id"
       ).val()}' and isdeleted = 0;`
-    )?.result[0]?.query0[0]?.phone;
-    if (phone) {
+    )?.result[0]?.query0[0]?.hash;
+    if (hash) {
       Swal.fire({
         title: "تنبيه",
-        text: "هذا الاسم تابع لمريض مسجل بالفعل",
+        text: "هذا المريض موجود بالفعل هل تريد اضافة زيارة له ؟",
         icon: "warning",
-        confirmButtonText: "موافق",
+        confirmButtonText: "أضافة زيارة",
+        cancelButtonText: "انشاء مريض جديد",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.value) {
+          // new promise
+          new Promise((resolve, reject) => {
+            changePatient($("#new_patient"));
+            $("input[name=new_patient]").prop("checked", false);
+            resolve();
+          }).then(() => {
+            $("#visits_patient_id").val(hash).trigger("change");
+            this.saveNewItem();
+          });
+        } else {
+          this.saveNewItem();
+        }
       });
-      return false;
+    } else {
+      this.saveNewItem();
     }
+  }
+
+  saveNewItem() {
     if (!this.validate()) {
       return false;
     }
@@ -654,7 +674,7 @@ class Visit extends Factory {
     this.resetForm();
     $(`#${this.table} -save`).attr(
       "onclick",
-      `fireSwal.call(${this.table}, ${this.table}.saveNewItem)`
+      `fireSwal.call(${this.table}, ${this.table}.savenewItemaAfterCheckName)`
     );
     visitDetail(hash);
     showAddResult(hash);
@@ -820,7 +840,9 @@ class Visit extends Factory {
     <!--<div class="modal-footer">
         <button type="button" class="btn btn-main-add" onclick="fireSwal.call(${
           this.table
-        },${this.table}.saveNewItem)" id="${this.table}-save">حفظ</button>
+        },${this.table}.savenewItemaAfterCheckName)" id="${
+      this.table
+    }-save">حفظ</button>
     </div>-->
     `;
   }

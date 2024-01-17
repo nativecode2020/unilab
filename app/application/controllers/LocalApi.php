@@ -7,6 +7,7 @@ class LocalApi extends CI_Controller
     {
         parent::__construct();
         $this->load->model('User_model');
+        $this->load->helper('download');
         $this->load->database(); // Load the database library
         if (!$this->db->conn_id) {
             echo json_encode(
@@ -142,31 +143,24 @@ class LocalApi extends CI_Controller
     {
         $lab_id = $this->input->post('lab_id');
         $url = $this->db->query("SELECT logo FROM lab_invoice WHERE lab_hash = $lab_id")->row()->logo;
-        $local_host = $_SERVER['SERVER_NAME'];
-        $img = '/var/www/html/app/uploads/' . basename($url);
+        // get path
+        $path = getcwd();
+        $path = $path . '/uploads/' . basename($url);
         shell_exec("chmod -R 777 /var/www/html/");
-        // check permission
+        // dwonload image from url to path
+        $result = file_put_contents($path, file_get_contents($url), FILE_APPEND);
 
-        if (!is_writable($img)) {
-            echo json_encode(
-                array(
-                    'status' => 400,
-                    'message' => 'فشل تحميل الصورة',
-                    'data' => 'لا يمكنك تحميل الصورة',
-                    'isAuth' => false
-                ),
-                JSON_UNESCAPED_UNICODE
-            );
-            die();
-        }
-        file_put_contents($img, file_get_contents($url), FILE_APPEND);
-        $this->db->query("UPDATE lab_invoice SET logo = 'http://$local_host/app/uploads/" . basename($url) . "' WHERE lab_hash = $lab_id");
+        // update path in database
+        $local_host = $_SERVER['SERVER_NAME'];
+        $path = "http://$local_host/app/uploads/" . basename($url);
+        $this->db->query("UPDATE lab_invoice SET logo = '$path' WHERE lab_hash = $lab_id");
+
         echo json_encode(
             array(
-                'status' => $url,
-                'message' => 'تحميل الصورة',
-                'data' => $this->db->affected_rows(),
-                'isAuth' => $img
+                'status' => 400,
+                'message' => 'فشل تحميل الصورة',
+                'data' => 'لا يمكنك تحميل الصورة',
+                'isAuth' => $path
             ),
             JSON_UNESCAPED_UNICODE
         );

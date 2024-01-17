@@ -404,27 +404,22 @@ function showAddResult(hash, animate = true) {
                                     <i class="mr-2 fal fa-print"></i>طباعة النتائج
                                 </button>
                             </div>
-                            <!--<div class="col-md-3 col-6">
-                                <button type="button" class="btn btn-outline-print w-100" id="print-invoice-result">
-                                    <i class="mr-2 fal fa-print"></i>طباعة النتائج
+                            <div class="col-md-2 col-6">
+                                <button type="button" class="btn btn-outline-print w-100" onclick="sendWhatsapp('${hash}', '${visit.phone}', '${visit.name}')">
+                                    <i class="mr-2 fas fa-whatsapp"></i>  الواتساب
                                 </button>
                             </div>
                             <div class="col-md-2 col-6">
-                                <button type="button" class="btn btn-outline-print w-100" id="print-all-invoice-result">
-                                    <i class="mr-2 fal fa-print"></i>طباعة الكل
-                                </button>
-                            </div>-->
-                            <div class="col-md-3 col-6">
-                            <button type="button" class="btn btn-add w-100" onclick="sendByWhatsapp('${hash}')">
-                            <i class="mr-2 fab fa-whatsapp"></i>تنزيل pdf
-                        </button>
+                            <button type="button" class="btn btn-add w-100" onclick="dwonloadInvoice('${hash}')">
+                            <i class="mr-2 fas fa-file-pdf"></i>تنزيل pdf
+                            </button>
                             </div>
                             <!--<div class="col-md-2 col-6">
                                 <a type="button" class="btn btn-outline-print w-100" onclick="printAfterSelect()">
                                     <i class="mr-2 fal fa-file-download"></i>تنزيل الملف
                                 </a>
                             </div>-->
-                            <div class="col-md-3 col-6">
+                            <div class="col-md-2 col-6">
                                 <button type="button" class="btn btn-outline-print w-100" onclick="toggleHeaderAndFooter.call(this)">
                                     <i class="mr-2 fal fa-print"></i>اظهار - اخفاء الفورمة 
                                 </button>
@@ -2256,13 +2251,64 @@ function manageInvoiceHeightForScroll() {
   $(".form-height").height(1500);
 }
 
-function sendByWhatsapp(hash) {
+function dwonloadInvoice(hash) {
   let lab_hash = localStorage.getItem("lab_hash");
-  // open new blank tab
   let newWindow = window.open(
-    `${base_url}Pdf?pk=${hash}&lab=${lab_hash}`,
+    `${base_url}Pdf/dwonload?pk=${hash}&lab=${lab_hash}`,
     "_blank"
   );
+}
+
+const waitSendElement = `<div id="alert_screen" class="alert_screen"> 
+<div class="loader">
+    <div class="loader-content">
+        <div class="card" style="width: 40rem;">
+            <div class="card-body text-center">
+              <h1 class="card-title">الرجاء الانتظار </h1>
+              <h4>جاري تهيئة النتائج للارسال</h4>
+              <img class="spinner-grow-alert" src="${front_url}assets/image/flask.png" width="100" height="100" alt="alert_screen">
+              <div class="w-100 mt-5"></div>
+            </div>
+          </div>
+    </div>
+</div>
+</div>`;
+
+async function sendWhatsapp(hash, phone, name) {
+  let text = `نتائج تحليل المختبري للمريض ${name}`;
+  if (!navigator.onLine) {
+    Swal.fire({
+      icon: "error",
+      title: "تأكد من الاتصال بالانترنت",
+      text: "لا يوجد اتصال بالانترنت",
+    });
+    return;
+  }
+  if (phone?.length > 10) {
+    if (phone[0] == "0") {
+      phone = `964${phone.slice(1)}`;
+    } else {
+      phone = `964${phone}`;
+    }
+    const body = document.getElementsByTagName("body")[0];
+    body.insertAdjacentHTML("beforeend", waitSendElement);
+    let lab_hash = localStorage.getItem("lab_hash");
+    await fetch(`${base_url}Pdf/path?pk=${hash}&lab=${lab_hash}`).then(
+      (res) => {
+        window.open(
+          `https://api.whatsapp.com/send?phone=${phone}&text=${text}`,
+          "_blank"
+        );
+        $("#alert_screen").remove();
+      }
+    );
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "تأكد من رقم الموبايل",
+      text: "لا يوجد رقم موبايل للمريض",
+    });
+  }
 }
 
 function manageHead(type) {

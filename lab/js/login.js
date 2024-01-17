@@ -86,7 +86,7 @@ const runQueries = async (username, password, type) => {
     for (let key in data) {
       form.append(key, data[key]);
     }
-    return form;
+    return { data, form };
   }
   message.innerHTML = "";
 
@@ -183,8 +183,8 @@ const login = async () => {
       await runQueries(username, password, type);
     }
     addAlert("تم اكمال 40 % من عملية تنزيل البيانات");
-    let form = await runQueries(username, password, "user");
-
+    let { form, data } = await runQueries(username, password, "user");
+    console.log(form);
     await fetch(`${base_url}LocalApi/addUser`, {
       method: "POST",
       body: form,
@@ -195,7 +195,7 @@ const login = async () => {
       });
 
     let labIdForm = new FormData();
-    labIdForm.append("lab_id", form.lab_id);
+    labIdForm.append("lab_id", data.lab_id);
 
     await fetch(`${base_url}LocalApi/downloadImage`, {
       method: "POST",

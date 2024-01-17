@@ -12,7 +12,7 @@ class Pdf extends CI_Controller
         $this->load->helper('download');
     }
 
-    public function index()
+    public function save()
     {
         $pk = $this->input->get('pk');
         $lab = $this->input->get('lab');
@@ -32,9 +32,25 @@ class Pdf extends CI_Controller
         }
         // file name
         $file = "$path\pdfs\\$name\\$date.pdf";
-        $command = 'C:\xampp\ch\chrome --headless --disable-gpu --print-to-pdf="' . $file . '"  --virtual-time-budget=10000 http://localhost:8807/lab/show_invoice.html?pk=' . $parm . '';
+        $command = 'C:\xampp\ch\chrome --headless --disable-gpu --print-to-pdf="' . $file . '" --print-to-pdf-no-header  --virtual-time-budget=10000 http://localhost:8807/lab/show_invoice.html?pk=' . $parm . '';
         $output = exec($command);
-        // return pdf file
+        return array(
+            "file" => $file,
+            "folder" => "$path\pdfs\\$name"
+        );
+    }
+
+    public function dwonload()
+    {
+        $file = $this->save();
+        $file = $file['file'];
         force_download($file, NULL);
+    }
+
+    public function path()
+    {
+        $folder = $this->save();
+        $folder = $folder['folder'];
+        shell_exec("explorer $folder");
     }
 }
