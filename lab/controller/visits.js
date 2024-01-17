@@ -406,7 +406,7 @@ function showAddResult(hash, animate = true) {
                             </div>
                             <div class="col-md-2 col-6">
                                 <button type="button" class="btn btn-outline-print w-100" onclick="sendWhatsapp('${hash}', '${visit.phone}', '${visit.name}')">
-                                    <i class="mr-2 fas fa-whatsapp"></i>  الواتساب
+                                    <i class="mr-2 fab fa-whatsapp"></i>  الواتساب
                                 </button>
                             </div>
                             <div class="col-md-2 col-6">
@@ -2253,10 +2253,13 @@ function manageInvoiceHeightForScroll() {
 
 function dwonloadInvoice(hash) {
   let lab_hash = localStorage.getItem("lab_hash");
-  let newWindow = window.open(
-    `${base_url}Pdf/dwonload?pk=${hash}&lab=${lab_hash}`,
-    "_blank"
-  );
+  fetch(`${base_url}Pdf/dwonload?pk=${hash}&lab=${lab_hash}`).then((res) => {
+    Swal.fire({
+      icon: "success",
+      title: "تم تحميل الفاتورة",
+      text: "تم تحميل الفاتورة بنجاح",
+    });
+  });
 }
 
 const waitSendElement = `<div id="alert_screen" class="alert_screen"> 
