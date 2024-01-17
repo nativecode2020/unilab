@@ -21,22 +21,21 @@ class Pdf extends CI_Controller
         $name = $patient['name'];
         $date = $patient['date'];
         $date = str_replace("-", "_", $date);
-        $path = getcwd();
-        // check if folter exist
-        if (!file_exists("$path\pdfs")) {
-            mkdir("$path\pdfs", 0777, true);
+        // check if folter exist c:\patient
+        if (!file_exists("c:\patient")) {
+            mkdir("c:\patient", 0777, true);
         }
         //  create folder with pk
-        if (!file_exists("$path\pdfs\\$name")) {
-            mkdir("$path\pdfs\\$name", 0777, true);
+        if (!file_exists("c:\patient\\$name")) {
+            mkdir("c:\patient\\$name", 0777, true);
         }
         // file name
-        $file = "$path\pdfs\\$name\\$date.pdf";
+        $file = "c:\patient\\$name\\$date.pdf";
         $command = 'C:\xampp\ch\chrome --headless --disable-gpu --print-to-pdf="' . $file . '" --print-to-pdf-no-header  --virtual-time-budget=10000 http://localhost:8807/lab/show_invoice.html?pk=' . $parm . '';
         $output = exec($command);
         return array(
             "file" => $file,
-            "folder" => "$path\pdfs\\$name"
+            "folder" => "c:\patient\\$name"
         );
     }
 
@@ -44,7 +43,6 @@ class Pdf extends CI_Controller
     {
         $file = $this->save();
         $file = $file['file'];
-        force_download($file, NULL);
     }
 
     public function path()
