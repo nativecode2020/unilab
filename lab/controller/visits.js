@@ -2268,7 +2268,7 @@ const waitDwonloadElement = `<div id="alert_screen" class="alert_screen">
 
 function dwonloadInvoice(hash) {
   const body = document.getElementsByTagName("body")[0];
-  body.insertAdjacentHTML("beforeend", waitSendElement);
+  body.insertAdjacentHTML("beforeend", waitDwonloadElement);
   let lab_hash = localStorage.getItem("lab_hash");
 
   fetch(`${base_url}Pdf/dwonload?pk=${hash}&lab=${lab_hash}`).then((res) => {
@@ -2281,7 +2281,7 @@ function dwonloadInvoice(hash) {
       cancelButtonText: "تم",
     }).then((result) => {
       if (result.isConfirmed) {
-        window.open(`${base_url}Pdf/openFolder?pk=${hash}&lab=${lab_hash}`);
+        fetch(`${base_url}Pdf/openFolder?pk=${hash}&lab=${lab_hash}`);
       }
     });
   });
