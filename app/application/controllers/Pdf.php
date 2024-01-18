@@ -29,7 +29,8 @@ class Pdf extends CI_Controller
         if (!file_exists("c:\patient\\$name")) {
             mkdir("c:\patient\\$name", 0777, true);
         }
-        if (file_exists("c:\patient\\$name\\$date")) {
+
+        if (!file_exists("c:\patient\\$name\\$date")) {
             mkdir("c:\patient\\$name\\$date", 0777, true);
         }
         // file name
@@ -39,7 +40,6 @@ class Pdf extends CI_Controller
         return array(
             "file" => $file,
             "folder" => "c:\patient\\$name\\$date",
-            "command" => $output
         );
     }
 
