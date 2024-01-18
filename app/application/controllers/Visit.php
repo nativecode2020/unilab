@@ -23,7 +23,9 @@ class Visit extends CI_Controller
                     "message" => "Invalid token",
                     "isAuth" => false,
                     "data" => null
-                ), JSON_UNESCAPED_UNICODE);
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
             exit();
         } else {
             $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
@@ -120,7 +122,7 @@ class Visit extends CI_Controller
 
     public function getVisitTests()
     {
-        $visit_id = $this->input->get('pk');
+        $visit_id = $this->input->post('visitHash');
         $tests = $this->Visit_model->getVisitTests($visit_id);
         $patient = $this->Visit_model->getPatientDetail($visit_id);
         $invoice = $this->Visit_model->getInvoice();
@@ -131,6 +133,42 @@ class Visit extends CI_Controller
             "patient" => $patient,
             "invoice" => $invoice,
             "tests" => $tests,
+            "message" => "تم الحصول على البيانات بنجاح"
+        );
+        echo json_encode($output);
+        exit();
+    }
+
+    public function getInvoice()
+    {
+        $invoice = $this->Visit_model->getInvoice();
+        $output = array(
+            "status" => 200,
+            "invoice" => $invoice,
+            "message" => "تم الحصول على البيانات بنجاح"
+        );
+        echo json_encode($output);
+        exit();
+    }
+
+    public function setOrderOfHeader()
+    {
+        $order = $this->input->post('order');
+        $this->Visit_model->setOrderOfHeader($order);
+        $output = array(
+            "status" => 200,
+            "message" => "تم تحديث البيانات بنجاح"
+        );
+        echo json_encode($output);
+        exit();
+    }
+
+    public function getInvoiceHeader()
+    {
+        $invoice = $this->Visit_model->getInvoiceHeader();
+        $output = array(
+            "status" => 200,
+            "invoice" => $invoice,
             "message" => "تم الحصول على البيانات بنجاح"
         );
         echo json_encode($output);

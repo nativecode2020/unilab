@@ -325,8 +325,12 @@ class Visit_model extends CI_Model
             where lab_visits.hash='$visit_id'
         ");
         $result = $query->result_array();
-        $result = $result[0];
-        return $result;
+        if (isset($result[0])) {
+            $result = $result[0];
+            return $result;
+        } else {
+            return $visit_id;
+        }
     }
 
     public function getResult($result)
@@ -339,17 +343,60 @@ class Visit_model extends CI_Model
 
     public function getInvoice()
     {
-        $this->db->select('color, phone_1, phone_2 as width, address, facebook, header, center, footer, logo, water_mark, footer_header_show, invoice_about_ar, invoice_about_en, font_size, zoom, doing_by, name_in_invoice, font_color, setting');
+        $this->db->select('color, phone_1, phone_2 as size, address, facebook, header, center, footer, logo, water_mark, footer_header_show, invoice_about_ar, invoice_about_en, font_size, zoom, doing_by, name_in_invoice, font_color, setting');
         $this->db->from('lab_invoice');
         $query = $this->db->get();
         $result = $query->result_array();
         $result = $result[0];
+        $workers = $this->getWorkers();
+        $newWorkers = array();
         if (isset($result['setting'])) {
-            $result['setting'] = json_decode($result['setting'], true);
+            $setting = json_decode($result['setting'], true);
+            if (isset($setting['orderOfHeader'])) {
+                if ($setting['orderOfHeader'] == "null") {
+                    $newWorkers = $workers;
+                    // append logo to first 
+                    array_unshift(
+                        $newWorkers,
+                        array(
+                            "hash" => "logo",
+                        )
+                    );
+                } else {
+                    $orderOfHeader = $setting['orderOfHeader'];
+                    $orderOfHeader = json_decode($orderOfHeader, true);
+                    foreach ($orderOfHeader as $key => $value) {
+                        if ($value == 'logo') {
+                            $newWorkers[] = array(
+                                "hash" => "logo",
+                            );
+                            continue;
+                        }
+                        // loop on workers
+                        foreach ($workers as $worker) {
+                            if ($worker['hash'] == $value) {
+                                $newWorkers[] = $worker;
+                            }
+                        }
+                    }
+                }
+            } else {
+                $newWorkers = $workers;
+                // append logo to first 
+                array_unshift(
+                    $newWorkers,
+                    array(
+                        "hash" => "logo",
+                    )
+                );
+            }
+            $result['setting'] = $setting;
+            $result['workers'] = $newWorkers;
         } else {
             $result['setting'] = array(
                 "orderOfHeader" => array()
             );
+            $result['workers'] = $workers;
         }
         if (isset($result['width'])) {
             $result['width'] = (int) $result['width'];
@@ -361,12 +408,36 @@ class Visit_model extends CI_Model
 
     public function getWorkers()
     {
-        $this->db->select('name, jop, jop_en');
+        $this->db->select('name, jop, jop_en,hash');
         $this->db->from('lab_invoice_worker');
-        // where isdeleted = 0
         $this->db->where('isdeleted', '0');
+        $this->db->where('is_available', '1');
         $query = $this->db->get();
         $result = $query->result_array();
         return $result;
+    }
+
+    public function getInvoiceHeader()
+    {
+        $invoice = $this->getInvoice();
+        $result = array(
+            "orderOfHeader" => $invoice['setting']['orderOfHeader'],
+            "workers" => $invoice['workers']
+        );
+        return $result;
+    }
+
+    public function setOrderOfHeader()
+    {
+        $setting = $this->db->query("select setting from lab_invoice");
+        $setting = $setting->result_array();
+        $setting = $setting[0]['setting'];
+        $setting = json_decode($setting, true);
+        $orderOfHeader = $this->input->post('orderOfHeader');
+        $setting['orderOfHeader'] = json_encode($orderOfHeader);
+        $setting = json_encode($setting);
+        $query = $this->db->set('setting', $setting);
+        $query = $this->db->update('lab_invoice');
+        return $query;
     }
 }

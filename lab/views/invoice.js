@@ -210,13 +210,16 @@ const InvoiceItem = ({ test, invoice, settingState }) => {
   );
 };
 
-const Invoice = ({ tests, invoice, settingState, employees }) => {
+const Invoice = ({ tests, invoice, settingState, setInvoice }) => {
   const testerRef = React.useRef(null);
 
   return (
     <div className="book-result" dir="ltr" id="invoice-normalTests" style={{}}>
+      <h1 className="text-center py-2">
+        امسك عناصر الفاتورة واسحبها لتغيير ترتيبها
+      </h1>
       <div className="page">
-        <InvoiceHeader invoice={invoice} employees={employees} />
+        <InvoiceHeader invoice={invoice} />
 
         <div
           className="center2"
@@ -407,7 +410,6 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
   const [oldFile, setOldFile] = React.useState(null);
 
   const updateInvoice = async () => {
-    let sessionOrderOfHeader = sessionStorage.getItem("orderOfHeader");
     let formData = new FormData();
     let newFile = null;
     if (file) {
@@ -419,21 +421,6 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
         });
     }
     for (let key in invoice) {
-      if (
-        key == "setting" &&
-        sessionOrderOfHeader !== "null" &&
-        sessionOrderOfHeader !== null &&
-        sessionOrderOfHeader !== undefined &&
-        sessionOrderOfHeader !== "undefined"
-      ) {
-        let setting = JSON.parse(invoice[key]);
-        setting = {
-          ...setting,
-          orderOfHeader: sessionStorage.getItem("orderOfHeader"),
-        };
-        formData.append(key, JSON.stringify(setting));
-        break;
-      }
       formData.append(key, invoice[key]);
     }
     if (newFile) {
@@ -562,10 +549,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                 />
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="phone_2">
-                  حجم عنصر الرأس (
-                  <span className="text-danger">علما ان الحجم الكلي 12</span>)
-                </label>
+                <label htmlFor="phone_2">حجم عنصر الرأس بالنسبة المئوية</label>
                 <input
                   type="number"
                   className="form-control"
@@ -573,13 +557,21 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   name="phone_2"
                   onChange={(e) => {
                     // max 12 min 0
-                    if (e.target.value > 12) {
-                      e.target.value = 12;
+                    if (e.target.value > 100) {
+                      e.target.value = 100;
                     }
                     if (e.target.value < 0) {
                       e.target.value = 0;
                     }
-                    setInvoice({ ...invoice, phone_2: e.target.value });
+                    setInvoice({
+                      ...invoice,
+                      phone_2: e.target.value,
+                      header: Math.round($(".uk-sortable").height() + 5),
+                      center:
+                        1495 -
+                        (Math.round($(".uk-sortable").height() + 5) +
+                          Math.round($(".footer2").height())),
+                    });
                   }}
                   value={invoice.phone_2}
                 />
@@ -929,11 +921,10 @@ const InvoiceSetting = () => {
       .then((e) => e.json())
       .then((res) => {
         if (!res.data.phone_2) {
-          res.data.phone_2 = 4;
+          res.data.phone_2 = 33;
         }
         setInvoice(res.data);
         let setting = JSON.parse(res.data.setting);
-        sessionStorage.setItem("orderOfHeader", setting.orderOfHeader);
       });
   };
 
@@ -960,70 +951,34 @@ const InvoiceSetting = () => {
           tests={tests.slice(0, 1)}
           invoice={invoice}
           settingState={state}
-          employees={employees}
         />
       </div>
     </div>
   );
 };
 
-const InvoiceHeader = ({ invoice, employees }) => {
+const InvoiceHeader = ({ invoice }) => {
   const [order, setOrder] = React.useState([]);
-  const [employeesOrder, setEmployeesOrder] = React.useState([]);
+  const [workers, setWorkers] = React.useState([]);
 
   React.useEffect(() => {
     $(function () {
-      $("#sortable").sortable({
-        update: function (event, ui) {
-          let newOrder = $("#sortable").sortable("toArray", {
-            attribute: "data-hash",
-          });
-          setOrder(newOrder);
-          sessionStorage.setItem("orderOfHeader", JSON.stringify(newOrder));
-        },
+      UIkit.util.on("#sortable", "moved", function (item) {
+        let newOrder = item.detail[0].items.map((el) => el.id);
+        setOrder(newOrder);
+        fetchData("Visit/setOrderOfHeader", "POST", {
+          orderOfHeader: newOrder,
+        });
+        niceSwal("success", "top-end", "تم تحديث الرأس بنجاح");
       });
     });
   }, []);
 
   React.useEffect(() => {
-    let numburs = 0;
-    if (
-      sessionStorage.getItem("orderOfHeader") != undefined &&
-      sessionStorage.getItem("orderOfHeader") != "undefined"
-    ) {
-      numburs = JSON.parse(sessionStorage.getItem("orderOfHeader"));
-      if (numburs) {
-        numburs = numburs.length;
-      } else {
-        numburs = 0;
-      }
-    }
-
-    if (employees.length + 1 == numburs) {
-      let newOrder = JSON.parse(sessionStorage.getItem("orderOfHeader"));
-      setOrder(newOrder);
-      // order employees in employeesOrder
-      let newEmployeesOrder = [];
-      newOrder.forEach((hash) => {
-        if (hash == "logo") {
-          newEmployeesOrder.push({ hash: "logo" });
-          return;
-        }
-        employees.find((employee) => {
-          if (employee.hash == hash) {
-            newEmployeesOrder.push(employee);
-          }
-        });
-      });
-      if (newEmployeesOrder.length == 1) {
-        newEmployeesOrder = [...newEmployeesOrder, ...employees];
-      }
-      setEmployeesOrder(newEmployeesOrder);
-    } else {
-      let newEmployeesOrder = [{ hash: "logo" }, ...employees];
-      setEmployeesOrder(newEmployeesOrder);
-    }
-  }, [employees]);
+    let data = fetchData("Visit/getInvoiceHeader", "GET", {}).invoice;
+    setWorkers(data.workers);
+    setOrder(data.orderOfHeader);
+  }, []);
 
   return (
     <div
@@ -1034,22 +989,27 @@ const InvoiceHeader = ({ invoice, employees }) => {
     >
       <div
         className={`row ${
-          employees.length > 0
+          workers.length > 0
             ? "justify-content-between"
             : "justify-content-center"
-        }`}
+        } uk-sortable border border-danger p-1`}
         id="sortable"
+        data-uk-sortable
         style={{ display: invoice.footer_header_show == "1" ? "" : "none" }}
       >
-        {employeesOrder.length > 1 ? (
-          employeesOrder.map((employee, index) => {
+        {workers.length > 0 ? (
+          workers.map((employee, index) => {
             if (!employee) return;
             if (employee.hash == "logo") {
               return (
                 <div
-                  className={`logo col-${invoice.phone_2}  p-2`}
-                  data-hash="logo"
+                  className={`logo  border p-2`}
+                  id="logo"
                   key={index}
+                  style={{
+                    flex: `0 0 ${invoice.phone_2}%`,
+                    "max-width": `${invoice.phone_2}%`,
+                  }}
                 >
                   <img src={invoice.logo} alt="" />
                 </div>
@@ -1057,9 +1017,13 @@ const InvoiceHeader = ({ invoice, employees }) => {
             }
             return (
               <div
-                className={`right col-${invoice.phone_2}`}
-                data-hash={employee.hash}
+                className={`right  border`}
+                id={employee.hash}
                 key={employee.hash}
+                style={{
+                  flex: `0 0 ${invoice.phone_2}%`,
+                  "max-width": `${invoice.phone_2}%`,
+                }}
               >
                 <div className="size1">
                   <p className="title">{employee.jop}</p>
@@ -1080,16 +1044,10 @@ const InvoiceHeader = ({ invoice, employees }) => {
           })
         ) : (
           <React.Fragment>
-            <div
-              className={`logo col-${invoice.phone_2}  p-2`}
-              data-hash="logo"
-            >
+            <div className={`logo  border p-2`} id="logo">
               <img src={invoice.logo} alt="" />
             </div>
-            <div
-              className={`logo col-${invoice.phone_2}  p-2`}
-              data-hash="logo"
-            >
+            <div className={`logo  border p-2`} id="logo">
               <h1>{invoice.name_in_invoice}</h1>
             </div>
           </React.Fragment>

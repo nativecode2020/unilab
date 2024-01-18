@@ -1417,108 +1417,49 @@ function showInvoice(hash) {
   manageInvoiceHeight();
 }
 
-function invoiceHeader(worker) {
-  console.log("worker =>", worker);
-  let orderOfHeader = sessionStorage.getItem("orderOfHeader");
-  try {
-    let setting = JSON.parse(invoices.setting);
-    orderOfHeader = JSON.parse(setting?.orderOfHeader ?? "[]") ?? null;
-  } catch (e) {
-    console.log("setting error =>", e);
-  }
-  let newWorkers = [];
-
-  try {
-    if (typeof orderOfHeader == "string") {
-      orderOfHeader = JSON.parse(orderOfHeader);
-    }
-    orderOfHeader?.forEach((hash) => {
-      if (hash == "logo") {
-        newWorkers.push({ hash: "logo" });
-        return;
-      }
-      worker.find((employee) => {
-        if (employee.hash == hash) {
-          newWorkers.push(employee);
-        }
-      });
-    });
-    if (newWorkers.length == 1) {
-      newWorkers = [...newWorkers, ...worker];
-    }
-  } catch (e) {
-    console.log("orderOfHeader error =>", e);
-    newWorkers = [{ hash: "logo" }, ...worker];
-  }
-  if (newWorkers.length == 0) {
-    newWorkers = [{ hash: "logo" }, ...worker];
-  }
-  // if (
-  //   orderOfHeader?.length > 0 &&
-  //   orderOfHeader != "undefined" &&
-  //   orderOfHeader != undefined &&
-  //   orderOfHeader != null &&
-  //   orderOfHeader != "null"
-  // ) {
-  //   if (typeof orderOfHeader == "string") {
-  //     orderOfHeader = JSON.parse(orderOfHeader);
-  //   }
-  //   orderOfHeader?.forEach((hash) => {
-  //     if (hash == "logo") {
-  //       newWorkers.push({ hash: "logo" });
-  //       return;
-  //     }
-  //     worker.find((employee) => {
-  //       if (employee.hash == hash) {
-  //         newWorkers.push(employee);
-  //       }
-  //     });
-  //   });
-  //   if (newWorkers.length == 1) {
-  //     newWorkers = [...newWorkers, ...worker];
-  //   }
-  // } else {
-  //   newWorkers = [{ hash: "logo" }, ...worker];
-  // }
-  let size =
-    (invoices?.phone_2 == "undefined" || invoices?.phone_2 == ""
-      ? 4
-      : invoices?.phone_2) ?? "4";
-  let hteml = "";
-  if (newWorkers.length > 1) {
-    html = newWorkers
+function invoiceHeader() {
+  let html = "";
+  let res = fetchData(`Visit/getInvoice`, "GET", {});
+  let { size, workers, logo, name_in_invoice } = res.invoice;
+  if (workers.length > 0) {
+    html = workers
       .map((worker) => {
         if (worker.hash == "logo") {
           return `
-        <div class="logo col-${size}  p-2">
-        <img src="${invoices?.logo}" alt="" />
-      </div>
-      `;
+          <div class="logo p-2" style="
+            flex: 0 0 ${size}%;
+            max-width: ${size}%;
+          ">
+          <img src="${logo}" alt="" />
+        </div>
+        `;
         }
         return `
-      <div class="right col-md-${size}">
-        <div class="size1">
-          <p class="title">${worker?.jop ?? "Jop title"}</p>
-          <p class="namet">${worker?.name ?? "Worker name"}</p>
-          <p class="certificate">${worker?.jop_en ?? "Jop En title"}</p>
+        <div class="right" style="
+        flex: 0 0 ${size}%;
+        max-width: ${size}%;
+      ">
+          <div class="size1">
+            <p class="title">${worker.jop ?? "Jop title"}</p>
+            <p class="namet">${worker.name ?? "Worker name"}</p>
+            <p class="certificate">${worker.jop_en ?? "Jop En title"}</p>
+          </div>
         </div>
-      </div>
-      `;
+        `;
       })
       .join("");
   } else {
     html = `
-      <div class="logo col-4 p-2">
-          <img src="${invoices?.logo ?? ""}" 
-          alt="${invoices?.logo ?? "upload Logo"}">
-      </div>
-      <div class="logo justify-content-end col-4 p-2">
-          <h2 class="navbar-brand-name text-center">${
-            invoices?.name_in_invoice ?? localStorage.lab_name ?? ""
-          }</h2>
-      </div>`;
+        <div class="logo col-4 p-2">
+            <img src="${logo ?? ""}"
+            alt="${logo ?? "upload Logo"}">
+        </div>
+        <div class="logo justify-content-end col-4 p-2">
+            <h2 class="navbar-brand-name text-center">${
+              name_in_invoice ?? localStorage.lab_name ?? ""
+            }</h2>
+        </div>`;
   }
-
   return `
     <div class="header">
         <div class="row justify-content-between">
@@ -1529,7 +1470,7 @@ function invoiceHeader(worker) {
 }
 
 function createInvoice(visit, type, form) {
-  let header = invoiceHeader(workers);
+  let header = invoiceHeader();
   return `<div class="book-result" dir="ltr" id="invoice-${type}" style="display: none;">
 		<div class="page">
 			<!-- صفحة يمكنك تكرارها -->
@@ -2275,10 +2216,10 @@ function dwonloadInvoice(hash) {
     $("#alert_screen").remove();
     Swal.fire({
       icon: "success",
-      title: "تم تحميل الفاتورة",
-      text: "عرض الفاتورة",
+      title: "تم تحميل النتائج",
       showCancelButton: true,
-      cancelButtonText: "تم",
+      cancelButtonText: "الغاء",
+      confirmButtonText: "عرض مجلد النتائج",
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(`${base_url}Pdf/openFolder?pk=${hash}&lab=${lab_hash}`);
