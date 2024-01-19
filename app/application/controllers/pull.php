@@ -126,7 +126,7 @@ class pull extends CI_Controller
     public function needUpdate()
     {
         $currentVersion = $this->getVersion();
-        $offlineVersion = $this->db->query("select version from lab_version order by id desc limit 1")->row();
+        $offlineVersion = $this->db->query("select version from lab_version where isdeleted=0 order by id desc limit 1")->row();
         $offlineVersion = $offlineVersion->version;
         if ($currentVersion == $offlineVersion) {
             echo "false";
