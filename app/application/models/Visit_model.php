@@ -320,7 +320,7 @@ class Visit_model extends CI_Model
     public function getPatientDetail($visit_id)
     {
         $query = $this->db->query("
-            select gender,age,lab_patient.name,lab_visits.hash as visit_hash,visit_date as date from lab_visits
+            select lab_patient.id,gender,age,lab_patient.name,lab_visits.hash as visit_hash,visit_date as date from lab_visits
             inner join lab_patient on lab_patient.hash=lab_visits.visits_patient_id
             where lab_visits.hash='$visit_id'
         ");

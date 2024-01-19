@@ -18,7 +18,7 @@ class Pdf extends CI_Controller
         $lab = $this->input->get('lab');
         $parm = "$pk-$lab";
         $patient = $this->Visit_model->getPatientDetail($pk);
-        $name = $patient['name'];
+        $name = $patient['id'];
         $date = $patient['date'];
         $date = str_replace("-", "_", $date);
         // check if folter exist c:\patient
@@ -60,7 +60,7 @@ class Pdf extends CI_Controller
     {
         $pk = $this->input->get('pk');
         $patient = $this->Visit_model->getPatientDetail($pk);
-        $name = $patient['name'];
+        $name = $patient['id'];
         $date = $patient['date'];
         $date = str_replace("-", "_", $date);
         $folder = "c:\patient\\$name\\$date";
