@@ -272,6 +272,7 @@ async function updateSystem() {
     });
     return false;
   }
+
   const body = document.getElementsByTagName("body")[0];
   body.insertAdjacentHTML("beforeend", waitElement);
   await fetch(`${base_url}pull/pull`)
@@ -284,6 +285,7 @@ async function updateSystem() {
       ).then(() => {
         body.removeChild(document.getElementById("alert_screen"));
       });
+      fetchData("Offline/setVersion", "GET", {});
       Swal.fire({
         icon: "success",
         title: "تم !",

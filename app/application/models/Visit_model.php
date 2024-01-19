@@ -396,6 +396,12 @@ class Visit_model extends CI_Model
             $result['setting'] = array(
                 "orderOfHeader" => array()
             );
+            array_unshift(
+                $workers,
+                array(
+                    "hash" => "logo",
+                )
+            );
             $result['workers'] = $workers;
         }
         if (isset($result['width'])) {

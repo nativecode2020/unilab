@@ -6,6 +6,42 @@ class pull extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->database();
+        // lood offline controller
+        // check if lab_version table exist
+        if (!$this->db->table_exists('lab_version')) {
+            $this->db->query("CREATE TABLE `lab_version` (
+                `id` int(11) NOT NULL,
+                `version` int(255) NOT NULL,
+                `isdeleted` tinyint(1) NOT NULL DEFAULT '0'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+            // insert default version
+            $this->db->query("INSERT INTO `lab_version` (`id`, `version`, `isdeleted`) VALUES
+                (1, 0, 0);");
+        }
+
+    }
+
+    public function auth()
+    {
+        $token = $this->input->get_request_header('Authorization', TRUE);
+        $token = str_replace("Bearer ", "", $token);
+        $decoded_array = $this->jwt_dec($token);
+        if ($decoded_array == 0) {
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => false,
+                    "data" => null
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+            exit();
+        } else {
+            $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
+            $token = $this->jwt_enc($res);
+        }
     }
 
 
@@ -57,5 +93,74 @@ class pull extends CI_Controller
                 JSON_UNESCAPED_UNICODE
             );
         }
+    }
+
+    public function getVersion()
+    {
+        $token = $this->input->get_request_header('Authorization', TRUE);
+        $token = str_replace("Bearer ", "", $token);
+
+        $url = "http://umc.native-code-iq.com/app/index.php/Offline/getLastVersion";
+        $headers = [
+            "Authorization: Bearer {$token}",
+        ];
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            echo 'Error: ' . curl_error($ch);
+        }
+
+        curl_close($ch);
+
+        // Process $response as needed
+        return $response;
+    }
+
+    public function needUpdate()
+    {
+        $currentVersion = $this->getVersion();
+        $offlineVersion = $this->db->query("select version from lab_version order by id desc limit 1")->row();
+        $offlineVersion = $offlineVersion->version;
+        if ($currentVersion == $offlineVersion) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit();
+    }
+
+    public function setVersion()
+    {
+        $token = $this->input->get_request_header('Authorization', TRUE);
+        $token = str_replace("Bearer ", "", $token);
+
+        $url = "http://umc.native-code-iq.com/app/index.php/Offline/setVersion";
+        $headers = [
+            "Authorization: Bearer {$token}",
+        ];
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            echo 'Error: ' . curl_error($ch);
+        }
+
+        curl_close($ch);
+
+        // Process $response as needed
+        echo $response;
     }
 }
