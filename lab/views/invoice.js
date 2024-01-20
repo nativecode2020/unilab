@@ -549,7 +549,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                 />
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="phone_2">حجم عنصر الرأس بالنسبة المئوية</label>
+                <label htmlFor="phone_2">عدد عناصر الرأس في الصف الواحد</label>
                 <input
                   type="number"
                   className="form-control"
@@ -565,7 +565,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                     }
                     setInvoice({
                       ...invoice,
-                      phone_2: e.target.value,
+                      phone_2: 100 / e.target.value,
                       header: Math.round($(".uk-sortable").height() + 5),
                       center:
                         1495 -
@@ -573,7 +573,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                           Math.round($(".footer2").height())),
                     });
                   }}
-                  value={invoice.phone_2}
+                  value={100 / invoice.phone_2}
                 />
               </div>
               <div className="form-group col-md-4">
