@@ -350,7 +350,7 @@ class Visit_model extends CI_Model
         $result = $result[0];
         $workers = $this->getWorkers();
         $newWorkers = array();
-        if (isset($result['setting'])) {
+        if (isset($result['setting']) && $result['setting'] != "null" && $result['setting'] != "") {
             $setting = json_decode($result['setting'], true);
             if (isset($setting['orderOfHeader'])) {
                 if ($setting['orderOfHeader'] == "null") {

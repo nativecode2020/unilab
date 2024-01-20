@@ -70,6 +70,9 @@ class pull extends CI_Controller
             die();
             // pull is done by check updating work not /updating/ or changed files
         } else if ((strpos($output, 'Updating') !== false || (strpos($output, 'changed') !== false)) && strpos($output, 'fatal') == false || strpos($output, 'create mode') !== false || strpos($output, 'delete mode') !== false) {
+            $version = $this->getVersion();
+            // update version
+            $this->db->query("UPDATE `lab_version` SET `version` = `$version` + 1 WHERE `lab_version`.`isdeleted` = 0;");
             echo json_encode(
                 array(
                     'status' => 200,
@@ -128,7 +131,7 @@ class pull extends CI_Controller
         $currentVersion = $this->getVersion();
         $offlineVersion = $this->db->query("select version from lab_version where isdeleted=0 order by id desc limit 1")->row();
         $offlineVersion = $offlineVersion->version;
-        if ($currentVersion == $offlineVersion) {
+        if ($currentVersion < $offlineVersion) {
             echo "false";
         } else {
             echo "true";

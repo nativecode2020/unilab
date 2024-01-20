@@ -285,7 +285,6 @@ async function updateSystem() {
       ).then(() => {
         body.removeChild(document.getElementById("alert_screen"));
       });
-      fetchData("Offline/setVersion", "GET", {});
       Swal.fire({
         icon: "success",
         title: "تم !",
