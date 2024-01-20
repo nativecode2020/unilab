@@ -11,7 +11,7 @@ class pull extends CI_Controller
         // check if lab_version table exist
         if (!$this->db->table_exists('lab_version')) {
             $this->db->query("CREATE TABLE `lab_version` (
-                `id` int(11) NOT NULL,
+                `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 `version` int(255) NOT NULL,
                 `isdeleted` tinyint(1) NOT NULL DEFAULT '0'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
