@@ -378,6 +378,9 @@ class Visit extends Factory {
   }
 
   savenewItemaAfterCheckName() {
+    if (!this.validate()) {
+      return false;
+    }
     let hash = run(
       `select hash from lab_patient where name = '${$(
         "#visits_patient_id"
@@ -389,21 +392,28 @@ class Visit extends Factory {
         text: "هذا المريض موجود بالفعل هل تريد اضافة زيارة له ؟",
         icon: "warning",
         confirmButtonText: "أضافة زيارة",
-        cancelButtonText: "انشاء مريض جديد",
+        cancelButtonText: "اغلاق",
         showCancelButton: true,
+        showDenyButton: true,
+        denyButtonText: "انشاء مريض جديد",
       }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           // new promise
           new Promise((resolve, reject) => {
-            changePatient($("#new_patient"));
-            $("input[name=new_patient]").prop("checked", false);
+            changePatient();
             resolve();
-          }).then(() => {
-            $("#visits_patient_id").val(hash).trigger("change");
-            this.saveNewItem();
-          });
-        } else {
+          })
+            .then(() => {
+              $("#visits_patient_id").val(hash).trigger("change");
+              this.saveNewItem();
+            })
+            .then(() => {
+              changePatient();
+            });
+        } else if (result.isDenied) {
           this.saveNewItem();
+        } else {
+          return false;
         }
       });
     } else {
@@ -412,9 +422,6 @@ class Visit extends Factory {
   }
 
   saveNewItem() {
-    if (!this.validate()) {
-      return false;
-    }
     $(".itemsActive").removeClass("itemsActive");
     let insertedPackages = [];
     $(".testSelect:checked").each(function () {

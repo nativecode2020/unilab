@@ -54,16 +54,7 @@ const InvoiceItem = ({ test, invoice, settingState }) => {
     initInvoiceItem
   );
   React.useEffect(() => {
-    const {
-      hash,
-      name,
-      unit_name,
-      options,
-      result_test,
-      unit,
-      kit_id,
-      category,
-    } = test;
+    const { name, unit_name, options, result_test } = test;
     dispatch({ type: "NAMEANDUNIT", payload: { name, unit: unit_name } });
     let result = JSON.parse(result_test);
     dispatch({ type: "RESULT", payload: result });
@@ -205,7 +196,11 @@ const InvoiceItem = ({ test, invoice, settingState }) => {
           }
         })}
       </div>
-      <div className="testprice col-12 h5 text-right text-info"></div>
+      {invoice.history == "1" && (
+        <div class="testprice col-12 h5 text-right text-info">
+          - Last Result dated 2024-01-10 was : 3 U/mL
+        </div>
+      )}
     </div>
   );
 };
@@ -667,7 +662,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   value={invoice.center}
                 />
               </div>
-              <div className="form-group  col-md-6">
+              <div className="form-group  col-md-4">
                 <label
                   htmlFor="footer_header_show"
                   className="w-100 text-center"
@@ -691,7 +686,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   <span className="slider round"></span>
                 </label>
               </div>
-              <div className="form-group  col-md-6">
+              <div className="form-group  col-md-4">
                 <label htmlFor="water_mark" className="w-100 text-center">
                   اظهار واخفاء العلامة المائية
                 </label>
@@ -707,6 +702,26 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                       });
                     }}
                     checked={invoice.water_mark == "1" ? true : false}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+              <div className="form-group  col-md-4">
+                <label htmlFor="history" className="w-100 text-center">
+                  اظهار واخفاء السجل الطبي
+                </label>
+                <label className="d-flex switch s-icons s-outline s-outline-success mx-auto mt-2">
+                  <input
+                    type="checkbox"
+                    name="history"
+                    id="history"
+                    onChange={(e) => {
+                      setInvoice({
+                        ...invoice,
+                        history: e.target.checked ? "1" : "0",
+                      });
+                    }}
+                    checked={invoice.history == "1" ? true : false}
                   />
                   <span className="slider round"></span>
                 </label>
@@ -868,30 +883,6 @@ const InvoiceSetting = () => {
   const [employees, setEmployees] = React.useState([]);
 
   const fetchTests = () => {
-    // let data = run(`select
-    //               option_test as options,
-    //               test_name as name,
-    //               kit_id,
-    //               (select name from devices where devices.id=lab_device_id) as device_name,
-    //               (select name from kits where kits.id =kit_id) as kit_name,
-    //               (select name from lab_test_units where hash=lab_pakage_tests.unit) as unit_name,
-    //               (select name from lab_test_catigory where hash=lab_test.category_hash) as category,
-    //               unit,
-    //               result_test,
-    //               lab_visits_tests.hash as hash
-    //           from
-    //               lab_visits_tests
-    //           left join
-    //               lab_pakage_tests
-    //           on
-    //               lab_pakage_tests.test_id = lab_visits_tests.tests_id and lab_pakage_tests.package_id = lab_visits_tests.package_id
-    //           inner join
-    //               lab_test
-    //           on
-    //               lab_test.hash = lab_visits_tests.tests_id
-    //           where
-    //               visit_id = '16921880982072694'
-    //           order by sort;`).result[0].query0;
     let data = [
       {
         category: null,

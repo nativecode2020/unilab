@@ -9,6 +9,10 @@ class Visit_model extends CI_Model
         $this->load->database('unimedica', TRUE);
         $this->load->library('session');
         $this->load->library('migration');
+        // check if lab_invoice have col named border
+        if (!$this->db->field_exists('history', 'lab_invoice')) {
+            $this->db->query("ALTER TABLE `lab_invoice` ADD `history` INT(1) NOT NULL DEFAULT '0' AFTER `font_color`;");
+        }
     }
 
     public function bothIsset($var1, $var2)
@@ -376,6 +380,8 @@ class Visit_model extends CI_Model
                         foreach ($workers as $worker) {
                             if ($worker['hash'] == $value) {
                                 $newWorkers[] = $worker;
+                                // delete worker from workers
+                                unset($workers[array_search($worker, $workers)]);
                             }
                         }
                     }
@@ -392,6 +398,7 @@ class Visit_model extends CI_Model
             }
             $result['setting'] = $setting;
             $result['workers'] = $newWorkers;
+            $result["unUsedWorkers"] = $workers;
         } else {
             $result['setting'] = array(
                 "orderOfHeader" => array()
@@ -430,6 +437,23 @@ class Visit_model extends CI_Model
             "orderOfHeader" => $invoice['setting']['orderOfHeader'],
             "workers" => $invoice['workers']
         );
+        return $result;
+    }
+
+    public function getUnusedWorkers()
+    {
+        $invoice = $this->getInvoice();
+        $workers = $invoice['unUsedWorkers'];
+        // make Workers array
+        $result = array();
+        foreach ($workers as $worker) {
+            $result[] = array(
+                "hash" => $worker['hash'],
+                "name" => $worker['name'],
+                "jop" => $worker['jop'],
+                "jop_en" => $worker['jop_en'],
+            );
+        }
         return $result;
     }
 

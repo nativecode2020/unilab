@@ -5,6 +5,12 @@ let units = run(`select name,hash from lab_test_units;`).result[0].query0;
 let __VISIT_TESTS__ = [];
 
 const changePatient = function (el) {
+  if (!el) {
+    el = $("input[name='new_patient']");
+    let is_checked = el.is(":checked");
+    // change prop checked
+    el.prop("checked", !is_checked);
+  }
   $("#visits_patient_id-form").empty();
   if (!el.is(":checked")) {
     $("#visits_patient_id-form").append(`
@@ -1211,7 +1217,7 @@ function showInvoice(hash) {
                   </div>
                 </div>
                 <div class="book-result" dir="ltr" id="pdf">
-                    <div class="page">
+                    <div class="page" contenteditable="true">
                         <!-- صفحة يمكنك تكرارها ----------------------------------------------------------------------------------------------------------------------->
                         <div class="header money">
                             <div class="row justify-content-between">
@@ -1472,7 +1478,7 @@ function invoiceHeader() {
 function createInvoice(visit, type, form) {
   let header = invoiceHeader();
   return `<div class="book-result" dir="ltr" id="invoice-${type}" style="display: none;">
-		<div class="page">
+		<div class="page" contenteditable="true">
 			<!-- صفحة يمكنك تكرارها -->
 			${header}
 			<div class="center2" ${
@@ -2404,9 +2410,13 @@ function manageTestType(type, test = {}) {
                     </p>
                 </div>
                 ${
-                  history != "" && history && history != "{}"
-                    ? `<div class="testprice col-12 h5 text-right text-info">
-                    ${history} ${history != "" ? unit : ""}
+                  invoices?.history == "1"
+                    ? `${
+                        history != "" && history && history != "{}"
+                          ? `<div class="testprice col-12 h5 text-right text-info">
+                    ${history} ${history != "" ? unit : ""}`
+                          : ""
+                      }
                 </div>`
                     : ""
                 }
@@ -2514,6 +2524,7 @@ function downloadPdf() {
       "lab/css/style.css",
       "lab/plugins/font-awesome/css/all.css",
     ],
+    beforePrint: () => {},
     afterPrint: () => {
       $("iframe").remove();
       svgs.each((i, svg) => {
@@ -2528,8 +2539,6 @@ function downloadPdf() {
   let onclick = $("#saveResultButton").attr("onclick");
   //get hash from onclick attr
   let hash = onclick.split("'")[1];
-  // update ispayed to 1
-  run(`update lab_visits set ispayed="1" where hash='${hash}'`);
 
   lab_visits.dataTable.ajax.reload();
 }

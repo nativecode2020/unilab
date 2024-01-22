@@ -174,4 +174,16 @@ class Visit extends CI_Controller
         echo json_encode($output);
         exit();
     }
+
+    public function getUnusedWorkers()
+    {
+        $workers = $this->Visit_model->getUnusedWorkers();
+        $output = array(
+            "status" => 200,
+            "workers" => $workers,
+            "message" => "تم الحصول على البيانات بنجاح"
+        );
+        echo json_encode($output);
+        exit();
+    }
 }
