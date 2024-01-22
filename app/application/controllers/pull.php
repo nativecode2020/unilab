@@ -45,7 +45,7 @@ class pull extends CI_Controller
         if (strpos($output, 'Already up to date.') !== false) {
             $version = $this->getVersion();
             // update version
-            $this->db->query("UPDATE `lab_version` SET `version` = `$version`  WHERE `lab_version`.`isdeleted` = 0;");
+            $this->db->query("UPDATE `lab_version` SET `version` = '$version'  WHERE `lab_version`.`isdeleted` = 0;");
             echo json_encode(
                 // no update
                 array(
@@ -62,7 +62,7 @@ class pull extends CI_Controller
         } else if ((strpos($output, 'Updating') !== false || (strpos($output, 'changed') !== false)) && strpos($output, 'fatal') == false || strpos($output, 'create mode') !== false || strpos($output, 'delete mode') !== false) {
             $version = $this->getVersion();
             // update version
-            $this->db->query("UPDATE `lab_version` SET `version` = `$version` WHERE `lab_version`.`isdeleted` = 0;");
+            $this->db->query("UPDATE `lab_version` SET `version` = '$version' WHERE `lab_version`.`isdeleted` = 0;");
             echo json_encode(
                 array(
                     'status' => 200,
