@@ -1217,7 +1217,7 @@ function showInvoice(hash) {
                   </div>
                 </div>
                 <div class="book-result" dir="ltr" id="pdf">
-                    <div class="page" contenteditable="true">
+                    <div class="page" >
                         <!-- صفحة يمكنك تكرارها ----------------------------------------------------------------------------------------------------------------------->
                         <div class="header money">
                             <div class="row justify-content-between">
@@ -2516,7 +2516,6 @@ function downloadPdf() {
   // .book-result:visible svg is not parent <>,.
 
   $(`#work-sapce .book-result:visible`).printThis({
-    debug: true,
     importCSS: false,
     loadCSS: [
       "lab/bootstrap/css/bootstrap.min.css",
@@ -2524,7 +2523,7 @@ function downloadPdf() {
       "lab/css/style.css",
       "lab/plugins/font-awesome/css/all.css",
     ],
-    beforePrint: () => {},
+    printDelay: 2000,
     afterPrint: () => {
       $("iframe").remove();
       svgs.each((i, svg) => {
