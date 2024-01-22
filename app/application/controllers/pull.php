@@ -7,19 +7,6 @@ class pull extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
-        // lood offline controller
-        // check if lab_version table exist
-        if (!$this->db->table_exists('lab_version')) {
-            $this->db->query("CREATE TABLE `lab_version` (
-                `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                `version` int(255) NOT NULL,
-                `isdeleted` tinyint(1) NOT NULL DEFAULT '0'
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
-            // insert default version
-            $this->db->query("INSERT INTO `lab_version` (`id`, `version`, `isdeleted`) VALUES
-                (1, 0, 0);");
-        }
-
     }
 
     public function auth()
