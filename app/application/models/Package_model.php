@@ -57,9 +57,9 @@ class Package_model extends CI_Model
             lab_package.name as name,
             lab_package.price as price,
             lab_package.cost as cost,
-            (select name from kits where id=lab_pakage_tests.kit_id) as kit_name,
-            (select name from devices where id=lab_pakage_tests.lab_device_id) as device_name,
-            (select name from lab_test_units where hash = lab_pakage_tests.unit) as unit_name'
+            (select name from kits where id=lab_pakage_tests.kit_id limit 1) as kit_name,
+            (select name from devices where id=lab_pakage_tests.lab_device_id limit 1) as device_name,
+            (select name from lab_test_units where hash = lab_pakage_tests.unit limit 1) as unit_name'
         );
         // inner join 
         $this->db->from('lab_package');
