@@ -82,9 +82,24 @@ $(document).ready(function () {
   });
   $(".dt-buttons").addClass("btn-group");
   $("div.addCustomItem").html(
-    `<span class="table-title">قائمة التحاليل</span><!--<button onclick="lab_test.newItem();" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> أضافة تحليل</button>-->`
+    `<span class="table-title">قائمة التحاليل</span>
+    <button onclick="fireSwal(uploadTestsSync)" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> نسخ احتياطي </button>`
   );
 });
+
+const uploadTestsSync = () => {
+  fetchData("LocalApi/getTestsQueries", "POST", {
+    lab_id: localStorage.getItem("lab_hash"),
+  });
+
+  Swal.fire({
+    title: "تم النسخ الاحتياطي بنجاح",
+    icon: "success",
+    showCancelButton: false,
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "حسنا",
+  });
+};
 
 Swal.fire({
   title: "الرجاء الانتظار",

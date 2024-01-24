@@ -1,4 +1,11 @@
 <?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
+require __DIR__ . '/jwt/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 class Offline extends CI_Controller
 {
 
@@ -6,12 +13,68 @@ class Offline extends CI_Controller
     {
         parent::__construct();
         $this->load->model('User_model');
+        $this->load->model('Menu_db');
         // access control api 
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
         header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description, Authorization');
         // json response
         header('Content-Type: application/json');
+    }
+
+    public function jwt_enc($data, $expir = "1900")
+    {
+        // die($expir);
+        $iat = time();
+        $exp = $iat + $expir;
+        $data["iat"] = $iat;
+        $data["exp"] = $exp;
+        //die(print_r($data));
+        $key = "@@redhaalasd2020@@";
+        $payload = $data;
+        $jwt = JWT::encode($payload, $key, 'HS256');
+        return $jwt;
+    }
+
+    public function jwt_dec($token, $type = "normal")
+    {
+        //die("aaaa");
+        try {
+            $key = "@@redhaalasd2020@@";
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
+            $decoded_array = (array) $decoded;
+            $exp = $decoded_array["exp"];
+            $iat = time();
+            //die($exp." x ".$iat." ".$type);
+            if ($exp > $iat || $type == "logout")
+                return $decoded_array;
+            else
+                return 0;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    public function auth()
+    {
+        $token = $this->input->get_request_header('Authorization', TRUE);
+        $token = str_replace("Bearer ", "", $token);
+        $decoded_array = $this->jwt_dec($token);
+        if ($decoded_array == 0) {
+            echo json_encode(
+                array(
+                    "status" => false,
+                    "message" => "Invalid token",
+                    "isAuth" => false,
+                    "data" => null
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+            exit();
+        } else {
+            $res = $this->Menu_db->check_user_by_hash($decoded_array["hash"], $decoded_array["lab_id"]);
+            $token = $this->jwt_enc($res);
+        }
     }
 
     public function login()
@@ -276,6 +339,8 @@ class Offline extends CI_Controller
 
     public function setVersion()
     {
+        // auth 
+        $this->auth();
         // get last version
         $version = $this->db->query("select version from lab_version where isdeleted=0 order by id desc limit 1")->row();
         // check if version is null
@@ -297,5 +362,55 @@ class Offline extends CI_Controller
             ),
             JSON_UNESCAPED_UNICODE
         );
+    }
+
+    public function insertIntoLab_test()
+    {
+        // auth 
+        $this->auth();
+        $result = false;
+        $lab_id = $this->input->post('lab_id');
+        // start transaction
+        $this->db->trans_start();
+        $this->db->query("SET SQL_SAFE_UPDATES = 0");
+        $this->db->query("delete from lab_test where lab_hash='$lab_id'");
+        // get all lab_test
+        $query = $this->input->post('query');
+        $this->db->query($query);
+        $this->db->query("SET SQL_SAFE_UPDATES = 1");
+
+        // end transaction
+        if ($this->db->trans_status() === FALSE) {
+            // حدثت مشكلة خلال الـtransaction
+            $result = false;
+            $this->db->trans_rollback();
+        } else {
+            // تمت العمليات بنجاح
+            $result = true;
+            $this->db->trans_commit();
+        }
+
+        $this->db->trans_complete();
+        if ($result) {
+            echo json_encode(
+                array(
+                    'status' => true,
+                    'message' => 'تمت العملية بنجاح',
+                    'data' => $query,
+                    'isAuth' => true
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+        } else {
+            echo json_encode(
+                array(
+                    'status' => false,
+                    'message' => 'حدث خطأ أثناء العملية',
+                    'data' => $query,
+                    'isAuth' => true
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+        }
     }
 }
