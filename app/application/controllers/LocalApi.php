@@ -227,44 +227,56 @@ class LocalApi extends CI_Controller
         }
 
         curl_close($ch);
-
-        $this->db->trans_start();
-        $this->db->query("SET SQL_SAFE_UPDATES = 0");
-        $this->db->query("truncate table lab_test");
-        $this->db->query($response);
-        $this->db->query("SET SQL_SAFE_UPDATES = 1");
-
-        // end transaction
-        if ($this->db->trans_status() === FALSE) {
-            // حدثت مشكلة خلال الـtransaction
-            $result = false;
-            $this->db->trans_rollback();
-        } else {
-            // تمت العمليات بنجاح
-            $result = true;
-            $this->db->trans_commit();
-        }
-
-        $this->db->trans_complete();
-        if ($result) {
-            echo json_encode(
-                array(
-                    'status' => true,
-                    'message' => 'تمت العملية بنجاح',
-                    'isAuth' => true
-                ),
-                JSON_UNESCAPED_UNICODE
-            );
-        } else {
+        if ($response == "") {
             echo json_encode(
                 array(
                     'status' => false,
-                    'message' => 'حدث خطأ أثناء العملية',
+                    'message' => 'لا توجد نسخة احتياطية',
                     'isAuth' => true
                 ),
                 JSON_UNESCAPED_UNICODE
             );
+            exit();
+        } else {
+            $this->db->trans_start();
+            $this->db->query("SET SQL_SAFE_UPDATES = 0");
+            $this->db->query("truncate table lab_test");
+            $this->db->query($response);
+            $this->db->query("SET SQL_SAFE_UPDATES = 1");
+
+            // end transaction
+            if ($this->db->trans_status() === FALSE) {
+                // حدثت مشكلة خلال الـtransaction
+                $result = false;
+                $this->db->trans_rollback();
+            } else {
+                // تمت العمليات بنجاح
+                $result = true;
+                $this->db->trans_commit();
+            }
+
+            $this->db->trans_complete();
+            if ($result) {
+                echo json_encode(
+                    array(
+                        'status' => true,
+                        'message' => 'تمت العملية بنجاح',
+                        'isAuth' => true
+                    ),
+                    JSON_UNESCAPED_UNICODE
+                );
+            } else {
+                echo json_encode(
+                    array(
+                        'status' => false,
+                        'message' => 'حدث خطأ أثناء العملية',
+                        'isAuth' => true
+                    ),
+                    JSON_UNESCAPED_UNICODE
+                );
+            }
         }
+
 
     }
 

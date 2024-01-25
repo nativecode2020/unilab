@@ -1426,7 +1426,7 @@ function showInvoice(hash) {
 function invoiceHeader() {
   let html = "";
   let res = fetchData(`Visit/getInvoice`, "GET", {});
-  let { size, workers, logo, name_in_invoice } = res.invoice;
+  let { size, workers, logo, name_in_invoice, show_name } = res.invoice;
   if (workers.length > 0) {
     html = workers
       .map((worker) => {
@@ -1438,6 +1438,20 @@ function invoiceHeader() {
           ">
           <img src="${logo}" alt="" />
         </div>
+        `;
+        }
+        if (worker.hash == "name") {
+          return `
+          <div style="
+          flex: 0 0 ${size}%;
+          max-width: ${size}%;
+        " class="logo text-center  justify-content-center align-content-center ${
+          show_name == "1" ? "d-flex" : "d-none"
+        }">
+              <h1 class="navbar-brand-name text-center">${
+                name_in_invoice ?? localStorage.lab_name ?? ""
+              }</h1>
+          </div>
         `;
         }
         return `
@@ -1460,10 +1474,12 @@ function invoiceHeader() {
             <img src="${logo ?? ""}"
             alt="${logo ?? "upload Logo"}">
         </div>
-        <div class="logo justify-content-end col-4 p-2">
-            <h2 class="navbar-brand-name text-center">${
+        <div class="logo border p-2 text-center  justify-content-center align-content-center ${
+          show_name == "1" ? "d-flex" : "d-none"
+        }">
+            <h1 class="navbar-brand-name text-center">${
               name_in_invoice ?? localStorage.lab_name ?? ""
-            }</h2>
+            }</h1>
         </div>`;
   }
   return `

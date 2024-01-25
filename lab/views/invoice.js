@@ -665,7 +665,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   value={invoice.center}
                 />
               </div>
-              <div className="form-group  col-md-4">
+              <div className="form-group  col-md-3">
                 <label
                   htmlFor="footer_header_show"
                   className="w-100 text-center"
@@ -689,7 +689,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   <span className="slider round"></span>
                 </label>
               </div>
-              <div className="form-group  col-md-4">
+              <div className="form-group  col-md-3">
                 <label htmlFor="water_mark" className="w-100 text-center">
                   اظهار واخفاء العلامة المائية
                 </label>
@@ -709,7 +709,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                   <span className="slider round"></span>
                 </label>
               </div>
-              <div className="form-group  col-md-4">
+              <div className="form-group  col-md-3">
                 <label htmlFor="history" className="w-100 text-center">
                   اظهار واخفاء الزيارات السابقة
                 </label>
@@ -725,6 +725,26 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                       });
                     }}
                     checked={invoice.history == "1" ? true : false}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+              <div className="form-group  col-md-3">
+                <label htmlFor="show_name" className="w-100 text-center">
+                  اظهار واخفاء اسم المختبر
+                </label>
+                <label className="d-flex switch s-icons s-outline s-outline-success mx-auto mt-2">
+                  <input
+                    type="checkbox"
+                    name="show_name"
+                    id="show_name"
+                    onChange={(e) => {
+                      setInvoice({
+                        ...invoice,
+                        show_name: e.target.checked ? "1" : "0",
+                      });
+                    }}
+                    checked={invoice.show_name == "1" ? true : false}
                   />
                   <span className="slider round"></span>
                 </label>
@@ -1006,6 +1026,24 @@ const InvoiceHeader = ({ invoice }) => {
                   }}
                 >
                   <img src={invoice.logo} alt="" />
+                </div>
+              );
+            }
+            if (employee.hash == "name") {
+              return (
+                <div
+                  style={{
+                    flex: `0 0 ${invoice.phone_2}%`,
+                    "max-width": `${invoice.phone_2}%`,
+                  }}
+                  className={`logo  border p-2 text-center  justify-content-center align-content-center ${
+                    invoice.show_name == "1" ? "d-flex" : "d-none"
+                  }`}
+                  id="name"
+                >
+                  <h1 className="navbar-brand-name text-center">
+                    {invoice.name_in_invoice}
+                  </h1>
                 </div>
               );
             }

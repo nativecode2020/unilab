@@ -104,15 +104,31 @@ const uploadTestsSync = () => {
 };
 
 const dwonLoadTestsSync = () => {
-  fireSwalConfirm(
-    "هل انت متاكد من سحب القيم الطبيعية",
-    fetchData,
-    "LocalApi/installTests",
-    "POST",
-    {
-      lab_id: localStorage.getItem("lab_hash"),
-    }
-  );
+  swal
+    .fire({
+      title: "هل انت متأكد من السحب",
+      text: "سيتم سحب القيم الطبيعية من السيرفر",
+      icon: "warning",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم",
+      cancelButtonText: "كلا",
+    })
+    .then((res) => {
+      if (res.isConfirmed) {
+        fireSwal(fetchTests);
+      }
+    });
+};
+
+const fetchTests = () => {
+  let data = fetchData("LocalApi/installTests", "POST", {
+    lab_id: localStorage.getItem("lab_hash"),
+  });
+  if (data.status) niceSwal("success", "top-right", data.message);
+  else niceSwal("error", "top-right", data.message);
 };
 
 Swal.fire({

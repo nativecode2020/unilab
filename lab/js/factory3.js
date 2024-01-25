@@ -974,7 +974,9 @@ function fireSwalConfirm(msg, fun, ...args) {
             Swal.showLoading();
           },
           willClose: () => {
-            if (fun.call(this, ...args) != false) {
+            let data = fun.call(this, ...args);
+            if (data != false) {
+              return data;
             }
           },
         });
