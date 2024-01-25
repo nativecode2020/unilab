@@ -382,3 +382,52 @@ let lab_test = new PackageTest("lab_test", " مجموعة", []);
 let lab_package = new Package("lab_package", " مجموعة", []);
 let allTests = new Tests("lab_test", " اختبار", []);
 let allPAckages = new PackageTests("lab_test", " اختبار", []);
+
+$(document).ready(function () {
+  $("div.addCustomItem").html(`
+    <button onclick="fireSwal(uploadTestsSync)" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> مزامنة القيم الطبيعية</button>
+    <button onclick="dwonLoadTestsSync()" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> سحب القيم الطبيعية</button>
+    `);
+});
+
+const uploadTestsSync = () => {
+  fetchData("LocalApi/getTestsQueries", "POST", {
+    lab_id: localStorage.getItem("lab_hash"),
+  });
+
+  Swal.fire({
+    title: "تم النسخ الاحتياطي بنجاح",
+    icon: "success",
+    showCancelButton: false,
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "حسنا",
+  });
+};
+
+const dwonLoadTestsSync = () => {
+  swal
+    .fire({
+      title: "هل انت متأكد من السحب",
+      text: "سيتم سحب القيم الطبيعية من السيرفر",
+      icon: "warning",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "نعم",
+      cancelButtonText: "كلا",
+    })
+    .then((res) => {
+      if (res.isConfirmed) {
+        fireSwal(fetchTests);
+      }
+    });
+};
+
+const fetchTests = () => {
+  let data = fetchData("LocalApi/installTests", "POST", {
+    lab_id: localStorage.getItem("lab_hash"),
+  });
+  if (data.status) niceSwal("success", "top-right", data.message);
+  else niceSwal("error", "top-right", data.message);
+};
