@@ -83,7 +83,9 @@ $(document).ready(function () {
   $(".dt-buttons").addClass("btn-group");
   $("div.addCustomItem").html(
     `<span class="table-title">قائمة التحاليل</span>
-    <button onclick="fireSwal(uploadTestsSync)" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> نسخ احتياطي </button>`
+    <button onclick="fireSwal(uploadTestsSync)" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> مزامنة القيم الطبيعية</button>
+    <button onclick="dwonLoadTestsSync()" class="btn-main-add ml-4"><i class="far fa-users-md mr-2"></i> سحب القيم الطبيعية</button>
+    `
   );
 });
 
@@ -99,6 +101,18 @@ const uploadTestsSync = () => {
     confirmButtonColor: "#3085d6",
     confirmButtonText: "حسنا",
   });
+};
+
+const dwonLoadTestsSync = () => {
+  fireSwalConfirm(
+    "هل انت متاكد من سحب القيم الطبيعية",
+    fetchData,
+    "LocalApi/installTests",
+    "POST",
+    {
+      lab_id: localStorage.getItem("lab_hash"),
+    }
+  );
 };
 
 Swal.fire({

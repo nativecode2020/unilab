@@ -416,6 +416,9 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
         });
     }
     for (let key in invoice) {
+      if (key == "setting") {
+        continue;
+      }
       formData.append(key, invoice[key]);
     }
     if (newFile) {
@@ -708,7 +711,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
               </div>
               <div className="form-group  col-md-4">
                 <label htmlFor="history" className="w-100 text-center">
-                  اظهار واخفاء السجل الطبي
+                  اظهار واخفاء الزيارات السابقة
                 </label>
                 <label className="d-flex switch s-icons s-outline s-outline-success mx-auto mt-2">
                   <input

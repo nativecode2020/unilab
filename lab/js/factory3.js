@@ -948,11 +948,11 @@ function fireSwalForDelete(fun, ...args) {
   });
 }
 
-function fireSwalConfirm(fun, ...args) {
+function fireSwalConfirm(msg, fun, ...args) {
   let condition = 1;
   Swal.fire({
     icon: "question",
-    html: "هل انت متاكد من التحديث ",
+    html: msg,
     showDenyButton: false,
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
