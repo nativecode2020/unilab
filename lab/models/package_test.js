@@ -390,25 +390,18 @@ $(document).ready(function () {
     `);
 });
 
-const uploadTestsSync = () => {
+const uploadTestsSync = async () => {
   fetchData("LocalApi/getTestsQueries", "POST", {
     lab_id: localStorage.getItem("lab_hash"),
   });
-
-  Swal.fire({
-    title: "تم النسخ الاحتياطي بنجاح",
-    icon: "success",
-    showCancelButton: false,
-    confirmButtonColor: "#3085d6",
-    confirmButtonText: "حسنا",
-  });
+  niceSwal("success", "top-end", "تم الرفع بنجاح");
 };
 
 const dwonLoadTestsSync = () => {
   swal
     .fire({
       title: "هل انت متأكد من السحب",
-      text: "سيتم سحب القيم الطبيعية من السيرفر",
+      text: "سيتم استرجاع القيم الطبيعية السابقة",
       icon: "warning",
       showDenyButton: false,
       showCancelButton: true,
@@ -424,7 +417,7 @@ const dwonLoadTestsSync = () => {
     });
 };
 
-const fetchTests = () => {
+const fetchTests = async () => {
   let data = fetchData("LocalApi/installTests", "POST", {
     lab_id: localStorage.getItem("lab_hash"),
   });

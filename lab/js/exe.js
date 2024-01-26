@@ -272,7 +272,7 @@ async function updateSystem() {
     });
     return false;
   }
-
+  fetchData("pull/updateDataBase", "GET", {});
   const body = document.getElementsByTagName("body")[0];
   body.insertAdjacentHTML("beforeend", waitElement);
   await fetch(`${base_url}pull/pull`)
@@ -296,6 +296,7 @@ async function updateSystem() {
         hardRefresh();
         // looooooooooooool
       });
+      fetchData("pull/cleanCach", "GET", {});
     })
     .catch((error) => {
       body.removeChild(document.getElementById("alert_screen"));

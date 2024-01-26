@@ -107,7 +107,7 @@ const dwonLoadTestsSync = () => {
   swal
     .fire({
       title: "هل انت متأكد من السحب",
-      text: "سيتم سحب القيم الطبيعية من السيرفر",
+      text: "سيتم استرجاع القيم الطبيعية السابقة",
       icon: "warning",
       showDenyButton: false,
       showCancelButton: true,

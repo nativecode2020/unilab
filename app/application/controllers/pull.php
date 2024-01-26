@@ -156,4 +156,40 @@ class pull extends CI_Controller
         // Process $response as needed
         echo $response;
     }
+
+    public function updateDataBase()
+    {
+        if (!$this->db->table_exists('lab_version')) {
+            $this->db->query("CREATE TABLE `lab_version` (
+                `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                `version` int(255) NOT NULL,
+                `isdeleted` tinyint(1) NOT NULL DEFAULT '0'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+            // insert default version
+            $this->db->query("INSERT INTO `lab_version` (`id`, `version`, `isdeleted`) VALUES
+                (1, 0, 0);");
+        }
+        echo json_encode(
+            array(
+                'message' => 'تم تحديث قاعدة البيانات بنجاح',
+                'isAuth' => true
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
+    public function cleanCach()
+    {
+        $command = 'set "userProfile=%LOCALAPPDATA%\Chromium\User Data" && set "cacheDir=%userProfile%\Cache" && chrome.exe --user-data-dir="%userProfile%" --disk-cache-dir="%cacheDir%" --disable-application-cache --disable-gpu --clear-restore-session --no-startup-window http://localhost:8807/';
+        $output = exec($command);
+        echo json_encode(
+            array(
+                'message' => "تم التنظيف",
+                'isAuth' => true,
+                'data' => $output
+            ),
+            JSON_UNESCAPED_UNICODE
+        );
+
+    }
 }

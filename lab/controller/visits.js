@@ -1147,18 +1147,24 @@ const changeInvoiceTitle = (type) => {
   const prices = $(".money-show");
   const doctor = $(".doctor-name");
   const doctorInpot = $(".custom-doctor");
+  const buttons = $(".invoicePrice");
+  const inputs = $("input-check");
+  buttons.toggleClass("active");
+
   switch (type) {
     case "money":
       title.text("وصــل اســتلام");
       prices.show();
       doctor.show();
       doctorInpot.hide();
+      inputs.toggleClass("d-none");
       break;
     case "send":
       title.text("قسـيـمة تـحويـل الي مختبر");
       prices.hide();
       doctor.hide();
       doctorInpot.show();
+      inputs.toggleClass("d-none");
       break;
     default:
       title.text("وصــل اســتلام");
@@ -1211,12 +1217,12 @@ function showInvoice(hash) {
             <div class="widget-content widget-content-area m-auto" style="width: 95%;">
                 <div class="row justify-content-center">
                   <div class="col-5">
-                    <button type="button" class="btn btn-outline-print w-100" onclick="changeInvoiceTitle('money')">
+                    <button type="button" class="action btn btn-action mx-2 w-100 active invoicePrice" onclick="changeInvoiceTitle('money')">
                       وصل استلام
                     </button>
                   </div>
                   <div class="col-5">
-                    <button type="button" class="btn btn-outline-print w-100" onclick="changeInvoiceTitle('send')">
+                    <button type="button" class="action btn btn-action mx-2 w-100 invoicePrice" onclick="changeInvoiceTitle('send')">
                       قسيمة تحويل
                     </button>
                   </div>
@@ -1327,7 +1333,7 @@ function showInvoice(hash) {
                                                   }').toggleClass('d-print-none opicty__4')"
                                                   id="check-${item.hash}"
                                                   checked
-                                                  class="custom-doctor"
+                                                  class="input-check d-none"
                                                 >
                                                 <span class="invoice-slider slider custom-doctor" style="display: none;"></span>
                                             </label>
