@@ -864,6 +864,7 @@ const waitElement = `<div id="alert_screen" class="alert_screen">
 function fireSwal(fun = null, ...args) {
   if (!fun) {
     console.log("no function");
+    return false;
   }
   let diffTimeInMin =
     (-1 *
