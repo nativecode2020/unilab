@@ -271,9 +271,9 @@ async function updateSystem() {
         text: data.message,
         confirmButtonText: "موافق",
       }).then((result) => {
-        location.href = front_url + "visits.html";
+        fetchData("pull/cleanCach", "GET", {});
+
       });
-      fetchData("pull/cleanCach", "GET", {});
     })
     .catch((error) => {
       body.removeChild(document.getElementById("alert_screen"));

@@ -1521,7 +1521,7 @@ function invoiceHeader() {
 function createInvoice(visit, type, form) {
   let header = invoiceHeader();
   return `<div class="book-result" dir="ltr" id="invoice-${type}" style="display: none;">
-		<div class="page" contenteditable="true">
+		<div class="page">
 			<!-- صفحة يمكنك تكرارها -->
 			${header}
 			<div class="center2" ${
@@ -2447,8 +2447,8 @@ function manageTestType(type, test = {}) {
                 <div class="testresult col-2">
                     <p> ${unit}</p>
                 </div>
-                <div class="testnormal col-3">
-                    <p class="text-right">
+                <div class="testnormal col-3" >
+                    <p class="text-right" contenteditable="true">
                     ${normal}
                     </p>
                 </div>
@@ -2478,8 +2478,8 @@ function manageTestType(type, test = {}) {
                     <div class="testname col-2" >
                         <p>${unit ?? ""}</p>
                     </div>
-                    <div class="testnormal col-2">
-                        <p>${normal}</p>
+                    <div class="testnormal col-2" >
+                        <p contenteditable="true">${normal}</p>
                     </div>
                 </div>
             `;
@@ -2493,8 +2493,8 @@ function manageTestType(type, test = {}) {
                         <p class="w-75 text-center ${color}">${result.toString()} </p>
                         <!--<span class="text-info">${history.toString()}</span>-->
                     </div>
-                    <div class="testnormal col-2">
-                        <p>${normal}</p>
+                    <div class="testnormal col-2" >
+                        <p contenteditable="true">${normal}</p>
                     </div>
                 </div>`;
     default:

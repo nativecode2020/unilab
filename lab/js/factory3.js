@@ -953,6 +953,10 @@ function fireSwalForDelete(fun, ...args) {
 }
 
 function fireSwalConfirm(msg, fun, ...args) {
+  if (!fun) {
+    console.log("no function");
+    return false;
+  }
   let condition = 1;
   Swal.fire({
     icon: "question",
