@@ -151,9 +151,9 @@ async function changeKitsAndUnits(name, hash) {
     if (kitsIdList.length != 0) {
       testDevicesByKit = run_both(`
             select 
-                DISTINCT devices.name, devices.id
+                DISTINCT name, id
                 from 
-                    lab_device;
+                devices;
         `).result[0].query0;
       // push {name: 'name', id: 'id'} to testDevicesByKit at first
     }
