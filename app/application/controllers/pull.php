@@ -180,13 +180,26 @@ class pull extends CI_Controller
 
     public function cleanCach()
     {
-        $command = 'set "userProfile=%LOCALAPPDATA%\Chromium\User Data" && set "cacheDir=%userProfile%\Cache" && chrome.exe --user-data-dir="%userProfile%" --disk-cache-dir="%cacheDir%" --disable-application-cache --disable-gpu --clear-restore-session --no-startup-window http://localhost:8807/';
-        $output = exec($command);
+        // remove every file in folder start with char f
+        $close_command = 'taskkill /F /IM chrome.exe 2>&1';
+        $close_output = exec($close_command);
+        $clean_cash_command = 'cd "%LOCALAPPDATA%\Chromium\User Data\Default\Cache" 2>&1';
+        $clean_cash_output = exec($clean_cash_command);
+        $delete_cash_dir_command = 'del /q /s /f "%LOCALAPPDATA%\Chromium\User Data\Default\Cache\*" 2>&1';
+        $delete_cash_dir_output = exec($delete_cash_dir_command);
+        $open_command = 'C:\xampp\ch\chrome http://localhost:8807/lab/login/login.html 2>&1';
+        $open_output = exec($open_command);
         echo json_encode(
             array(
                 'message' => "تم التنظيف",
                 'isAuth' => true,
-                'data' => $output
+                'data' => array(
+                    'close_output' => $close_output,
+                    'clean_cash_output' => $clean_cash_output,
+                    'delete_cash_dir_output' => $delete_cash_dir_output,
+                    'open_output' => $open_output,
+                )
+
             ),
             JSON_UNESCAPED_UNICODE
         );

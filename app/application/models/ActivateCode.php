@@ -31,21 +31,20 @@ class ActivateCode extends CI_Model
 
     public function check($code)
     {
-        $this->db->select('count(*) as count');
-        $this->db->from('activation_code');
-        $this->db->where('number', $code);
-        $this->db->where('status', 0);
-        $query = $this->db->get();
-        $result = $query->result_array();
-        $count_of_codes = $result[0]['count'];
-        // get count of codes used by
-        $this->db->select('count(*) as count');
-        $this->db->from('activation_code_used_by');
-        $this->db->where('code_number', $code);
-        $query = $this->db->get();
-        $result = $query->result_array();
-        $count_of_codes_used_by = $result[0]['count'];
-        if ($count_of_codes >= 0 && !$count_of_codes_used_by) {
+        // shoult by true
+        $count_of_codes = $this->db->select('id')
+            ->from('activation_code')
+            ->where('number', $code)
+            ->where('status', 0)
+            ->get()
+            ->result_array();
+        // should be null
+        $count_of_codes_used_by = $this->db->select('id')
+            ->from('activation_code_used_by')
+            ->where('code_number', $code)
+            ->get()
+            ->result_array();
+        if ($count_of_codes && !$count_of_codes_used_by) {
             return true;
         } else {
             return false;
