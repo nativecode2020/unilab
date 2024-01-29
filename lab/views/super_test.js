@@ -56,8 +56,8 @@ for (let data of units) {
 let categories = allData.result[1].query1;
 
 $(document).ready(function () {
-  $("#kit").select2({
-    dropdownParent: $("#refrence_form"),
+  $("select[name='kit']").select2({
+    dropdownParent: $("#form_id"),
     width: "100%",
   });
   $("#category_hash").select2({

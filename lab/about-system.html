@@ -100,7 +100,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto modal-body page" id="active">
                         <h2 class="text-center mb-4">تفعيل الكارت</h2>
                         <h4 class="text-center mb-4">
-                            الرجاء ادخال رقم الكارت لتفعيل لتفعيل النظام او لتمديد الاشتراك
+                            الرجاء ادخال رقم الكارت لتفعيل النظام او لتمديد الاشتراك
                         </h4>
                         <div class="container mt-5">
                             <div class="row justify-content-center">
@@ -157,21 +157,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto modal-body page" style="display: none"
-                        id="network">
-                        <h2 class="text-center mb-4">الربط الشبكي</h2>
-                        <div class="row mt-4 justify-content-center text-center">
-                            <div class="col-auto network-wired">
-                                <h4>انسخ الرابط التالي للاتصال من جهاز اخر</h4>
-                                <h5 class="mt-4">
-                                    يرجي مراعاة ربط الجهاز الاخر بنفس الشبكة (نفس الراوتر)
-                                </h5>
-                                <h3 class="netWork_link text-success mt-4">
-                                    http://127.0.0.1:8007
-                                </h3>
-                                <div id="netWork_img" class="d-flex justify-content-center mt-5"></div>
+                    <div class="col-sm-6 col-md-6 col-lg-6 mx-auto modal-body page" style="display: none" id="network">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <h2 class="text-center mb-4">شاشة العرض</h2>
+                                <div class="row mt-4 justify-content-center text-center">
+                                    <div class="col-auto network-wired">
+                                        <h4>انسخ الرابط التالي لفتح شاشة العرض </h4>
+                                        <h5 class="mt-4">
+                                            يرجي مراعاة ربط الجهاز الاخر بنفس الشبكة (نفس الراوتر)
+                                        </h5>
+                                        <h3 class="screen_link text-success mt-4">
+                                            http://127.0.0.1:8007
+                                        </h3>
+                                        <div id="screen_img" class="d-flex justify-content-center mt-5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <h2 class="text-center mb-4">الربط الشبكي</h2>
+                                <div class="row mt-4 justify-content-center text-center">
+                                    <div class="col-auto network-wired">
+                                        <h4>انسخ الرابط التالي للاتصال من جهاز اخر</h4>
+                                        <h5 class="mt-4">
+                                            يرجي مراعاة ربط الجهاز الاخر بنفس الشبكة (نفس الراوتر)
+                                        </h5>
+                                        <h3 class="netWork_link text-success mt-4">
+                                            http://127.0.0.1:8007
+                                        </h3>
+                                        <div id="netWork_img" class="d-flex justify-content-center mt-5"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -407,12 +426,22 @@
     </script>
     <script>
         const networkLink = document.querySelector(".netWork_link");
+        const screnLink = document.querySelector(".screen_link");
         fetch(`${base_url}Network`)
             .then((res) => res.json())
             .then((res) => {
                 networkLink.innerHTML = res.url;
+                screnLink.innerHTML = res.url + '/lab/screen.html';
                 var qrcode = new QRCode("netWork_img", {
                     text: res.url,
+                    width: 300,
+                    height: 300,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H,
+                });
+                var qrcode = new QRCode("screen_img", {
+                    text: res.url + '/lab/screen.html',
                     width: 300,
                     height: 300,
                     colorDark: "#000000",
