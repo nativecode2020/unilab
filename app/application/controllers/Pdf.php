@@ -51,9 +51,16 @@ class Pdf extends CI_Controller
 
     public function path()
     {
+        $name = $this->input->get('name');
+        $text = `نتائج تحليل المختبري للمريض $name`;
+        $phone = $this->input->get('phone');
+
         $folder = $this->save();
         $folder = $folder['folder'];
         shell_exec("explorer $folder");
+        //https://api.whatsapp.com/send?phone=${phone}&text=${text} with size 500 500
+        $open_command = 'c:\xampp\ch\chrome.exe --new-window --window-size=300,300  --app=https://api.whatsapp.com/send?phone=' . $phone . '&text=' . $text . '';
+        $open_output = exec($open_command);
     }
 
     public function openFolder()

@@ -533,9 +533,7 @@ class Visit extends Factory {
       insertedTests.map((test) => test.id),
       newObjectHash
     );
-    this.addRow(newVisit);
-    this.dataTable.draw();
-    this.orderDataTable();
+    this.dataTable.ajax.reload();
     this.resetForm();
     visitDetail(newObjectHash);
     showAddResult(newObjectHash);

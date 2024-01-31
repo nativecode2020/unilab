@@ -182,7 +182,7 @@ function showVisit(hash) {
                      FROM lab_visits WHERE hash = ${hash};`).result[0]
       .query0[0];
   let patient = run(
-    `SELECT * FROM lab_patient WHERE hash=${visit.visits_patient_id};`
+    `SELECT * FROM lab_patient WHERE hash='${visit.visits_patient_id}';`
   ).result[0].query0[0];
   let workSpace = $("#work-sapce");
   workSpace.html("");
@@ -2310,10 +2310,10 @@ async function sendWhatsapp(hash, phone, name) {
     let lab_hash = localStorage.getItem("lab_hash");
     await fetch(`${base_url}Pdf/path?pk=${hash}&lab=${lab_hash}`).then(
       (res) => {
-        window.open(
-          `https://api.whatsapp.com/send?phone=${phone}&text=${text}`,
-          "_blank"
-        );
+        // window.open(
+        //   `https://api.whatsapp.com/send?phone=${phone}&text=${text}`,
+        //   "_blank"
+        // );
         $("#alert_screen").remove();
       }
     );
