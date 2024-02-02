@@ -227,7 +227,7 @@ class LocalApi extends CI_Controller
         }
 
         curl_close($ch);
-        if ($response == "") {
+        if ($response == "" || $response == null || $response == "null") {
             echo json_encode(
                 array(
                     'status' => false,

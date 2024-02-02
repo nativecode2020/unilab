@@ -147,6 +147,19 @@
                         id="contact">
                         <div class="row justify-content-between">
                             <div class="col-6">
+                                <h2 class="text-center mb-4">الدعم الفني</h2>
+                                <h4 class="text-center mb-4">
+                                    الدعم الفني يستقبل الطلبات لاتترد بارسال الرسائل المتعلقة حول
+                                    النظام
+                                </h4>
+                                <div class="row mt-4 justify-content-center">
+                                    <div class="col-auto">
+                                        <h4 class="text-center">ارسل رسالة عبر الواتساب</h4>
+                                        <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
                                 <h2 class="text-center mb-4">AnyDesk</h2>
                                 <h4 class="text-center mb-4">
                                     لتشغيل برنامج AnyDesk يرجي الضغط علي الزر التالي
@@ -160,20 +173,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <h2 class="text-center mb-4">الدعم الفني</h2>
-                                <h4 class="text-center mb-4">
-                                    الدعم الفني يستقبل الطلبات لاتترد بارسال الرسائل المتعلقة حول
-                                    النظام
-                                </h4>
-                                <div class="row mt-4 justify-content-center">
-                                    <div class="col-auto">
-                                        <h4 class="text-center">ارسل رسالة عبر الواتساب</h4>
-                                        <img src="assets/image/qrcode.png" alt="QrCode" width="300" height="300" />
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto modal-body page" style="display: none"
@@ -323,7 +322,7 @@
             if (!navigator.onLine) {
                 swal.fire({
                     toast: true,
-                    position: "top-end",
+                    position: "bottom-end",
                     showConfirmButton: false,
                     timer: 5000,
                     icon: "error",
@@ -335,7 +334,7 @@
             if (code == "") {
                 swal.fire({
                     toast: true,
-                    position: "top-end",
+                    position: "bottom-end",
                     showConfirmButton: false,
                     timer: 5000,
                     icon: "error",
@@ -379,7 +378,7 @@
                     .catch((err) => {
                         swal.fire({
                             toast: true,
-                            position: "top-end",
+                            position: "bottom-end",
                             showConfirmButton: false,
                             timer: 5000,
                             icon: "error",
@@ -395,7 +394,7 @@
             if (!navigator.onLine) {
                 swal.fire({
                     toast: true,
-                    position: "top-end",
+                    position: "bottom-end",
                     showConfirmButton: false,
                     timer: 5000,
                     icon: "error",
@@ -408,7 +407,7 @@
             if (message == "") {
                 swal.fire({
                     toast: true,
-                    position: "top-end",
+                    position: "bottom-end",
                     showConfirmButton: false,
                     timer: 5000,
                     icon: "error",
@@ -427,7 +426,7 @@
                     .then((res) => {
                         swal.fire({
                             toast: true,
-                            position: "top-end",
+                            position: "bottom-end",
                             showConfirmButton: false,
                             timer: 5000,
                             icon: "success",
@@ -437,7 +436,7 @@
                     .catch((err) => {
                         swal.fire({
                             toast: true,
-                            position: "top-end",
+                            position: "bottom-end",
                             showConfirmButton: false,
                             timer: 5000,
                             icon: "error",
@@ -485,7 +484,7 @@
             $temp.remove();
             swal.fire({
                 toast: true,
-                position: "top-end",
+                position: "bottom-end",
                 showConfirmButton: false,
                 timer: 5000,
                 icon: "success",

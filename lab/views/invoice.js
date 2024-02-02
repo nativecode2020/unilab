@@ -430,7 +430,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
     })
       .then((e) => e.json())
       .then((res) => {
-        niceSwal("success", "top-end", "تم تحديث الفاتورة بنجاح");
+        niceSwal("success", "bottom-end", "تم تحديث الفاتورة بنجاح");
       })
       .catch((e) => console.log(e));
   };
@@ -476,7 +476,7 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
                     ) {
                       niceSwal(
                         "error",
-                        "top-end",
+                        "bottom-end",
                         "لا يمكن ادخال هذه العلامات"
                       );
                       e.target.value = invoice.name_in_invoice;
@@ -548,31 +548,24 @@ const Setting = ({ dispatch, state, invoice, setInvoice }) => {
               </div>
               <div className="form-group col-md-6">
                 <label htmlFor="phone_2">عدد عناصر الرأس في الصف الواحد</label>
-                <input
+                <select
                   type="number"
                   className="form-control"
                   id="phone_2"
                   name="phone_2"
                   onChange={(e) => {
-                    // max 12 min 0
-                    if (e.target.value > 100) {
-                      e.target.value = 100;
-                    }
-                    if (e.target.value < 0) {
-                      e.target.value = 0;
-                    }
                     setInvoice({
                       ...invoice,
-                      phone_2: 100 / e.target.value,
-                      header: Math.round($(".uk-sortable").height() + 5),
-                      center:
-                        1495 -
-                        (Math.round($(".uk-sortable").height() + 5) +
-                          Math.round($(".footer2").height())),
+                      phone_2: Math.round(100 / e.target.value),
                     });
                   }}
-                  value={100 / invoice.phone_2}
-                />
+                  value={Math.round(100 / invoice.phone_2)}
+                >
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="phone_1">رقم الهاتف</label>
@@ -983,7 +976,7 @@ const InvoiceHeader = ({ invoice }) => {
         fetchData("Visit/setOrderOfHeader", "POST", {
           orderOfHeader: newOrder,
         });
-        niceSwal("success", "top-end", "تم تحديث الرأس بنجاح");
+        niceSwal("success", "bottom-end", "تم تحديث الرأس بنجاح");
       });
     });
   }, []);

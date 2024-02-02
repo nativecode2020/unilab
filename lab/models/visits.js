@@ -321,13 +321,13 @@ class Visit extends Factory {
     // check if patient is selected
     let patientHash = $("#visits_patient_id").val();
     if (patientHash == "false" || patientHash == "0" || patientHash == "") {
-      niceSwal("error", "top-end", "يجب ادخال بيانات المريض اولا");
+      niceSwal("error", "bottom-end", "يجب ادخال بيانات المريض اولا");
       return false;
     } else if ($("#visit_date").val() == "") {
-      niceSwal("error", "top-end", "يجب اختيار تاريخ الزيارة");
+      niceSwal("error", "bottom-end", "يجب اختيار تاريخ الزيارة");
       return false;
     } else if (!$(".testSelect:checked").length) {
-      niceSwal("error", "top-end", "يجب اختيار اختبار واحد على الاقل");
+      niceSwal("error", "bottom-end", "يجب اختيار اختبار واحد على الاقل");
       return false;
     } else if (
       parseInt($("#age_year").val()) * 356 +
@@ -335,7 +335,7 @@ class Visit extends Factory {
         parseInt($("#age_month").val()) * 30 <=
       0
     ) {
-      niceSwal("error", "top-end", "يجب ادخال العمر");
+      niceSwal("error", "bottom-end", "يجب ادخال العمر");
       return false;
     }
     return true;
@@ -445,7 +445,7 @@ class Visit extends Factory {
             foundedTest.id === test.id &&
             foundedTest.catigory_id != test.catigory_id
           ) {
-            niceSwal("error", "top-end", `التحليل ${test.name} مكرر`);
+            niceSwal("error", "bottom-end", `التحليل ${test.name} مكرر`);
             error = true;
           }
           return (
@@ -568,7 +568,7 @@ class Visit extends Factory {
             foundedTest.package_id === test.package_id &&
             foundedTest.catigory_id != test.catigory_id
           ) {
-            niceSwal("error", "top-end", `التحليل ${test.name} مكرر`);
+            niceSwal("error", "bottom-end", `التحليل ${test.name} مكرر`);
             error = true;
           }
           return (
