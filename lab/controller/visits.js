@@ -1295,7 +1295,7 @@ function showInvoice(hash) {
                                 </div>
                                 <div class="prd">
                                     <p class=" doctor-name">Doctor</p>
-                                    <p class=" custom-doctor" tyle="display: none;">Lab</p>
+                                    <p class=" custom-doctor" style="display: none;">Lab</p>
                                 </div>
                                 <div class="prdgo doctor-name">
                                     <p>${visit.doctor ?? ""}</p>
@@ -1303,6 +1303,7 @@ function showInvoice(hash) {
                                 <input type="text" class="prdgo text-center custom-doctor"  style="display: none;z-index: 999;background-color: transparent">
                             </div>
                             <div class="tester">
+                                ${manageHead()}
                                 <div class="row m-0">
                                     ${visitPackages
                                       .map(
@@ -2391,7 +2392,7 @@ function manageHead(type) {
                     <p>Analysis Type</p>
                 </div>
                 <div class="col-2 text-right">
-                    <p>Price</p>
+                    <p class="doctor-name">Price</p>
                 </div>
             </div>
             `;
