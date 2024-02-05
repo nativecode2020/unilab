@@ -2308,15 +2308,15 @@ async function sendWhatsapp(hash, phone, name) {
     const body = document.getElementsByTagName("body")[0];
     body.insertAdjacentHTML("beforeend", waitSendElement);
     let lab_hash = localStorage.getItem("lab_hash");
-    await fetch(`${base_url}Pdf/path?pk=${hash}&lab=${lab_hash}`).then(
-      (res) => {
-        // window.open(
-        //   `https://api.whatsapp.com/send?phone=${phone}&text=${text}`,
-        //   "_blank"
-        // );
-        $("#alert_screen").remove();
-      }
-    );
+    await fetch(
+      `${base_url}Pdf/path?pk=${hash}&lab=${lab_hash}&phone=${phone}&name=${name}`
+    ).then((res) => {
+      // window.open(
+      //   `https://api.whatsapp.com/s end?phone=${phone}&text=${text}`,
+      //   "_blank"
+      // );
+      $("#alert_screen").remove();
+    });
   } else {
     Swal.fire({
       icon: "error",
